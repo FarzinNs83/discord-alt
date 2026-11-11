@@ -37,13 +37,13 @@ with a Let's Encrypt certificate, with voice and video (LiveKit):
   less than 3 GB of RAM (for the build)
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/FarzinNs83/patogh/main/patogh-setup.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/FarzinNs83/discord-alt/main/patogh-setup.sh)
 ```
 
 If raw.githubusercontent.com is blocked, the same through the ghfast.top GitHub mirror:
 
 ```bash
-bash <(curl -Ls https://ghfast.top/https://raw.githubusercontent.com/FarzinNs83/patogh/main/patogh-setup.sh)
+bash <(curl -Ls https://ghfast.top/https://raw.githubusercontent.com/FarzinNs83/discord-alt/main/patogh-setup.sh)
 ```
 
 Then open `https://<domain>` right away: the first visitor names the server
@@ -55,7 +55,7 @@ snapshot, pulls, rebuilds and restarts; settings and secrets are kept.
 Show all options:
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/FarzinNs83/patogh/main/patogh-setup.sh) --help
+bash <(curl -Ls https://raw.githubusercontent.com/FarzinNs83/discord-alt/main/patogh-setup.sh) --help
 ```
 
 Ports: TCP 80/443, and for voice UDP 3478, TCP 7881 and UDP 7882 (open
