@@ -58,10 +58,28 @@ Show all options:
 bash <(curl -Ls https://raw.githubusercontent.com/FarzinNs83/discord-alt/main/patogh-setup.sh) --help
 ```
 
-Ports: TCP 80/443, and for voice UDP 3478, TCP 7881 and UDP 7882 (open
-them in the provider firewall; `--open-firewall` opens them in ufw). Next to
-`dns-setup.sh` from my-scripts, Patogh sits behind its relay on
-`127.0.0.1:10446`.
+By default, web traffic uses TCP 80/443. Next to `dns-setup.sh` from my-scripts,
+Patogh's HTTPS listener sits behind its relay on `127.0.0.1:10446`.
+
+To leave both ports available for other projects, choose a public HTTPS port
+and supply a certificate for your hostname (or IPv4 address):
+
+```bash
+sudo PS_TLS_DIR=/etc/patogh/tls bash patogh-setup.sh \
+  --domain chat.example.com --https-port 8443 --open-firewall
+```
+
+Before running this command, place `fullchain.pem` and `privkey.pem` in
+`/etc/patogh/tls/chat.example.com/`. A certificate issued using DNS validation
+works without opening either standard web port. Renew the certificate through
+its issuer and reload nginx after renewal. Open TCP 8443 in the provider
+firewall and visit `https://chat.example.com:8443`. The script remembers the
+port and certificate directory on updates. `--port` sets the separate
+loopback port for the app behind nginx.
+
+Voice uses UDP 3478, TCP 7881 and UDP 7882 in either mode. Open those in the
+provider firewall as well. `--open-firewall` opens the selected ports in an
+active ufw or firewalld.
 
 ## backup.sh / restore.sh
 

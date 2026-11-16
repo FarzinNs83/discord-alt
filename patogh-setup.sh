@@ -12,9 +12,8 @@
 #    3. clones the Patogh repository to /opt/patogh, writes its .env (secrets
 #       are generated once and kept) and livekit.yaml, builds the image and
 #       starts it on 127.0.0.1 with LiveKit for voice and video
-#    4. nginx in front (websockets, /livekit, no upload cap: the app enforces
-#       its own) and a Let's Encrypt certificate (HTTP-01, webroot) with
-#       auto-renewal
+#    4. nginx in front (WebSockets, /livekit) with automatic Let's Encrypt
+#       on 80/443, or an existing certificate on a custom HTTPS port
 #
 #  Then open https://<domain>: the first visitor names the server and becomes
 #  its owner. Re-running the script updates Patogh (database snapshot, git
@@ -27,7 +26,7 @@
 #
 #  Usage:
 #    bash patogh-setup.sh                      (asks for the domain)
-#    bash <(curl -Ls https://raw.githubusercontent.com/FarzinNs83/patogh/main/patogh-setup.sh)
+#    bash <(curl -Ls https://raw.githubusercontent.com/FarzinNs83/discord-alt/main/patogh-setup.sh)
 #
 #  Options: --help
 # =============================================================================
@@ -47,12 +46,12 @@ ENV_FILE="${PS_DIR}/.env"
 LOG_FILE="${PS_LOG_FILE:-/var/log/patogh-setup.log}"
 NGINX_CONF="${PS_NGINX_CONF:-/etc/nginx/conf.d/patogh.conf}"
 ACME_ROOT="${PS_ACME_ROOT:-/var/www/patogh-acme}"
-TLS_DIR="${PS_TLS_DIR:-/etc/letsencrypt/live}"
+TLS_DIR="${PS_TLS_DIR:-}"
 RENEW_HOOK="${PS_RENEW_HOOK:-/etc/letsencrypt/renewal-hooks/deploy/patogh-reload.sh}"
 DS_STREAM_CONF="/etc/nginx/stream.d/dns-setup-relay.conf"
 SNI_ROUTES_DIR="${PS_SNI_ROUTES_DIR:-/etc/nginx/sni-routes.d}"
 SNI_MAP="${SNI_ROUTES_DIR}/patogh.map"
-DEFAULT_REPO="https://github.com/FarzinNs83/patogh.git"
+DEFAULT_REPO="https://github.com/FarzinNs83/discord-alt.git"
 
 DOCKER_MIRROR_CANDIDATES=(
   https://docker.arvancloud.ir
@@ -89,6 +88,7 @@ REPO=""
 BRANCH=""
 APP_PORT=""
 TLS_PORT=""
+HTTPS_PORT=""
 REGISTRY_MIRROR=""
 NPM_REGISTRY=""
 DEBIAN_MIRROR=""
@@ -129,7 +129,11 @@ Options:
       --no-voice            no voice / video (no LiveKit, no UDP ports)
       --port <n>            local port Patogh listens on behind nginx
                             (default: 3080)
-      --tls-port <n>        loopback HTTPS port when dns-setup.sh owns :443
+      --https-port <n>      public HTTPS port (default: 443). A custom port
+                            skips HTTP and uses an existing TLS certificate.
+                            Set PS_TLS_DIR to the parent of DOMAIN/fullchain.pem
+                            and DOMAIN/privkey.pem (default: /etc/letsencrypt/live).
+      --tls-port <n>        loopback port behind the dns-setup.sh relay on :443
                             (default: 10446)
       --registry-mirror <url>  Docker Hub mirror, e.g. https://docker.arvancloud.ir
                             (default: found automatically when Docker Hub is blocked)
@@ -137,10 +141,10 @@ Options:
                             automatically when registry.npmjs.org is blocked)
       --debian-mirror <url> Debian mirror for the build (http://host, serving
                             /debian; found automatically when blocked)
-      --repo <url>          git repository (default: FarzinNs83/patogh)
+      --repo <url>          git repository (default: FarzinNs83/discord-alt)
       --branch <name>       branch (default: main)
       --skip-dns-check      do not verify that the domain points to this server
-      --open-firewall       open 80, 443 and the voice ports in ufw / firewalld
+      --open-firewall       open the selected web ports and voice ports in ufw / firewalld
       --no-swap             do not add a 2 GB swap file on small servers
       --staging             Let's Encrypt staging CA (testing only)
   -h, --help                show this help
@@ -234,12 +238,17 @@ is_domain() {
   [[ $1 =~ ^([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$ ]]
 }
 
+is_ipv4() {
+  local octet='(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])'
+  [[ $1 =~ ^(${octet}\.){3}${octet}$ ]]
+}
+
 is_email() {
   [[ $1 =~ ^[A-Za-z0-9._%+-]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,63}$ ]]
 }
 
 is_port() {
-  [[ $1 =~ ^[0-9]+$ ]] && (($1 >= 1 && $1 <= 65535))
+  [[ $1 =~ ^[1-9][0-9]{0,4}$ ]] && (($1 <= 65535))
 }
 
 port_in_use() {
@@ -327,6 +336,11 @@ load_settings() {
   fi
   [[ -n $APP_PORT ]] || APP_PORT=$(env_get APP_PORT)
   [[ -n $TLS_PORT ]] || TLS_PORT=$(env_get PATOGH_SETUP_TLS_PORT)
+  [[ -n $HTTPS_PORT ]] || HTTPS_PORT=$(env_get PATOGH_SETUP_HTTPS_PORT)
+  if [[ -z $TLS_DIR ]]; then
+    [[ ${HTTPS_PORT:-443} == 443 ]] || TLS_DIR=$(env_get PATOGH_SETUP_TLS_DIR)
+    : "${TLS_DIR:=/etc/letsencrypt/live}"
+  fi
   [[ -n $EMAIL ]] || EMAIL=$(env_get CERTBOT_EMAIL)
   [[ -n $REPO ]] || REPO=$(env_get PATOGH_SETUP_REPO)
   [[ -n $BRANCH ]] || BRANCH=$(env_get PATOGH_SETUP_BRANCH)
@@ -343,11 +357,23 @@ load_settings() {
   LIVEKIT_API_SECRET=$(env_get LIVEKIT_API_SECRET)
   MAX_UPLOAD_SIZE=$(env_get MAX_UPLOAD_SIZE)
 
-  : "${APP_PORT:=3080}" "${TLS_PORT:=10446}" "${REPO:=$DEFAULT_REPO}" "${BRANCH:=main}"
+  : "${APP_PORT:=3080}" "${TLS_PORT:=10446}" "${HTTPS_PORT:=443}" "${REPO:=$DEFAULT_REPO}" "${BRANCH:=main}"
   : "${MAX_UPLOAD_SIZE:=104857600}"
   is_port "$APP_PORT" || die "Invalid --port '${APP_PORT}'."
   is_port "$TLS_PORT" && ((TLS_PORT != 80 && TLS_PORT != 443)) || die "Invalid --tls-port '${TLS_PORT}'."
+  is_port "$HTTPS_PORT" && ((HTTPS_PORT != 80)) || die "Invalid --https-port '${HTTPS_PORT}'."
+  if ((HTTPS_PORT != 443)); then
+    ((APP_PORT != HTTPS_PORT && APP_PORT != 80 && APP_PORT != 443)) || die "Use a separate --port other than ${HTTPS_PORT}, 80 or 443 for the app."
+    [[ $TLS_DIR =~ ^/[a-zA-Z0-9_./-]+$ ]] || die "PS_TLS_DIR must be an absolute directory path without spaces."
+  fi
   [[ $BRANCH =~ ^[A-Za-z0-9._/-]+$ ]] || die "Invalid branch '${BRANCH}'."
+}
+
+public_host() {
+  printf '%s' "$DOMAIN"
+  if ((HTTPS_PORT != 443)); then
+    printf ':%s' "$HTTPS_PORT"
+  fi
 }
 
 # ---------------------------------------------------------------------------
@@ -385,8 +411,6 @@ precheck_dns() {
 [x] DNS mismatch for ${DOMAIN}
       domain resolves to : ${resolved}
       this server's IPv4 : ${PUBLIC_IPV4}
-    Let's Encrypt validates the domain on port 80 of the address it points to,
-    and voice / video connect to this address directly.
     Fix the A record (Cloudflare: proxy OFF / grey cloud) and re-run,
     or bypass this check with --skip-dns-check.
 EOF
@@ -394,17 +418,16 @@ EOF
   fi
   say "DNS OK: ${DOMAIN} -> ${PUBLIC_IPV4}"
 
-  # Let's Encrypt prefers IPv6: an AAAA record elsewhere fails the challenge.
   # (ahostsv6 maps a plain A record to ::ffff:a.b.c.d; that is not an AAAA.)
   local v6
   v6=$(getent ahostsv6 "$DOMAIN" 2> /dev/null | awk '$1 !~ /^::ffff:/ {print $1; exit}') || v6=""
   if [[ -n $v6 ]] && ! ip -6 addr show scope global 2> /dev/null | grep -qiF "inet6 ${v6}/"; then
-    die "${DOMAIN} also has an AAAA (IPv6) record, ${v6}, that is not this server. Let's Encrypt checks IPv6 first, so the certificate would fail. Delete the AAAA record (or point it here) and re-run."
+    die "${DOMAIN} also has an AAAA (IPv6) record, ${v6}, that is not this server. Delete the AAAA record (or point it here) and re-run."
   fi
 }
 
 relay_active() {
-  [[ -f $DS_STREAM_CONF ]]
+  ((HTTPS_PORT == 443)) && [[ -f $DS_STREAM_CONF ]]
 }
 
 # Every setup on the server needs its own (sub)domain.
@@ -446,6 +469,10 @@ precheck_old_install() {
 
 precheck_ports() {
   local p holder
+  local web_ports=(80 443)
+  if ((HTTPS_PORT != 443)); then
+    web_ports=("$HTTPS_PORT")
+  fi
   if relay_active; then
     if ! grep -qF "$SNI_ROUTES_DIR" "$DS_STREAM_CONF"; then
       die "The dns-setup.sh relay on this server is too old for other sites. Re-run the current dns-setup.sh first, then this script."
@@ -456,11 +483,13 @@ precheck_ports() {
       [[ $holder == *'"nginx"'* ]] || die "TCP/${TLS_PORT} is in use: ${holder:-unknown}. Pick another port with --tls-port."
     fi
   fi
-  for p in 80 443; do
+  for p in "${web_ports[@]}"; do
     port_in_use "$p" || continue
     holder=$(port_holder "$p") || true
-    [[ $holder == *'"nginx"'* ]] && continue
-    die "TCP/${p} is in use by another program: ${holder:-unknown}. Free it (Apache? Caddy? x-ui? an old Patogh nginx container?) and re-run."
+    if [[ $holder == *'"nginx"'* ]] && { ((HTTPS_PORT == 443)) || grep -Eqs "^[[:space:]]*listen[[:space:]]+${p}[[:space:]]+ssl" "$NGINX_CONF"; }; then
+      continue
+    fi
+    die "TCP/${p} is in use: ${holder:-unknown}. Free it or select a different --https-port."
   done
   if port_in_use "$APP_PORT"; then
     holder=$(port_holder "$APP_PORT") || true
@@ -703,7 +732,7 @@ write_env() {
   tmp=$(mktemp)
   {
     printf '# Patogh, written by patogh-setup.sh %s -- re-run the script to change it\n\n' "$(date -Is)"
-    printf 'DOMAIN=%s\n' "$DOMAIN"
+    printf 'DOMAIN=%s\n' "$(public_host)"
     printf 'DEPLOY_MODE=proxy\n'
     printf '# the host nginx is the proxy: the bundled one is dropped, the app is on 127.0.0.1:APP_PORT\n'
     printf 'COMPOSE_FILE=docker-compose.yml:docker-compose.proxy.yml\n'
@@ -717,7 +746,7 @@ write_env() {
     printf 'DEBIAN_MIRROR=%s\n' "$DEBIAN_MIRROR"
     printf 'PATOGH_INSTALL_CHANNEL=source\n\n'
     if ((VOICE)); then
-      printf 'LIVEKIT_URL=wss://%s/livekit\n' "$DOMAIN"
+      printf 'LIVEKIT_URL=wss://%s/livekit\n' "$(public_host)"
       printf 'LIVEKIT_API_KEY=%s\n' "$LIVEKIT_API_KEY"
       printf 'LIVEKIT_API_SECRET=%s\n' "$LIVEKIT_API_SECRET"
       printf 'COMPOSE_PROFILES=voice\n\n'
@@ -727,6 +756,10 @@ write_env() {
     printf '# read by patogh-setup.sh on re-runs\n'
     printf 'CERTBOT_EMAIL=%s\n' "$EMAIL"
     printf 'PATOGH_SETUP_TLS_PORT=%s\n' "$TLS_PORT"
+    if ((HTTPS_PORT != 443)); then
+      printf 'PATOGH_SETUP_HTTPS_PORT=%s\n' "$HTTPS_PORT"
+      printf 'PATOGH_SETUP_TLS_DIR=%s\n' "$TLS_DIR"
+    fi
     printf 'PATOGH_SETUP_REPO=%s\n' "$REPO"
     printf 'PATOGH_SETUP_BRANCH=%s\n' "$BRANCH"
   } > "$tmp"
@@ -812,19 +845,37 @@ build_and_start() {
 # nginx and certificate
 # ---------------------------------------------------------------------------
 ensure_nginx() {
-  local missing=()
+  local missing=() defer_start=0 failed=0 default_site=/etc/nginx/sites-available/default packaged
   command -v nginx > /dev/null 2>&1 || missing+=(nginx)
-  command -v certbot > /dev/null 2>&1 || missing+=(certbot)
+  if ((HTTPS_PORT == 443)); then
+    command -v certbot > /dev/null 2>&1 || missing+=(certbot)
+  fi
   if ((${#missing[@]} > 0)); then
     say "Installing: ${missing[*]}"
     apt_update || die "apt-get update failed."
-    apt_install "${missing[@]}" || die "Could not install: ${missing[*]}"
+    if ((HTTPS_PORT != 443)) && [[ ! -e /run/systemd/system/nginx.service ]]; then
+      systemctl mask --runtime nginx.service || die "Could not defer nginx startup during installation."
+      defer_start=1
+    fi
+    apt_install "${missing[@]}" || failed=1
+    if ((defer_start)); then
+      systemctl unmask --runtime nginx.service || die "Could not restore nginx startup."
+    fi
+    ((failed == 0)) || die "Could not install: ${missing[*]}"
   fi
   [[ -d $(dirname "$NGINX_CONF") ]] || die "$(dirname "$NGINX_CONF") is missing; unexpected nginx layout."
   if ! grep -rqs 'conf\.d/\*\.conf' /etc/nginx/nginx.conf; then
     die "/etc/nginx/nginx.conf does not include conf.d/*.conf; add it and re-run."
   fi
-  install -d -m 755 "${ACME_ROOT}/.well-known/acme-challenge"
+  if ((HTTPS_PORT == 443)); then
+    install -d -m 755 "${ACME_ROOT}/.well-known/acme-challenge"
+  elif [[ -L /etc/nginx/sites-enabled/default && $(readlink -f /etc/nginx/sites-enabled/default) == "$default_site" && -f $default_site ]]; then
+    # Debian/Ubuntu's unmodified welcome site would claim port 80 on its own.
+    packaged=$(dpkg-query -W -f='${Conffiles}' nginx-common 2> /dev/null | awk -v site="$default_site" '$1 == site {print $2}') || packaged=""
+    if [[ -n $packaged && $(md5sum < "$default_site") == "$packaged "* ]]; then
+      rm /etc/nginx/sites-enabled/default
+    fi
+  fi
 }
 
 nginx_version_ge() { # x.y.z
@@ -890,25 +941,27 @@ render_nginx() { # http | https
       printf "    ''      close;\n"
       printf '}\n\n'
     fi
-    printf 'server {\n'
-    printf '    listen 80;\n'
-    ((v6)) && printf '    listen [::]:80;\n'
-    printf '    server_name %s;\n\n' "$DOMAIN"
-    printf '    location ^~ /.well-known/acme-challenge/ {\n'
-    printf '        root %s;\n' "${ACME_ROOT%/}"
-    printf '        default_type "text/plain";\n'
-    printf '    }\n'
-    printf '    location / {\n'
-    printf '        return 301 https://$host$request_uri;\n'
-    printf '    }\n'
-    printf '}\n'
+    if ((HTTPS_PORT == 443)); then
+      printf 'server {\n'
+      printf '    listen 80;\n'
+      ((v6)) && printf '    listen [::]:80;\n'
+      printf '    server_name %s;\n\n' "$DOMAIN"
+      printf '    location ^~ /.well-known/acme-challenge/ {\n'
+      printf '        root %s;\n' "${ACME_ROOT%/}"
+      printf '        default_type "text/plain";\n'
+      printf '    }\n'
+      printf '    location / {\n'
+      printf '        return 301 https://$host$request_uri;\n'
+      printf '    }\n'
+      printf '}\n'
+    fi
     if [[ $mode == https ]]; then
       printf '\nserver {\n'
       if relay_active; then
         printf '    listen 127.0.0.1:%s ssl%s;\n' "$TLS_PORT" "$h2_listen"
       else
-        printf '    listen 443 ssl%s;\n' "$h2_listen"
-        ((v6)) && printf '    listen [::]:443 ssl%s;\n' "$h2_listen"
+        printf '    listen %s ssl%s;\n' "$HTTPS_PORT" "$h2_listen"
+        ((v6)) && printf '    listen [::]:%s ssl%s;\n' "$HTTPS_PORT" "$h2_listen"
       fi
       [[ -n $h2_line ]] && printf '%s\n' "$h2_line"
       printf '    server_name %s;\n\n' "$DOMAIN"
@@ -961,11 +1014,15 @@ apply_nginx() {
 }
 
 cert_valid() {
-  local full="${TLS_DIR}/${DOMAIN}/fullchain.pem" san
-  [[ -s $full && -s ${TLS_DIR}/${DOMAIN}/privkey.pem ]] || return 1
+  local full="${TLS_DIR}/${DOMAIN}/fullchain.pem" key="${TLS_DIR}/${DOMAIN}/privkey.pem" cert_key priv_key
+  local verify_name=-verify_hostname
+  is_ipv4 "$DOMAIN" && verify_name=-verify_ip
+  [[ -s $full && -s $key ]] || return 1
   openssl x509 -in "$full" -noout -checkend 86400 > /dev/null 2>&1 || return 1
-  san=$(openssl x509 -in "$full" -noout -ext subjectAltName 2> /dev/null) || return 1
-  [[ $san == *"DNS:${DOMAIN}"* ]]
+  openssl verify -partial_chain -trusted "$full" "$verify_name" "$DOMAIN" "$full" > /dev/null 2>&1 || return 1
+  cert_key=$(openssl x509 -in "$full" -noout -pubkey 2> /dev/null) || return 1
+  priv_key=$(openssl pkey -in "$key" -passin pass: -pubout 2> /dev/null) || return 1
+  [[ $cert_key == "$priv_key" ]]
 }
 
 obtain_certificate() {
@@ -1068,7 +1125,8 @@ firewalld_is_active() {
 }
 
 firewall_ports() {
-  printf '%s\n' 80/tcp 443/tcp
+  ((HTTPS_PORT == 443)) && printf '%s\n' 80/tcp
+  printf '%s/tcp\n' "$HTTPS_PORT"
   ((VOICE)) && printf '%s\n' 3478/udp 7881/tcp 7882/udp
   return 0
 }
@@ -1101,10 +1159,10 @@ warn_closed_firewall() {
 # Checks and output
 # ---------------------------------------------------------------------------
 verify_https() {
-  local args=(-sS --noproxy '*' -o /dev/null -w '%{http_code}' --max-time 15 --resolve "${DOMAIN}:443:127.0.0.1")
+  local args=(-sS --noproxy '*' -o /dev/null -w '%{http_code}' --max-time 15 --connect-to "${DOMAIN}:${HTTPS_PORT}:127.0.0.1:${HTTPS_PORT}")
   [[ $STAGING -eq 1 ]] && args+=(-k)
   local code
-  code=$(curl "${args[@]}" "https://${DOMAIN}/api/health" 2> /dev/null) || code=000
+  code=$(curl "${args[@]}" "https://$(public_host)/api/health" 2> /dev/null) || code=000
   [[ $code == 200 ]]
 }
 
@@ -1119,7 +1177,7 @@ print_summary() {
     printf ' Patogh was installed successfully\n'
   fi
   printf '==============================================================\n'
-  printf ' URL         : https://%s/\n' "$DOMAIN"
+  printf ' URL         : https://%s/\n' "$(public_host)"
   if ((EXISTING == 0)); then
     printf ' First visit : open the link right away -- the first visitor names\n'
     printf '               the server and becomes its owner.\n'
@@ -1127,12 +1185,18 @@ print_summary() {
   printf ' Commit      : %s\n' "$(git -C "$PS_DIR" log -1 --format='%h %s')"
   printf ' Voice/video : %s\n' "$( ((VOICE)) && printf 'on (LiveKit)' || printf 'off')"
   printf ' Folder      : %s (settings: .env, data: data/)\n' "$PS_DIR"
-  printf ' Certificate : expires %s, renews automatically\n' "${expires:-unknown}"
+  if ((HTTPS_PORT == 443)); then
+    printf ' Certificate : expires %s, renews via certbot\n' "${expires:-unknown}"
+  else
+    printf ' Certificate : expires %s, renew through your certificate provider\n' "${expires:-unknown}"
+  fi
   if [[ $(listen_mode) == loopback ]]; then
     printf ' HTTPS       : 127.0.0.1:%s, reached through the dns-setup.sh relay on :443\n' "$TLS_PORT"
   fi
   printf '%s\n' '--------------------------------------------------------------'
-  printf ' Ports       : TCP 80, 443'
+  printf ' Ports       : TCP '
+  ((HTTPS_PORT == 443)) && printf '80, '
+  printf '%s' "$HTTPS_PORT"
   ((VOICE)) && printf ', UDP 3478, TCP 7881, UDP 7882 (voice)'
   printf '\n               must be open in the provider firewall too.\n'
   printf ' Update      : run this script again\n'
@@ -1175,6 +1239,11 @@ parse_args() {
       --tls-port)
         (($# >= 2)) || die "Option $1 needs a value."
         TLS_PORT="$2"
+        shift 2
+        ;;
+      --https-port)
+        (($# >= 2)) || die "Option $1 needs a value."
+        HTTPS_PORT="$2"
         shift 2
         ;;
       --registry-mirror)
@@ -1244,13 +1313,16 @@ resolve_domain() {
     read -r DOMAIN || die "No input."
   fi
   DOMAIN=$(normalize_domain "$DOMAIN")
-  if [[ -z $DOMAIN ]] || ! is_domain "$DOMAIN"; then
-    die "Invalid domain '${DOMAIN}'. Use something like chat.example.com."
+  is_domain "$DOMAIN" && return 0
+  if ((HTTPS_PORT != 443)) && is_ipv4 "$DOMAIN"; then
+    return 0
   fi
+  die "Invalid domain '${DOMAIN}'. Use a hostname, or an IPv4 address with a custom --https-port."
 }
 
 install_all() {
   parse_args "$@"
+  load_settings
   resolve_domain
   setup_logging
   trap '_on_err $LINENO' ERR
@@ -1260,12 +1332,14 @@ install_all() {
 
   load_os
   ensure_base_packages
-  load_settings
+  if ((HTTPS_PORT != 443)); then
+    cert_valid || die "Provide a valid certificate for ${DOMAIN} and its key at ${TLS_DIR}/${DOMAIN}/{fullchain,privkey}.pem."
+  fi
   precheck_disk
   precheck_dns
   precheck_domain_free
   precheck_old_install
-  free_ports_from_old_install
+  ((HTTPS_PORT == 443)) && free_ports_from_old_install
   precheck_ports
   ensure_swap
 
@@ -1281,28 +1355,26 @@ install_all() {
   write_livekit
   build_and_start
 
-  # --- 3. nginx (port 80 first: needed for the ACME challenge) ------------
+  # --- 3. nginx and TLS ---------------------------------------------------
   ensure_nginx
   [[ $OPEN_FIREWALL -eq 1 ]] && open_firewall_rules
   warn_closed_firewall
-  if cert_valid; then
-    render_nginx https
-  else
+  if ((HTTPS_PORT == 443)) && ! cert_valid; then
     render_nginx http
+    apply_nginx
   fi
-  apply_nginx
-
-  # --- 4. certificate -----------------------------------------------------
-  obtain_certificate || die "Could not obtain a certificate for ${DOMAIN}. Fix the cause above and re-run."
-  install_renew_hook
+  if ((HTTPS_PORT == 443)); then
+    obtain_certificate || die "Could not obtain a certificate for ${DOMAIN}. Fix the cause above and re-run."
+    install_renew_hook
+  fi
   render_nginx https
   apply_nginx
 
-  # --- 5. check -----------------------------------------------------------
+  # --- 4. check -----------------------------------------------------------
   if verify_https; then
-    say "HTTPS check OK: https://${DOMAIN}/api/health"
+    say "HTTPS check OK: https://$(public_host)/api/health"
   else
-    warn "https://${DOMAIN}/api/health did not answer 200 through nginx; check: nginx -t, cd ${PS_DIR} && docker compose logs patogh"
+    warn "https://$(public_host)/api/health did not answer 200 through nginx; check TLS trust, nginx -t and docker compose logs in ${PS_DIR}."
   fi
   print_summary
 }

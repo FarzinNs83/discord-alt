@@ -8,6 +8,7 @@ import { connectionManager } from '../ws/handler.js';
 import { sanitizeUser } from '../utils/sanitize.js';
 import { sendError } from '../utils/httpErrors.js';
 import { memberRolesView, rolesForViewer } from '../utils/permissionDataView.js';
+import { assignJoinRoles } from './spaces.js';
 import type {
   ExploreSpace,
   JoinRequest,
@@ -280,6 +281,7 @@ export async function exploreRoutes(app: FastifyInstance): Promise<void> {
       userId: request.userId,
       joinedAt: now,
     }).run();
+    const roles = assignJoinRoles(id, request.userId);
 
     // Register in connectionManager for WS broadcasts
     connectionManager.addUserSpace(request.userId, id);
@@ -293,7 +295,7 @@ export async function exploreRoutes(app: FastifyInstance): Promise<void> {
         nickname: null,
         joinedAt: now,
         user: sanitizeUser(joiningUser),
-        roles: [],
+        roles,
       };
       connectionManager.sendToSpace(id, {
         type: 'member_joined',
@@ -471,6 +473,7 @@ export async function exploreRoutes(app: FastifyInstance): Promise<void> {
           decidedAt: now,
         }).where(eq(schema.joinRequests.id, requestId)).run();
       });
+      const roles = assignJoinRoles(id, joinReq.userId);
 
       // Register in connectionManager
       connectionManager.addUserSpace(joinReq.userId, id);
@@ -484,7 +487,7 @@ export async function exploreRoutes(app: FastifyInstance): Promise<void> {
           nickname: null,
           joinedAt: now,
           user: sanitizeUser(joiningUser),
-          roles: [],
+          roles,
         };
         connectionManager.sendToSpace(id, {
           type: 'member_joined',

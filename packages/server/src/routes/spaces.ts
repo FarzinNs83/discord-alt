@@ -192,6 +192,24 @@ function inviteJoinRefusal(space: typeof schema.spaces.$inferSelect, userId: str
  * Add a member admitted by an invite code: the membership row, the user's
  * WebSocket subscription to the space, and `member_joined` to the space.
  */
+const JOIN_ROLE_NAME = 'Member';
+
+/**
+ * Give a member who just joined the space's Member role, if it has one, and
+ * return their roles as the member_joined payload lists them.
+ * shortcut: found by name, so a renamed Member role stops being given; store its id on the space if that matters.
+ */
+export function assignJoinRoles(spaceId: string, userId: string): Role[] {
+  const db = getDb();
+  const role = db.select().from(schema.roles)
+    .where(and(eq(schema.roles.spaceId, spaceId), eq(schema.roles.name, JOIN_ROLE_NAME)))
+    .orderBy(asc(schema.roles.position))
+    .get();
+  if (!role || role.id === spaceId) return [];
+  db.insert(schema.memberRoles).values({ spaceId, userId, roleId: role.id }).onConflictDoNothing().run();
+  return memberRolesView([role], new Set([role.id]));
+}
+
 function admitByInvite(spaceId: string, userId: string): void {
   const db = getDb();
   const now = Date.now();
@@ -200,6 +218,7 @@ function admitByInvite(spaceId: string, userId: string): void {
     userId,
     joinedAt: now,
   }).run();
+  const roles = assignJoinRoles(spaceId, userId);
 
   // Register the user in connectionManager so they receive WS broadcasts for this space
   connectionManager.addUserSpace(userId, spaceId);
@@ -213,7 +232,7 @@ function admitByInvite(spaceId: string, userId: string): void {
       nickname: null,
       joinedAt: now,
       user: sanitizeUser(joiningUser),
-      roles: [],
+      roles,
     };
     connectionManager.sendToSpace(spaceId, {
       type: 'member_joined',
@@ -223,18 +242,117 @@ function admitByInvite(spaceId: string, userId: string): void {
   }
 }
 
-/** Create a space with its default categories, channels and @everyone role; the owner is its first member. */
+const P = PermissionBits;
+const TALK = P.SEND_MESSAGES | P.ADD_REACTIONS | P.SPEAK | P.STREAM;
+
+type DefaultRoleKey = 'admin' | 'moderator' | 'helper' | 'vip' | 'member' | 'muted';
+type DefaultOverride = { role: DefaultRoleKey | 'everyone'; allow?: bigint; deny?: bigint };
+
+/** Roles a new space starts with, most senior first. */
+const DEFAULT_ROLES: { key: DefaultRoleKey; name: string; color: string; permissions: bigint }[] = [
+  { key: 'admin', name: 'Admin', color: '#e74c3c', permissions: P.ADMINISTRATOR },
+  {
+    key: 'moderator', name: 'Moderator', color: '#3498db',
+    permissions: P.MANAGE_ROLES | P.MANAGE_MESSAGES | P.KICK_MEMBERS | P.BAN_MEMBERS | P.MENTION_EVERYONE
+      | P.MUTE_MEMBERS | P.DEAFEN_MEMBERS | P.MOVE_MEMBERS | P.DISCONNECT_MEMBERS,
+  },
+  { key: 'helper', name: 'Helper', color: '#1abc9c', permissions: P.MANAGE_MESSAGES | P.MUTE_MEMBERS | P.MOVE_MEMBERS },
+  { key: 'vip', name: 'VIP', color: '#f1c40f', permissions: 0n },
+  { key: 'member', name: JOIN_ROLE_NAME, color: '#2ecc71', permissions: 0n },
+  { key: 'muted', name: 'Muted', color: '#7f8c8d', permissions: 0n },
+];
+
+// Muted is denied per category: roles only add bits, so the deny has to live in an override.
+const MUTED: DefaultOverride = { role: 'muted', deny: TALK };
+const STAFF_ONLY: DefaultOverride[] = [
+  { role: 'everyone', deny: P.VIEW_CHANNEL },
+  { role: 'moderator', allow: P.VIEW_CHANNEL },
+  { role: 'helper', allow: P.VIEW_CHANNEL },
+];
+
+/** Categories and channels a new space starts with. */
+const DEFAULT_LAYOUT: {
+  name: string;
+  overrides: DefaultOverride[];
+  channels: { name: string; type: 'text' | 'voice'; topic?: string; overrides?: DefaultOverride[] }[];
+}[] = [
+  {
+    name: 'Information',
+    overrides: [{ role: 'everyone', deny: P.SEND_MESSAGES }, MUTED],
+    channels: [
+      { name: 'welcome', type: 'text', topic: 'Welcome! Start here.' },
+      { name: 'rules', type: 'text', topic: 'Read these before you chat.' },
+      { name: 'announcements', type: 'text', topic: 'Server news and updates.', overrides: [{ role: 'moderator', allow: P.SEND_MESSAGES }] },
+      { name: 'roles', type: 'text', topic: 'What each role means and how to get it.' },
+    ],
+  },
+  {
+    name: 'Community',
+    overrides: [MUTED],
+    channels: [
+      { name: 'general', type: 'text', topic: 'Talk about anything.' },
+      { name: 'introductions', type: 'text', topic: 'Say hi and tell us about yourself.' },
+      { name: 'media', type: 'text', topic: 'Photos, videos and clips.' },
+      { name: 'memes', type: 'text' },
+      { name: 'links', type: 'text', topic: 'Share interesting links.' },
+      { name: 'suggestions', type: 'text', topic: 'Ideas to make the server better.' },
+      { name: 'off-topic', type: 'text' },
+    ],
+  },
+  {
+    name: 'Gaming',
+    overrides: [MUTED],
+    channels: [
+      { name: 'gaming-chat', type: 'text', topic: 'Everything games.' },
+      { name: 'looking-for-group', type: 'text', topic: 'Find people to play with.' },
+      { name: 'clips', type: 'text', topic: 'Your best plays.' },
+    ],
+  },
+  {
+    name: 'Voice',
+    overrides: [MUTED],
+    channels: [
+      { name: 'lobby', type: 'voice' },
+      { name: 'chill', type: 'voice' },
+      { name: 'gaming-1', type: 'voice' },
+      { name: 'gaming-2', type: 'voice' },
+      { name: 'music', type: 'voice' },
+      { name: 'study', type: 'voice' },
+    ],
+  },
+  {
+    name: 'VIP',
+    overrides: [...STAFF_ONLY, { role: 'vip', allow: P.VIEW_CHANNEL }, MUTED],
+    channels: [
+      { name: 'vip-chat', type: 'text', topic: 'For VIPs.' },
+      { name: 'vip-lounge', type: 'voice' },
+    ],
+  },
+  {
+    name: 'Staff',
+    overrides: [...STAFF_ONLY, MUTED],
+    channels: [
+      { name: 'staff-chat', type: 'text', topic: 'Staff discussion.' },
+      { name: 'mod-log', type: 'text', topic: 'Moderation actions and notes.' },
+      { name: 'staff-meeting', type: 'voice' },
+    ],
+  },
+];
+
+/** Create a space with its default roles, categories and channels; the owner is its first member. */
 function createSpaceWithDefaults(ownerId: string, name: string): string {
   const db = getDb();
   const spaceId = generateSnowflake();
-  const textCategoryId = generateSnowflake();
-  const voiceCategoryId = generateSnowflake();
-  const channelId = generateSnowflake();
-  const voiceChannelId = generateSnowflake();
   const now = Date.now();
   const inviteCode = generateInviteCode();
+  const roleIds = Object.fromEntries(DEFAULT_ROLES.map((r) => [r.key, generateSnowflake()])) as Record<DefaultRoleKey, string>;
+  const targetId = (role: DefaultOverride['role']) => (role === 'everyone' ? spaceId : roleIds[role]);
+  const overrideRow = (o: DefaultOverride) => ({
+    targetType: 'role', targetId: targetId(o.role),
+    allow: permissionsToString(o.allow ?? 0n), deny: permissionsToString(o.deny ?? 0n),
+  });
 
-  // Create server, owner membership, default categories + channels, and @everyone role atomically
+  // Create server, owner membership, roles, categories + channels atomically
   db.transaction((tx) => {
     tx.insert(schema.spaces).values({
       id: spaceId,
@@ -255,44 +373,36 @@ function createSpaceWithDefaults(ownerId: string, name: string): string {
       joinedAt: now,
     }).run();
 
-    // Default categories
-    tx.insert(schema.channelCategories).values({
-      id: textCategoryId,
-      spaceId,
-      name: 'text-channels',
-      position: 0,
-      createdAt: now,
-    }).run();
+    // Default roles above @everyone (position 0), most senior highest
+    DEFAULT_ROLES.forEach((role, i) => {
+      tx.insert(schema.roles).values({
+        id: roleIds[role.key],
+        spaceId,
+        name: role.name,
+        color: role.color,
+        position: DEFAULT_ROLES.length - i,
+        permissions: permissionsToString(role.permissions),
+        createdAt: now,
+      }).run();
+    });
 
-    tx.insert(schema.channelCategories).values({
-      id: voiceCategoryId,
-      spaceId,
-      name: 'voice-channels',
-      position: 1,
-      createdAt: now,
-    }).run();
-
-    // Default text channel in text-channels category
-    tx.insert(schema.channels).values({
-      id: channelId,
-      spaceId,
-      name: 'general',
-      type: 'text',
-      position: 0,
-      categoryId: textCategoryId,
-      createdAt: now,
-    }).run();
-
-    // Default voice channel in voice-channels category
-    tx.insert(schema.channels).values({
-      id: voiceChannelId,
-      spaceId,
-      name: 'voice',
-      type: 'voice',
-      position: 0,
-      categoryId: voiceCategoryId,
-      createdAt: now,
-    }).run();
+    DEFAULT_LAYOUT.forEach((category, catPos) => {
+      const categoryId = generateSnowflake();
+      tx.insert(schema.channelCategories).values({ id: categoryId, spaceId, name: category.name, position: catPos, createdAt: now }).run();
+      for (const o of category.overrides) {
+        tx.insert(schema.categoryOverrides).values({ categoryId, ...overrideRow(o) }).run();
+      }
+      category.channels.forEach((channel, chanPos) => {
+        const channelId = generateSnowflake();
+        tx.insert(schema.channels).values({
+          id: channelId, spaceId, name: channel.name, type: channel.type, topic: channel.topic ?? null,
+          position: chanPos, categoryId, createdAt: now,
+        }).run();
+        for (const o of channel.overrides ?? []) {
+          tx.insert(schema.channelOverrides).values({ channelId, ...overrideRow(o) }).run();
+        }
+      });
+    });
 
     // Auto-create @everyone role (id = spaceId)
     tx.insert(schema.roles).values({

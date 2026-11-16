@@ -87,14 +87,52 @@ describe('main space', () => {
     const id = mainSpaceId()!;
     const space = testDb.select().from(schema.spaces).where(eq(schema.spaces.id, id)).get()!;
     expect(space).toMatchObject({ name: 'Home', ownerId: 'owner' });
-    expect(testDb.select().from(schema.channels).where(eq(schema.channels.spaceId, id)).all()).toHaveLength(2);
+    expect(testDb.select().from(schema.channels).where(eq(schema.channels.spaceId, id)).all()).toHaveLength(25);
     expect(memberIds(id)).toEqual(['member', 'owner']);
+    const memberRole = testDb.select().from(schema.roles).where(eq(schema.roles.name, 'Member')).get()!;
+    expect(testDb.select().from(schema.memberRoles).all().map(r => [r.userId, r.roleId])).toEqual([['member', memberRole.id]]);
 
     // Idempotent: a second boot neither creates another space nor re-adds anyone.
     testDb.delete(schema.spaceMembers).where(eq(schema.spaceMembers.userId, 'member')).run();
     ensureMainSpace();
     expect(testDb.select().from(schema.spaces).all()).toHaveLength(1);
     expect(memberIds(id)).toEqual(['owner']);
+  });
+
+  it('default roles and overrides gate the default channels', async () => {
+    const { ensureMainSpace } = await import('./spaces.js');
+    const { computePermissions, PermissionBits: P } = await import('../utils/permissions.js');
+    ensureMainSpace();
+    const id = mainSpaceId()!;
+    const channel = (name: string) => testDb.select().from(schema.channels).where(eq(schema.channels.name, name)).get()!.id;
+    const role = (name: string) => testDb.select().from(schema.roles).where(eq(schema.roles.name, name)).get()!.id;
+    const can = (bit: bigint, name: string) => (computePermissions('member', id, channel(name)) & bit) !== 0n;
+    const giveRole = (name: string) => testDb.insert(schema.memberRoles).values({ spaceId: id, userId: 'member', roleId: role(name) }).run();
+
+    expect(testDb.select().from(schema.roles).where(eq(schema.roles.spaceId, id)).all().map(r => r.name).sort())
+      .toEqual(['@everyone', 'Admin', 'Helper', 'Member', 'Moderator', 'Muted', 'VIP']);
+
+    // Plain member: talks in general, reads but cannot post in rules, does not see staff or VIP.
+    expect(can(P.SEND_MESSAGES, 'general')).toBe(true);
+    expect(can(P.VIEW_CHANNEL, 'rules')).toBe(true);
+    expect(can(P.SEND_MESSAGES, 'rules')).toBe(false);
+    expect(can(P.VIEW_CHANNEL, 'staff-chat')).toBe(false);
+    expect(can(P.VIEW_CHANNEL, 'vip-lounge')).toBe(false);
+
+    giveRole('VIP');
+    expect(can(P.CONNECT, 'vip-lounge')).toBe(true);
+    expect(can(P.VIEW_CHANNEL, 'staff-chat')).toBe(false);
+
+    giveRole('Muted');
+    expect(can(P.SEND_MESSAGES, 'general')).toBe(false);
+    expect(can(P.SPEAK, 'lobby')).toBe(false);
+    expect(can(P.VIEW_CHANNEL, 'general')).toBe(true);
+
+    testDb.delete(schema.memberRoles).run();
+    giveRole('Moderator');
+    expect(can(P.VIEW_CHANNEL, 'staff-chat')).toBe(true);
+    expect(can(P.SEND_MESSAGES, 'announcements')).toBe(true);
+    expect(can(P.SEND_MESSAGES, 'rules')).toBe(false);
   });
 
   it("adopts the owner's existing space instead of creating one", async () => {
