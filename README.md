@@ -126,3 +126,5 @@ Each script has `--help`. See `.env.example` for every setting.
 
 AGPL-3.0-only. If you run a modified version for other people, you must offer
 them its source code.
+
+**✨ Forked, redesigned & enhanced** from [Backspace](https://github.com/TheZwiss/backspace) by [TheZwiss](https://github.com/TheZwiss).
