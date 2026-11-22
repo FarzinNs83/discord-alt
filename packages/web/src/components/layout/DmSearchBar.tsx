@@ -441,7 +441,7 @@ export function DmSearchBar() {
         <button
           onClick={open}
           title={t('dm:search.trigger')}
-          className="w-full h-8 bg-surface-input text-txt-tertiary text-[13px] font-medium px-2 rounded-[4px] text-left border border-white/[0.06] shadow-input hover:border-white/[0.1] transition-colors truncate"
+          className="w-full h-8 bg-surface-input text-txt-tertiary text-[13px] font-medium px-2 rounded-[4px] text-start border border-white/[0.06] shadow-input hover:border-white/[0.1] transition-colors truncate"
         >
           {t('dm:search.trigger')}
         </button>

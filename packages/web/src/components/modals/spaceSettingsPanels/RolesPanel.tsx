@@ -99,7 +99,7 @@ export function RolesPanel({ spaceId }: RolesPanelProps) {
 
   return (
     <div className="space-y-5">
-      <h2 className="text-lg font-semibold text-txt-primary mb-6">{t('spaces:roles.title')}</h2>
+      <h2 className="font-display font-extrabold text-[32px] leading-tight tracking-[-0.03em] text-txt-primary mb-6">{t('spaces:roles.title')}</h2>
       {error && (
         <div className="p-2 bg-accent-rose/10 border border-accent-rose/30 rounded text-txt-danger text-sm">{error}</div>
       )}
@@ -334,7 +334,7 @@ function RoleEditView({ role, spaceId, isNew, onBack, onDeleted, onCopied }: Rol
           onClick={onBack}
           className="glass-bubble rounded-full px-3 py-1.5 flex items-center gap-1 text-sm text-txt-tertiary hover:text-txt-secondary transition-colors pointer-events-auto"
         >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg className="w-4 h-4 rtl:-scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
           {t('spaces:roles.backToList')}
@@ -481,7 +481,7 @@ function RoleEditView({ role, spaceId, isNew, onBack, onDeleted, onCopied }: Rol
                       >
                         <div
                           className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${
-                            isOn ? 'translate-x-4' : 'translate-x-0.5'
+                            isOn ? 'translate-x-4 rtl:-translate-x-4' : 'translate-x-0.5 rtl:-translate-x-0.5'
                           }`}
                         />
                       </div>
@@ -513,7 +513,7 @@ function RoleEditView({ role, spaceId, isNew, onBack, onDeleted, onCopied }: Rol
                   <button
                     onClick={handleSave}
                     disabled={saving || (!isEveryone && !draftName.trim()) || !!nameError}
-                    className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+                    className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50"
                   >
                     {saving ? t('common:states.saving') : t('common:actions.save')}
                   </button>

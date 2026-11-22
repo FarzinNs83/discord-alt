@@ -130,7 +130,8 @@
       "connections": "连接",
       "keybinds": "按键绑定",
       "desktop": "桌面端",
-      "instance": "实例"
+      "instance": "实例",
+      "weakNet": "弱网"
     },
     "logOut": "退出登录",
     "backToMenu": "返回设置菜单"
@@ -427,5 +428,60 @@
     },
     "version": "版本 {{version}}",
     "allReleases": "GitHub 上的所有版本"
+  },
+  "weakNet": {
+    "title": "弱网",
+    "subtitle": "在网络缓慢、不稳定或流量受限时继续聊天和通话。",
+    "now": {
+      "unknown": "无法连接服务器",
+      "weak": "你的网络现在不太稳定",
+      "good": "你的网络看起来正常",
+      "rtt": "往返 {{ms}} 毫秒",
+      "on": {
+        "auto": "弱网模式已开启（自动）",
+        "always": "弱网模式已开启（始终）"
+      },
+      "off": "弱网模式已关闭",
+      "bars_other": "网络：{{count}}/4 格",
+      "test": "重新测试",
+      "testing": "测试中…"
+    },
+    "mode": {
+      "label": "何时使用弱网模式",
+      "auto": {
+        "label": "自动",
+        "description": "网络变差时自动开启，恢复后自动关闭。"
+      },
+      "always": {
+        "label": "始终开启",
+        "description": "适合流量有限或网络一直很慢的情况。"
+      },
+      "off": {
+        "label": "关闭",
+        "description": "无论网络如何，始终使用最高质量。"
+      }
+    },
+    "groups": {
+      "voice": "语音和视频",
+      "chat": "聊天和媒体"
+    },
+    "features": {
+      "voiceOnly": {
+        "label": "通话中仅语音",
+        "description": "在你选择“观看摄像头”之前，不下载其他人的摄像头画面。"
+      },
+      "lighterVoice": {
+        "label": "轻量语音",
+        "description": "以更低码率发送你的声音。依然清晰，体积小得多。"
+      },
+      "tapToLoad": {
+        "label": "点按加载图片和 GIF",
+        "description": "图片和语音片段只在你点按后下载。"
+      },
+      "shrinkImages": {
+        "label": "压缩我发送的图片",
+        "description": "上传前缩小照片。其他文件保持不变。"
+      }
+    }
   }
 }

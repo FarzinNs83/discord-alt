@@ -130,7 +130,8 @@
       "connections": "Verbindungen",
       "keybinds": "Tastenkürzel",
       "desktop": "Desktop",
-      "instance": "Instanz"
+      "instance": "Instanz",
+      "weakNet": "Schwaches Internet"
     },
     "logOut": "Abmelden",
     "backToMenu": "Zurück zum Einstellungsmenü"
@@ -428,5 +429,61 @@
     },
     "version": "Version {{version}}",
     "allReleases": "Alle Versionen auf GitHub"
+  },
+  "weakNet": {
+    "title": "Schwaches Internet",
+    "subtitle": "Weiter chatten und reden, wenn die Verbindung langsam, wackelig oder begrenzt ist.",
+    "now": {
+      "unknown": "Server nicht erreichbar",
+      "weak": "Deine Verbindung ist gerade wackelig",
+      "good": "Deine Verbindung sieht gut aus",
+      "rtt": "Umlaufzeit {{ms}} ms",
+      "on": {
+        "auto": "Modus für schwaches Internet ist an (automatisch)",
+        "always": "Modus für schwaches Internet ist an (immer)"
+      },
+      "off": "Modus für schwaches Internet ist aus",
+      "bars_one": "Verbindung: {{count}} von 4 Balken",
+      "bars_other": "Verbindung: {{count}} von 4 Balken",
+      "test": "Erneut testen",
+      "testing": "Wird getestet…"
+    },
+    "mode": {
+      "label": "Wann der Modus für schwaches Internet gilt",
+      "auto": {
+        "label": "Automatisch",
+        "description": "Schaltet sich bei schlechter Verbindung selbst ein und wieder aus, wenn sie sich erholt."
+      },
+      "always": {
+        "label": "Immer an",
+        "description": "Für begrenztes mobiles Datenvolumen oder eine dauerhaft langsame Verbindung."
+      },
+      "off": {
+        "label": "Aus",
+        "description": "Volle Qualität überall, egal wie die Verbindung ist."
+      }
+    },
+    "groups": {
+      "voice": "Sprache und Video",
+      "chat": "Chat und Medien"
+    },
+    "features": {
+      "voiceOnly": {
+        "label": "Nur Sprache in Anrufen",
+        "description": "Kameras anderer erst laden, wenn du „Kamera ansehen“ wählst."
+      },
+      "lighterVoice": {
+        "label": "Leichtere Stimme",
+        "description": "Sendet deine Stimme mit geringerer Bitrate. Immer noch klar, viel kleiner."
+      },
+      "tapToLoad": {
+        "label": "Bilder und GIFs per Tippen laden",
+        "description": "Bilder und Sprachclips werden erst geladen, wenn du sie antippst."
+      },
+      "shrinkImages": {
+        "label": "Gesendete Bilder verkleinern",
+        "description": "Fotos vor dem Hochladen verkleinern. Andere Dateien bleiben unverändert."
+      }
+    }
   }
 }

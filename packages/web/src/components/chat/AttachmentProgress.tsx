@@ -58,7 +58,7 @@ export function AttachmentProgress({ loaded, total, state, filename, error, onPa
         </div>
       )}
       {!isFinal && (
-        <div className="absolute top-1 right-1 flex gap-1">
+        <div className="absolute top-1 end-1 flex gap-1">
           {state === 'paused' && onResume && (
             <button onClick={onResume} className="bg-black/60 hover:bg-black/80 text-white w-5 h-5 rounded text-[9px]" aria-label={t('common:actions.resume')}>▶</button>
           )}

@@ -160,7 +160,7 @@ export function StickerUploadPreview({
               </button>
             </div>
 
-            <div className="space-y-2 max-h-56 overflow-y-auto pr-1 scrollbar-thin">
+            <div className="space-y-2 max-h-56 overflow-y-auto pe-1 scrollbar-thin">
               {items.map((item, index) => (
                 <div key={item.id} className="flex items-center gap-2.5 rounded-lg border border-border-soft bg-surface-base/50 p-2">
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-md border border-border-soft bg-surface-elevated sticker-checkerboard">

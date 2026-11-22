@@ -123,7 +123,8 @@
   },
   "chrome": {
     "toggleMemberList": "切换成员列表显示",
-    "closeSettings": "关闭设置"
+    "closeSettings": "关闭设置",
+    "escKey": "Esc"
   },
   "sourceCode": {
     "label": "源代码 (AGPL)",

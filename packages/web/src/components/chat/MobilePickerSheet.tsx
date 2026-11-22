@@ -44,7 +44,7 @@ export function MobilePickerSheet({ onClose, header, label, children }: MobilePi
       <div
         role={label ? 'dialog' : undefined}
         aria-label={label}
-        className={`fixed left-0 right-0 z-[301] rounded-t-2xl glass-modal flex flex-col ${
+        className={`fixed start-0 end-0 z-[301] rounded-t-2xl glass-modal flex flex-col ${
           hasInteracted ? '' : 'animate-slide-up-sheet'
         }`}
         style={{

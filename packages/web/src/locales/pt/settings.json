@@ -130,7 +130,8 @@
       "connections": "Conexões",
       "keybinds": "Atalhos",
       "desktop": "Desktop",
-      "instance": "Instância"
+      "instance": "Instância",
+      "weakNet": "Internet fraca"
     },
     "logOut": "Sair",
     "backToMenu": "Voltar ao menu de configurações"
@@ -429,5 +430,62 @@
     },
     "version": "Versão {{version}}",
     "allReleases": "Todas as versões no GitHub"
+  },
+  "weakNet": {
+    "title": "Internet fraca",
+    "subtitle": "Continue conversando quando a conexão estiver lenta, instável ou limitada.",
+    "now": {
+      "unknown": "Não foi possível alcançar o servidor",
+      "weak": "Sua conexão está instável agora",
+      "good": "Sua conexão parece boa",
+      "rtt": "Ida e volta {{ms}} ms",
+      "on": {
+        "auto": "modo internet fraca ativado (automático)",
+        "always": "modo internet fraca ativado (sempre)"
+      },
+      "off": "modo internet fraca desativado",
+      "bars_one": "Conexão: {{count}} de 4 barras",
+      "bars_other": "Conexão: {{count}} de 4 barras",
+      "test": "Testar de novo",
+      "testing": "Testando…",
+      "bars_many": "Conexão: {{count}} de 4 barras"
+    },
+    "mode": {
+      "label": "Quando usar o modo internet fraca",
+      "auto": {
+        "label": "Automático",
+        "description": "Liga sozinho quando a conexão piora e desliga quando ela se recupera."
+      },
+      "always": {
+        "label": "Sempre ativado",
+        "description": "Para dados móveis limitados ou uma conexão sempre lenta."
+      },
+      "off": {
+        "label": "Desativado",
+        "description": "Qualidade máxima em tudo, seja qual for a conexão."
+      }
+    },
+    "groups": {
+      "voice": "Voz e vídeo",
+      "chat": "Chat e mídia"
+    },
+    "features": {
+      "voiceOnly": {
+        "label": "Só voz nas chamadas",
+        "description": "Não baixa as câmeras dos outros até você escolher Ver câmera."
+      },
+      "lighterVoice": {
+        "label": "Voz mais leve",
+        "description": "Envia sua voz com taxa de bits menor. Continua clara, bem menor."
+      },
+      "tapToLoad": {
+        "label": "Tocar para carregar imagens e GIFs",
+        "description": "Imagens e clipes de voz só são baixados quando você toca neles."
+      },
+      "shrinkImages": {
+        "label": "Reduzir imagens que eu envio",
+        "description": "Redimensiona fotos antes do envio. Outros arquivos ficam intactos."
+      }
+    }
   }
 }

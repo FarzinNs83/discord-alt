@@ -215,7 +215,7 @@ function Popover() {
 /** Same frame as the setup screen's quality drawer. */
 function Drawer() {
   return (
-    <div className="w-[340px] glass border-l border-border-hard flex flex-col shadow-2xl rounded-r-lg">
+    <div className="w-[340px] glass border-s border-border-hard flex flex-col shadow-2xl rounded-e-lg">
       <div className="flex items-start justify-between gap-3 px-5 pt-4 pb-3 border-b border-border-hard">
         <div className="min-w-0">
           <div className="text-[15px] font-bold text-txt-primary">{i18n.t('voice:streamSettings.title')}</div>

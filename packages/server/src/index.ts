@@ -32,6 +32,8 @@ import { gifRoutes } from './routes/gif.js';
 import { federationRoutes } from './routes/federation.js';
 import { ensureMainSpace } from './routes/spaces.js';
 import { cspReportRoutes } from './routes/cspReport.js';
+import { eventRoutes } from './routes/events.js';
+import { soundRoutes } from './routes/sounds.js';
 import { buildCspHeaderValue, CSP_REPORT_GROUP, CSP_REPORT_PATH } from './utils/csp.js';
 import { startFederationWorkers, stopFederationWorkers } from './utils/federationWorker.js';
 import { startBackupWorker, stopBackupWorker } from './utils/backupWorker.js';
@@ -212,6 +214,8 @@ async function main(): Promise<void> {
   await app.register(authRoutes);
   await app.register(userRoutes);
   await app.register(spaceRoutes);
+  await app.register(eventRoutes);
+  await app.register(soundRoutes);
   await app.register(channelRoutes);
   await app.register(messageRoutes);
   await app.register(uploadRoutes);

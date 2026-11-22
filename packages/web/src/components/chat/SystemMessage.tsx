@@ -41,7 +41,7 @@ export function SystemMessage({ message, dm }: SystemMessageProps) {
   return (
     <div className="flex items-center justify-center py-1 px-4 select-none">
       <span className="text-xs text-txt-tertiary">
-        {icon && <span className="mr-1.5">{icon}</span>}
+        {icon && <span className="me-1.5">{icon}</span>}
         {dmSystemText(event, actorName, 'timeline')}
       </span>
     </div>

@@ -52,6 +52,14 @@ and becomes its owner.
 Update to the latest commit: run the same command again. It takes a database
 snapshot, pulls, rebuilds and restarts; settings and secrets are kept.
 
+Or, from `/opt/patogh`, update only the app (no nginx, certificate or Docker
+changes) with a rollback if the new build does not come up healthy:
+
+```bash
+./update.sh --check   # list new commits, change nothing
+./update.sh           # snapshot, pull, rebuild, restart; --yes skips the question
+```
+
 Show all options:
 
 ```bash

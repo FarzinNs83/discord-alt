@@ -82,7 +82,7 @@ export function ImageCropModal({
       <div className="relative max-w-md w-full mx-4 bg-surface-elevated rounded-lg shadow-xl animate-slide-up">
         {/* Title bar */}
         <div className="flex items-center justify-between px-4 pt-4">
-          <h2 className="text-xl font-bold text-txt-primary">{heading}</h2>
+          <h2 className="text-xl font-display font-bold text-txt-primary">{heading}</h2>
           <button
             onClick={onClose}
             className="text-txt-tertiary hover:text-txt-primary transition-colors p-1"
@@ -142,7 +142,7 @@ export function ImageCropModal({
             type="button"
             onClick={handleApply}
             disabled={isProcessing || !croppedAreaPixels}
-            className="flex-1 py-2.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
+            className="flex-1 py-2.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
           >
             {isProcessing ? t('uploads:crop.applying') : t('common:actions.apply')}
           </button>

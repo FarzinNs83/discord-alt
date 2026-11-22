@@ -75,46 +75,47 @@ export function DmListItem({ dm, isActive, isUnread, user, onSelect, onClose, on
 
   // ── State-driven classes ──────────────────────────────────────────────
   // Container: 6px radius (up from 4px), 44px height (up from 42px)
-  const containerClass = `relative flex items-center gap-3 px-2 h-[44px] rounded-[6px] cursor-pointer transition-colors group ${
+  // Selected DM is a solid tea pill (Chai Pop), so its text switches to the dark on-primary colour.
+  const containerClass = `relative flex items-center gap-3 px-2 h-[48px] rounded-[14px] cursor-pointer transition-colors group ${
     isActive
-      ? 'bg-interactive-selected text-white'
+      ? 'bg-accent-primary text-txt-on-primary'
       : isUnread
-        ? 'text-white hover:bg-interactive-hover'
+        ? 'text-txt-primary hover:bg-interactive-hover'
         : 'text-txt-tertiary hover:bg-interactive-hover hover:text-txt-secondary'
   }`;
 
   // Name: font-semibold for unread (deliberately NOT font-bold — design decision)
   const nameClass = `text-[15px] truncate leading-tight ${
-    isActive ? 'text-white font-medium'
-      : isUnread ? 'text-white font-semibold'
-      : 'text-txt-tertiary group-hover:text-txt-secondary font-medium'
+    isActive ? 'text-txt-on-primary font-bold'
+      : isUnread ? 'text-txt-primary font-semibold'
+      : 'text-txt-secondary group-hover:text-txt-primary font-medium'
   }`;
 
   // Timestamp: brightens on hover and lifts for unread/selected
-  const timestampClass = `text-[11px] ml-auto flex-shrink-0 ${
-    isActive || isUnread
-      ? 'text-txt-secondary'
+  const timestampClass = `text-[11px] ms-auto flex-shrink-0 ${
+    isActive ? 'text-txt-on-primary/75'
+      : isUnread ? 'text-txt-secondary'
       : 'text-txt-tertiary group-hover:text-txt-secondary'
   }`;
 
   // Preview: brightens on hover and lifts for unread/selected
   const previewClass = `text-[12px] truncate leading-tight mt-0.5 ${
-    isActive || isUnread
-      ? 'text-txt-secondary'
+    isActive ? 'text-txt-on-primary/75'
+      : isUnread ? 'text-txt-secondary'
       : 'text-txt-tertiary group-hover:text-txt-secondary'
   }`;
 
   // Federation badge: brightens with parent
   const fedBadgeClass = `flex-shrink-0 ${
-    isActive || isUnread
-      ? 'text-txt-secondary/60'
+    isActive ? 'text-txt-on-primary/60'
+      : isUnread ? 'text-txt-secondary/60'
       : 'text-txt-tertiary/60 group-hover:text-txt-secondary/60'
   }`;
 
   // Close button: always visible when selected, hover-reveal otherwise
   const closeClass = `${
-    isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-  } text-txt-tertiary hover:text-txt-primary transition-opacity flex-shrink-0 ml-1`;
+    isActive ? 'opacity-100 text-txt-on-primary/70 hover:text-txt-on-primary' : 'opacity-0 group-hover:opacity-100 text-txt-tertiary hover:text-txt-primary'
+  } transition-opacity flex-shrink-0 ms-1`;
 
   // ── Preview text ──────────────────────────────────────────────────────
   // formatDmSidebarPreview handles user/system messages and applies the
@@ -128,17 +129,9 @@ export function DmListItem({ dm, isActive, isUnread, user, onSelect, onClose, on
       onClick={handleClick}
       className={containerClass}
     >
-      {/* Selected accent bar */}
-      {isActive && (
-        <div
-          className="absolute -left-[2px] top-1/2 -translate-y-1/2 w-[3px] bg-white rounded-r-full"
-          style={{ height: '55%', opacity: 0.7 }}
-        />
-      )}
-
       {/* Unread indicator */}
-      {isUnread && (
-        <div className="absolute -left-1 w-1 h-2 bg-white rounded-r-full" />
+      {isUnread && !isActive && (
+        <div className="absolute -start-1 w-1 h-2 bg-accent-amber rounded-e-full" />
       )}
 
       {/* Avatar */}

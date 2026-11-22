@@ -47,7 +47,7 @@ export function RichEmbed({ embed }: RichEmbedProps) {
         <button
           type="button"
           onClick={() => setIsLoaded(true)}
-          className="w-full text-left focus:outline-none group"
+          className="w-full text-start focus:outline-none group"
           aria-label={providerLabel ? t('embed.loadNamed', { name: providerLabel }) : t('embed.loadUnnamed')}
         >
           <div className="flex items-start gap-3 p-3">

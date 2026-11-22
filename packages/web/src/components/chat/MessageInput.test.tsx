@@ -279,7 +279,7 @@ describe('MessageInput staged attachment controls', () => {
     const removeButton = screen.getByRole('button', { name: 'Remove attachment' });
 
     // Negative offsets must not be clipped by the tile or a wrapper around it.
-    expect(removeButton).toHaveClass('-top-2', '-right-2');
+    expect(removeButton).toHaveClass('-top-2', '-end-2');
     expect(removeButton.closest('.overflow-hidden')).toBeNull();
     fireEvent.click(removeButton);
 

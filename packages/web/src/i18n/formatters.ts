@@ -30,6 +30,8 @@ export interface Formatters {
   formatRelativeTime: (timestamp: number, now?: Date) => string;
   /** `today`, `yesterday`, `3 days ago`: the calendar day, so 11 pm and 1 am are a day apart. */
   formatRelativeDay: (timestamp: number, now?: Date) => string;
+  /** "Friday" */
+  formatWeekday: (timestamp: number) => string;
   formatNumber: (value: number) => string;
   /** `150%` / `150 %` from a whole-number percent such as a volume slider value. */
   formatPercent: (percent: number) => string;
@@ -140,6 +142,8 @@ export function createFormatters(getLocale: () => string): Formatters {
       const days = Math.round((dayOf(new Date(timestamp)) - dayOf(now)) / (24 * 60 * 60 * 1000));
       return relativeFormat().format(days, 'day');
     },
+
+    formatWeekday: (timestamp) => dateFormat({ weekday: 'long' }).format(timestamp),
 
     formatNumber: (value) => numberFormat({}).format(value),
 

@@ -248,7 +248,7 @@ export function UserProfileModal() {
           {/* Close button */}
           <button
             onClick={closeModal}
-            className="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 flex items-center justify-center transition-colors"
+            className="absolute top-2 end-2 w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 flex items-center justify-center transition-colors"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
               <path d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z" />
@@ -271,7 +271,7 @@ export function UserProfileModal() {
 
           <div className="mb-3">
             <ProfileSpaceNickname member={memberContext} />
-            <span className="text-[20px] font-bold leading-tight">{displayName}</span>
+            <span className="text-[20px] font-display font-bold leading-tight">{displayName}</span>
             <div className="text-[14px] text-txt-tertiary mt-0.5">
               <Username username={user.username} showAt className="text-[14px] text-txt-tertiary" />
             </div>
@@ -298,10 +298,10 @@ export function UserProfileModal() {
               >
                 {tab.label}
                 {tab.count !== undefined && !loadingMutuals && (
-                  <span className="ml-1 text-[11px] text-txt-tertiary">({tab.count})</span>
+                  <span className="ms-1 text-[11px] text-txt-tertiary">({tab.count})</span>
                 )}
                 {activeTab === tab.key && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent-primary rounded-full" />
+                  <div className="absolute bottom-0 start-0 end-0 h-[2px] bg-accent-primary rounded-full" />
                 )}
               </button>
             ))}
@@ -358,7 +358,7 @@ export function UserProfileModal() {
                       <button
                         key={friend.id}
                         onClick={() => handleViewFriend(friend)}
-                        className="flex items-center gap-2.5 p-2.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.04] transition-colors text-left"
+                        className="flex items-center gap-2.5 p-2.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.04] transition-colors text-start"
                       >
                         <Avatar
                           src={friend.avatar}
@@ -413,7 +413,7 @@ export function UserProfileModal() {
                     <button
                       key={`${space.id}:${space._instanceOrigin}`}
                       onClick={() => handleGoToSpace(space.id)}
-                      className="flex items-center gap-3 w-full p-2.5 rounded-lg hover:bg-white/[0.06] transition-colors text-left"
+                      className="flex items-center gap-3 w-full p-2.5 rounded-lg hover:bg-white/[0.06] transition-colors text-start"
                     >
                       <div className="relative shrink-0">
                         {space.icon ? (
@@ -431,7 +431,7 @@ export function UserProfileModal() {
                           </div>
                         )}
                         {space._instanceOrigin && (
-                          <div className="absolute -bottom-0.5 -right-0.5 w-[14px] h-[14px] rounded-full bg-[#1a1a23] flex items-center justify-center">
+                          <div className="absolute -bottom-0.5 -end-0.5 w-[14px] h-[14px] rounded-full bg-[#1a1a23] flex items-center justify-center">
                             <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" className="text-txt-tertiary/80">
                               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
                             </svg>
@@ -466,7 +466,7 @@ export function UserProfileModal() {
           <div className="flex-shrink-0 px-5 py-3 border-t border-white/[0.06] flex gap-2">
             <button
               onClick={handleSendMessage}
-              className="flex-1 py-2 rounded-lg text-[13px] font-medium text-white bg-accent-primary hover:bg-accent-primary/80 transition-colors"
+              className="flex-1 py-2 rounded-lg text-[13px] font-medium text-txt-on-primary bg-accent-primary hover:bg-accent-primary/80 transition-colors"
             >
               {t('social:profile.sendMessage')}
             </button>
@@ -488,7 +488,7 @@ export function UserProfileModal() {
             {friendship.state === 'inbound_pending' && (
               <>
                 <button onClick={handleAcceptRequest} disabled={friendActionLoading}
-                  className="flex-1 py-2 rounded-lg text-[13px] font-medium text-white bg-accent-primary hover:bg-accent-primary/80 transition-colors disabled:opacity-50">
+                  className="flex-1 py-2 rounded-lg text-[13px] font-medium text-txt-on-primary bg-accent-primary hover:bg-accent-primary/80 transition-colors disabled:opacity-50">
                   {friendActionLoading ? '...' : t('common:actions.accept')}
                 </button>
                 <button onClick={handleDeclineRequest} disabled={friendActionLoading}

@@ -106,7 +106,7 @@ export function IncomingCallModal() {
 
           {/* Caller info */}
           <div className="text-center">
-            <h3 className="text-[20px] font-bold text-txt-primary">{callerBaseName}</h3>
+            <h3 className="text-[20px] font-display font-bold text-txt-primary">{callerBaseName}</h3>
             <p className="text-[14px] text-txt-tertiary mt-1">{t('voice:incomingCall.status')}</p>
           </div>
 

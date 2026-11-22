@@ -13,6 +13,7 @@ import {
   LocalTrackPublication,
   DisconnectReason,
   TrackEvent,
+  AudioPresets,
 } from 'livekit-client';
 import { getApiForOrigin, getChannelOrigin, getMyUserIdForOrigin, useSpaceStore } from '../stores/spaceStore';
 import { homeIdentityOf } from '../utils/identity';
@@ -25,6 +26,7 @@ import type { User } from '@patogh/shared';
 import { broadcastVoiceStatus, clearSpaceVoiceForDmCall } from '../utils/voice';
 import { consumeIntentionalCameraOff, markIntentionalCameraOff } from '../utils/voiceActions';
 import { dmCallChannelId, dmCallOrigin, dmCallRoomKey, voiceSessionOrigin } from '../utils/dmCall';
+import { weakNetFeature } from '../stores/weakNetStore';
 import { AudioManager } from '../audio/AudioManager';
 import { SpeakingDetector } from '../audio/SpeakingDetector';
 import {
@@ -164,6 +166,25 @@ export function setStreamSubscription(room: Room | null, targetIdentity: string,
   });
 }
 
+/**
+ * Weak internet mode's "voice only": a camera is left unsubscribed and marked
+ * unwatched, so the participant menu offers Watch camera to fetch it anyway.
+ * A camera someone already chose to watch again stays watched.
+ */
+function skipCameraForWeakNet(pub: RemoteTrackPublication, identity: string): boolean {
+  if (pub.source !== Track.Source.Camera || !weakNetFeature('voiceOnly')) return false;
+  const userId = resolveParticipantUserId(identity);
+  const voice = useVoiceStore.getState();
+  if (rewatchedForWeakNet.has(userId)) return false;
+  if (!voice.unwatchedCameras.has(userId)) voice.unwatchCamera(userId);
+  return true;
+}
+/** People whose camera was skipped for weak internet and then watched on purpose. */
+const rewatchedForWeakNet = new Set<string>();
+export function noteCameraRewatched(userId: string): void {
+  rewatchedForWeakNet.add(userId);
+}
+
 export function setCameraSubscription(room: Room | null, targetIdentity: string, subscribed: boolean) {
   if (!room) return;
   const rp = room.remoteParticipants.get(targetIdentity);
@@ -297,6 +318,8 @@ async function republishMicrophone(r: Room, lastMicGenRef: { current: number }):
   await r.localParticipant.publishTrack(audioTrack, {
     name: 'microphone',
     source: Track.Source.Microphone,
+    // Weak internet's lighter voice: speech bitrate with silence suppressed. Applies from the next publish.
+    ...(weakNetFeature('lighterVoice') ? { audioPreset: AudioPresets.speech, dtx: true, red: false } : {}),
   });
   lastMicGenRef.current = currentGen;
 }
@@ -967,7 +990,9 @@ export function useLiveKit() {
       newRoom.on(RoomEvent.ParticipantMetadataChanged, guardedUpdate);
       newRoom.on(RoomEvent.TrackPublished, (publication: RemoteTrackPublication, participant: RemoteParticipant) => {
         if (!isCurrent()) return;
-        if (
+        if (skipCameraForWeakNet(publication, participant.identity)) {
+          // Voice only: the camera waits until someone picks Watch camera.
+        } else if (
           publication.source !== Track.Source.ScreenShare &&
           publication.source !== Track.Source.ScreenShareAudio
         ) {
@@ -1126,7 +1151,8 @@ export function useLiveKit() {
         rp.trackPublications.forEach((pub) => {
           if (
             pub.source !== Track.Source.ScreenShare &&
-            pub.source !== Track.Source.ScreenShareAudio
+            pub.source !== Track.Source.ScreenShareAudio &&
+            !skipCameraForWeakNet(pub as RemoteTrackPublication, rp.identity)
           ) {
             (pub as RemoteTrackPublication).setSubscribed(true);
           }

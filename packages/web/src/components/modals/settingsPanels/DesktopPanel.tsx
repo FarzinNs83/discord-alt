@@ -53,7 +53,7 @@ function AutoLaunchSettings() {
   return (
     <>
       <div className="flex items-center justify-between py-1">
-        <div className="flex-1 mr-4">
+        <div className="flex-1 me-4">
           <div className="text-sm text-txt-primary">{t('desktop.autoLaunch.openAtLogin.label')}</div>
           <div className="text-xs text-txt-tertiary mt-0.5">
             {t('desktop.autoLaunch.openAtLogin.description')}
@@ -62,7 +62,7 @@ function AutoLaunchSettings() {
         <Toggle enabled={openAtLogin} onChange={handleOpenAtLoginChange} disabled={busy} />
       </div>
       <div className="flex items-center justify-between py-1">
-        <div className="flex-1 mr-4">
+        <div className="flex-1 me-4">
           <div className={`text-sm ${openAtLogin ? 'text-txt-primary' : 'text-txt-tertiary'}`}>{t('desktop.autoLaunch.startMinimized.label')}</div>
           <div className="text-xs text-txt-tertiary mt-0.5">
             {t('desktop.autoLaunch.startMinimized.description')}
@@ -172,7 +172,7 @@ function UpdateSettings() {
   return (
     <div className="space-y-2.5">
       <div className="flex items-center justify-between py-1">
-        <div className="flex-1 mr-4 min-w-0">
+        <div className="flex-1 me-4 min-w-0">
           <div className="text-sm text-txt-primary">
             {currentVersion ? t('desktop.updates.versionLabel', { version: currentVersion }) : t('desktop.updates.appName')}
           </div>
@@ -182,7 +182,7 @@ function UpdateSettings() {
           {action && (
             <button
               onClick={action.onClick}
-              className="px-3 py-1.5 text-sm font-medium text-white bg-accent-primary hover:bg-accent-primary/80 rounded-lg transition-colors"
+              className="px-3 py-1.5 text-sm font-medium text-txt-on-primary bg-accent-primary hover:bg-accent-primary/80 rounded-lg transition-colors"
             >
               {action.label}
             </button>
@@ -241,7 +241,7 @@ export function DesktopPanel() {
 
   return (
     <div className="space-y-5">
-      <h2 className="text-lg font-semibold text-txt-primary mb-6">{t('desktop.title')}</h2>
+      <h2 className="font-display font-extrabold text-[32px] leading-tight tracking-[-0.03em] text-txt-primary mb-6">{t('desktop.title')}</h2>
 
       <div className="rounded-lg bg-white/[0.03] border border-white/[0.04] p-3.5 space-y-3">
         {sandboxed === false && <AutoLaunchSettings />}

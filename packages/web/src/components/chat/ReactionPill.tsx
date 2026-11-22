@@ -134,14 +134,14 @@ export function ReactionPill({ emoji, reactions, origin, onToggle }: ReactionPil
         onBlur={hide}
         aria-pressed={mine}
         aria-describedby={descriptionId}
-        className={`glass-pill flex items-center gap-1 rounded-[6px] cursor-pointer transition-all duration-[120ms] ease-out focus-visible:ring-2 focus-visible:ring-accent-primary/60 ${
+        className={`glass-pill flex items-center gap-1 rounded-[10px] cursor-pointer transition-all duration-[120ms] ease-out focus-visible:ring-2 focus-visible:ring-accent-primary/60 ${
           mine ? 'glass-pill-mine' : ''
         }`}
         style={{ padding: '2px 8px', fontSize: '13px', lineHeight: 1 }}
       >
         {imageUrl ? <img src={imageUrl} alt={t('chat:stickers.sticker')} className="w-7 h-7 object-contain" />
           : <span style={{ fontSize: '14px', lineHeight: 1 }}>{emoji}</span>}
-        <span className={`font-semibold ${mine ? 'text-accent-mint' : 'text-txt-secondary'}`} style={{ fontSize: '12px' }}>
+        <span className={`font-bold ${mine ? 'text-txt-on-primary' : 'text-txt-secondary'}`} style={{ fontSize: '12px' }}>
           {fmt.formatNumber(reactions.length)}
         </span>
       </button>

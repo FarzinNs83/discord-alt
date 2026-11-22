@@ -438,7 +438,7 @@ export function PermissionsEditor({
       <button
         onClick={handleSave}
         disabled={saving}
-        className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+        className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50"
       >
         {saving ? t('common:states.saving') : t('common:actions.save')}
       </button>

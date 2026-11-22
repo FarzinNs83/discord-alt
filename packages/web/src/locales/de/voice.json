@@ -270,5 +270,25 @@
     "stillDenied": "Der Mikrofonzugriff ist weiterhin verweigert. Erlaube ihn für diese Seite in den Browser- oder Geräteeinstellungen.",
     "notFound": "Kein Mikrofon gefunden.",
     "failed": "Auf das Mikrofon konnte nicht zugegriffen werden."
+  },
+  "soundboard": {
+    "title": "Soundboard",
+    "upload": "Sound hochladen",
+    "add": "Hinzufügen",
+    "name": "Name des Sounds",
+    "emoji": "Emoji",
+    "empty": "Noch keine Sounds. Wer Kanäle verwalten darf, kann welche hochladen.",
+    "emptyManager": "Noch keine Sounds. Lade einen kurzen Clip mit höchstens 6 Sekunden hoch.",
+    "play": "{{name}} abspielen",
+    "remove": "{{name}} entfernen",
+    "tooLong": "Sounds dürfen höchstens {{seconds}} Sekunden und {{size}} MB groß sein.",
+    "cooldown_one": "Nächster Sound in {{count}} s",
+    "cooldown_other": "Nächster Sound in {{count}} s",
+    "volume": "Wie laut ich Sounds höre",
+    "rule_one": "Jede Person kann alle {{count}} Sekunde einen Sound abspielen.",
+    "rule_other": "Jede Person kann alle {{count}} Sekunden einen Sound abspielen.",
+    "justPlayed": "Gerade gespielt",
+    "played": "{{name}} hat {{sound}} abgespielt",
+    "someone": "Jemand"
   }
 }

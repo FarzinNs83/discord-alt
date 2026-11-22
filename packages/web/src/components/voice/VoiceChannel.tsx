@@ -164,7 +164,7 @@ export function VoiceChannel({ channelId, channelName, onClick, locked, canManag
       >
         {isActive && !locked && (
           <div
-            className="absolute -left-[2px] top-1/2 -translate-y-1/2 w-[3px] bg-white rounded-r-full"
+            className="absolute -start-[2px] top-1/2 -translate-y-1/2 w-[3px] bg-white rounded-e-full"
             style={{ height: '55%', opacity: 0.7 }}
           />
         )}
@@ -177,7 +177,7 @@ export function VoiceChannel({ channelId, channelName, onClick, locked, canManag
             <path d="M11 5L6 9H2V15H6L11 19V5ZM15.54 8.46C16.48 9.4 17 10.67 17 12S16.48 14.6 15.54 15.54L14.12 14.12C14.69 13.55 15 12.79 15 12S14.69 10.45 14.12 9.88L15.54 8.46ZM19.07 4.93C20.91 6.77 22 9.28 22 12C22 14.72 20.91 17.23 19.07 19.07L17.66 17.66C19.11 16.21 20 14.21 20 12C20 9.79 19.11 7.79 17.66 6.34L19.07 4.93Z" />
           </svg>
         )}
-        <span className="truncate text-[15px] font-medium flex-1 text-left">{channelName}</span>
+        <span className="truncate text-[15px] font-medium flex-1 text-start">{channelName}</span>
         <span className="relative flex flex-shrink-0 items-center">
           {canManage && (
             <svg
@@ -187,7 +187,7 @@ export function VoiceChannel({ channelId, channelName, onClick, locked, canManag
               viewBox="0 0 24 24"
               fill="currentColor"
               aria-hidden="true"
-              className="pointer-events-none absolute right-full mr-1 opacity-0 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 text-txt-tertiary hover:text-txt-primary transition-opacity"
+              className="pointer-events-none absolute end-full me-1 opacity-0 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 text-txt-tertiary hover:text-txt-primary transition-opacity"
               onClick={(e) => {
                 e.stopPropagation();
                 onSettingsClick?.();
@@ -204,7 +204,7 @@ export function VoiceChannel({ channelId, channelName, onClick, locked, canManag
 
       {/* Connected users */}
       {voiceUsers.length > 0 && (
-        <div className="ml-9 mt-0.5 space-y-0.5">
+        <div className="ms-9 mt-0.5 space-y-0.5">
           {voiceUsers.map((userId) => {
             const member = members.find(m => m.userId === userId);
             const participant = participants.find(p => p.userId === userId);

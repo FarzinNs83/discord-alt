@@ -89,6 +89,9 @@ interface UIState {
   lastChannelPerSpace: Record<string, string>;
   setLastChannel: (spaceId: string, channelId: string) => void;
   voiceChatOpen: boolean;
+  /** The soundboard side panel in a space call; shares the chat panel's place, so opening one closes the other. */
+  soundboardOpen: boolean;
+  toggleSoundboard: () => void;
   voiceFullscreen: boolean;
   pipCollapsed: boolean;
   toggleVoiceChat: () => void;
@@ -195,9 +198,11 @@ export const useUIStore = create<UIState>()(
       })),
 
       voiceChatOpen: false,
+      soundboardOpen: false,
+      toggleSoundboard: () => set((state) => ({ soundboardOpen: !state.soundboardOpen, voiceChatOpen: false })),
       voiceFullscreen: false,
       pipCollapsed: false,
-      toggleVoiceChat: () => set((state) => ({ voiceChatOpen: !state.voiceChatOpen })),
+      toggleVoiceChat: () => set((state) => ({ voiceChatOpen: !state.voiceChatOpen, soundboardOpen: false })),
       toggleVoiceFullscreen: () => set((state) => ({ voiceFullscreen: !state.voiceFullscreen })),
       setVoiceFullscreen: (fullscreen) => set({ voiceFullscreen: fullscreen }),
       setPipCollapsed: (collapsed) => set({ pipCollapsed: collapsed }),

@@ -1156,12 +1156,12 @@ export function MessageList({ channelId, jumpToMessageId, onJumpHandled }: Messa
             return (
               <React.Fragment key={msg.id}>
                 {dateLabel && !isUnreadStart && (
-                  <div className="flex items-center px-5 my-2 select-none pointer-events-none">
-                    <div className="flex-1 h-[1px] bg-border-hard" />
-                    <span className="px-[14px] text-[11px] font-bold text-txt-tertiary leading-tight">
+                  <div className="flex items-center gap-3 px-5 my-3 select-none pointer-events-none">
+                    <div className="flex-1 h-[2px] rounded-full bg-border-hard" />
+                    <span className="px-3 py-1 rounded-[10px] bg-accent-amber text-[12px] font-extrabold text-txt-on-primary leading-tight -rotate-2">
                       {dateLabel}
                     </span>
-                    <div className="flex-1 h-[1px] bg-border-hard" />
+                    <div className="flex-1 h-[2px] rounded-full bg-border-hard" />
                   </div>
                 )}
                 {isUnreadStart && (
@@ -1258,7 +1258,7 @@ function LoadFailedNotice({ title, detail, retryLabel, onRetry }: {
         <button
           type="button"
           onClick={onRetry}
-          className="mt-3 rounded-full bg-accent-primary px-4 py-1.5 text-[14px] font-medium text-white transition-colors hover:bg-accent-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-chat"
+          className="mt-3 rounded-full bg-accent-primary px-4 py-1.5 text-[14px] font-medium text-txt-on-primary transition-colors hover:bg-accent-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-chat"
         >
           {retryLabel}
         </button>
@@ -1278,7 +1278,7 @@ function UnreadDivider({ label, name, dateLabel }: { label: string; name: string
     <div
       role="separator"
       aria-label={name}
-      className="flex items-center pl-5 pr-4 my-2 select-none pointer-events-none"
+      className="flex items-center ps-5 pe-4 my-2 select-none pointer-events-none"
     >
       <div className="flex-1 h-px bg-accent-rose/50" />
       {dateLabel && (
@@ -1287,7 +1287,7 @@ function UnreadDivider({ label, name, dateLabel }: { label: string; name: string
           <div className="flex-1 h-px bg-accent-rose/50" />
         </>
       )}
-      <span className="ml-2 rounded-full bg-accent-rose/15 px-2 py-[1px] text-[11px] font-bold leading-4 text-accent-rose">
+      <span className="ms-2 rounded-full bg-accent-rose/15 px-2 py-[1px] text-[11px] font-bold leading-4 text-accent-rose">
         {label}
       </span>
     </div>
@@ -1370,7 +1370,7 @@ function WelcomeHeader({ channelId }: { channelId: string }) {
           <div className="mt-4 flex items-center gap-2">
             <button
               onClick={handleOpenSettings}
-              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-[14px] font-medium rounded-[3px] transition-colors"
+              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-[14px] font-medium rounded-[3px] transition-colors"
             >
               {t('chat:list.welcome.group.openSettings')}
             </button>

@@ -86,7 +86,7 @@ export function MobileYouScreen() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
           {updateBadge && (
-            <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-accent-amber" />
+            <span className="absolute top-0.5 end-0.5 w-1.5 h-1.5 rounded-full bg-accent-amber" />
           )}
         </button>
       </header>
@@ -105,7 +105,7 @@ export function MobileYouScreen() {
 
         {/* Avatar overlay */}
         <div className="px-4 -mt-10 relative z-10">
-          <div className="w-20 h-20 rounded-full border-4 border-surface-channel overflow-hidden">
+          <div className="w-20 h-20 rounded-[34%] border-4 border-surface-channel overflow-hidden">
             <Avatar
               src={avatarUrl}
               name={user.displayName ?? user.username}
@@ -141,14 +141,14 @@ export function MobileYouScreen() {
           <button
             key={row.label}
             onClick={row.action}
-            className={`w-full flex items-center gap-3 px-4 py-3.5 hover:bg-interactive-hover text-left transition-colors ${
+            className={`w-full flex items-center gap-3 px-4 py-3.5 hover:bg-interactive-hover text-start transition-colors ${
               i > 0 ? 'border-t border-border-soft' : ''
             }`}
           >
             <span className="text-txt-secondary">{row.icon}</span>
             <span className="text-sm text-txt-primary flex-1">{row.label}</span>
             {row.badge}
-            <svg className="w-4 h-4 text-txt-tertiary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg className="w-4 h-4 text-txt-tertiary rtl:-scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
             </svg>
           </button>
@@ -159,7 +159,7 @@ export function MobileYouScreen() {
       <div className="mt-4 mx-4 mb-8 rounded-xl bg-surface-channel overflow-hidden">
         <button
           onClick={() => setShowLogoutConfirm(true)}
-          className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-interactive-hover text-left transition-colors"
+          className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-interactive-hover text-start transition-colors"
         >
           <svg className="w-5 h-5 text-accent-rose" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />

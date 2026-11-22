@@ -65,7 +65,7 @@ export function BansPanel({ spaceId }: BansPanelProps) {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-lg font-semibold text-txt-primary mb-6">{t('spaces:bans.title')}</h2>
+      <h2 className="font-display font-extrabold text-[32px] leading-tight tracking-[-0.03em] text-txt-primary mb-6">{t('spaces:bans.title')}</h2>
       {error && (
         <div className="p-2 bg-accent-rose/10 border border-accent-rose/30 rounded text-txt-danger text-sm">{error}</div>
       )}

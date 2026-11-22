@@ -460,12 +460,12 @@ export function ScreenShareSetup() {
         {/* Header */}
         <div className="flex items-start justify-between gap-4 px-6 pt-5 pb-3 flex-shrink-0">
           <div className="min-w-0">
-            <h2 className="text-xl font-bold text-txt-primary leading-tight">{t('voice:screenPicker.title')}</h2>
+            <h2 className="text-xl font-display font-bold text-txt-primary leading-tight">{t('voice:screenPicker.title')}</h2>
             <p className="text-[13px] text-txt-tertiary mt-0.5">{t('voice:screenPicker.subtitle')}</p>
           </div>
           <button
             onClick={handleClose}
-            className="text-txt-tertiary hover:text-txt-primary transition-colors p-1 -mr-1 flex-shrink-0"
+            className="text-txt-tertiary hover:text-txt-primary transition-colors p-1 -me-1 flex-shrink-0"
             aria-label={t('common:actions.close')}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -592,7 +592,7 @@ export function ScreenShareSetup() {
                 {staged ? (
                   <>
                     <video ref={previewRef} autoPlay muted playsInline className="absolute inset-0 w-full h-full object-contain bg-black/70" />
-                    <div className="absolute top-3 left-3 px-2 py-0.5 rounded-md bg-black/60 text-[10px] font-bold uppercase tracking-wide text-white/80">
+                    <div className="absolute top-3 start-3 px-2 py-0.5 rounded-md bg-black/60 text-[10px] font-bold uppercase tracking-wide text-white/80">
                       {t('voice:screenPicker.preview')}
                     </div>
                     <div className="absolute inset-x-0 bottom-0 px-4 py-3 flex flex-col items-start gap-2 desktop:flex-row desktop:items-center desktop:justify-between desktop:gap-3 bg-gradient-to-t from-black/70 via-black/30 to-transparent">
@@ -640,7 +640,7 @@ export function ScreenShareSetup() {
                     <button
                       onClick={stageNow}
                       disabled={staging || !supported || (electron && pickerMode === null)}
-                      className="px-5 py-2.5 rounded-full bg-accent-primary hover:bg-accent-primary-hover text-white text-sm font-semibold transition-colors shadow-lg shadow-accent-primary/20 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
+                      className="px-5 py-2.5 rounded-full bg-accent-primary hover:bg-accent-primary-hover text-txt-on-primary text-sm font-semibold transition-colors shadow-lg shadow-accent-primary/20 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
                     >
                       {t('voice:screenPicker.choose')}
                     </button>
@@ -665,8 +665,8 @@ export function ScreenShareSetup() {
             id="stream-settings-drawer-panel"
             data-testid="stream-settings-drawer"
             aria-hidden={!settingsOpen}
-            className={`absolute inset-y-0 right-0 z-20 w-[calc(calc(100*var(--app-vw))-5rem)] desktop:w-[340px] glass border-l border-border-hard flex flex-col min-h-0 shadow-2xl transition-transform duration-300 ease-out ${
-              settingsOpen ? 'translate-x-0' : 'translate-x-full'
+            className={`absolute inset-y-0 end-0 z-20 w-[calc(calc(100*var(--app-vw))-5rem)] desktop:w-[340px] glass border-s border-border-hard flex flex-col min-h-0 shadow-2xl transition-transform duration-300 ease-out ${
+              settingsOpen ? 'translate-x-0' : 'translate-x-full rtl:-translate-x-full'
             }`}
           >
             <div className="flex items-start justify-between gap-3 px-5 pt-4 pb-3 border-b border-border-hard flex-shrink-0">
@@ -676,7 +676,7 @@ export function ScreenShareSetup() {
               </div>
               <button
                 onClick={() => setSettingsOpen(false)}
-                className="text-txt-tertiary hover:text-txt-primary transition-colors p-1 -mr-1"
+                className="text-txt-tertiary hover:text-txt-primary transition-colors p-1 -me-1"
                 aria-label={t('common:actions.close')}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -695,7 +695,7 @@ export function ScreenShareSetup() {
           <div className="min-w-0 flex flex-col">
             <button
               onClick={() => setSettingsOpen(true)}
-              className="text-left hover:text-txt-secondary transition-colors truncate"
+              className="text-start hover:text-txt-secondary transition-colors truncate"
               title={t('voice:streamSettings.title')}
             >
               <StreamSummary />
@@ -713,7 +713,7 @@ export function ScreenShareSetup() {
               aria-controls="stream-settings-drawer-panel"
               aria-label={t('voice:streamSettings.title')}
               title={t('voice:streamSettings.title')}
-              className={`flex items-center gap-2 pl-3 pr-3.5 py-1.5 rounded-full text-sm font-medium transition-colors ${
+              className={`flex items-center gap-2 ps-3 pe-3.5 py-1.5 rounded-full text-sm font-medium transition-colors ${
                 settingsOpen
                   ? 'bg-white/[0.1] text-txt-primary'
                   : 'text-txt-secondary hover:text-txt-primary hover:bg-white/[0.06]'
@@ -734,7 +734,7 @@ export function ScreenShareSetup() {
             <button
               onClick={() => void handleStart()}
               disabled={!canStart}
-              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary-hover text-white text-sm font-semibold rounded-full transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary-hover text-txt-on-primary text-sm font-semibold rounded-full transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
               {t('voice:screenPicker.start')}
             </button>
@@ -762,13 +762,13 @@ function TabButton({ active, onClick, label, count }: {
       onClick={onClick}
       className={`px-3.5 py-1.5 text-sm font-medium rounded-full transition-colors ${
         active
-          ? 'bg-accent-primary text-white shadow-sm'
+          ? 'bg-accent-primary text-txt-on-primary shadow-sm'
           : 'text-txt-secondary hover:text-txt-primary hover:bg-white/[0.06]'
       }`}
     >
       {label}
       {count !== null && count > 0 && (
-        <span className={`ml-1.5 text-xs ${active ? 'text-white/70' : 'text-txt-tertiary'}`}>
+        <span className={`ms-1.5 text-xs ${active ? 'text-white/70' : 'text-txt-tertiary'}`}>
           {count}
         </span>
       )}
@@ -786,7 +786,7 @@ function SourceCard({ source, selected, onClick, onDoubleClick }: {
     <button
       onClick={onClick}
       onDoubleClick={onDoubleClick}
-      className={`group flex flex-col rounded-lg overflow-hidden transition-all text-left ring-2 ${
+      className={`group flex flex-col rounded-lg overflow-hidden transition-all text-start ring-2 ${
         selected
           ? 'ring-accent-primary bg-accent-primary/10'
           : 'ring-transparent hover:ring-white/20 bg-surface-elevated/60 hover:bg-surface-elevated'
@@ -801,7 +801,7 @@ function SourceCard({ source, selected, onClick, onDoubleClick }: {
           draggable={false}
         />
         {selected && (
-          <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-accent-primary flex items-center justify-center">
+          <div className="absolute top-2 end-2 w-5 h-5 rounded-full bg-accent-primary flex items-center justify-center">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
               <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
             </svg>

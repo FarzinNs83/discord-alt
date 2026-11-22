@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useHomeInstanceInfo } from '../../hooks/useHomeInstanceInfo';
 import { useNavigate, useLocation } from 'react-router-dom';
 import type { Channel } from '@patogh/shared';
-import { useSpaceStore, getChannelOrigin, getMyUserIdForOrigin } from '../../stores/spaceStore';
+import { useSpaceStore, getChannelOrigin, getMyUserIdForOrigin, type TaggedSpace } from '../../stores/spaceStore';
+import { SpaceEventCard } from './SpaceEventCard';
 import { useChatStore } from '../../stores/chatStore';
 import { useUIStore } from '../../stores/uiStore';
 import { useAuthStore } from '../../stores/authStore';
@@ -432,7 +433,7 @@ export function ChannelSidebar() {
 
   // Floating bottom panel — shared between DM view and server view
   const floatingPanel = user ? (
-    <div ref={setFloatingPanelEl} data-pip-obstacle="bottom" className="fixed bottom-0 left-0 right-0 z-[105] p-2 desktop:right-auto desktop:w-[296px] desktop:bottom-[10px] desktop:left-[10px] desktop:p-0">
+    <div ref={setFloatingPanelEl} data-pip-obstacle="bottom" className="fixed bottom-0 start-0 end-0 z-[105] p-2 desktop:end-auto desktop:w-[296px] desktop:bottom-[10px] desktop:start-[10px] desktop:p-0">
       <div className="glass-bubble rounded-[14px]">
         {/* Voice controls (expands when connected) */}
         {(currentVoiceChannelId || activeDmCall) && <VoiceControls />}
@@ -457,20 +458,20 @@ export function ChannelSidebar() {
   if (!space) {
     return (
       <>
-      <div className="w-60 desktop:w-full bg-surface-channel flex flex-col flex-shrink-0 select-none desktop:pl-[72px] border-r border-border-hard">
+      <div className="w-60 desktop:w-full bg-surface-channel flex flex-col flex-shrink-0 select-none desktop:ps-[72px] border-e border-border-hard">
         <div className="h-12 px-[10px] flex items-center border-b border-border-hard z-10">
           <DmSearchBar />
         </div>
         <div className="flex-1 overflow-y-auto pt-4 px-2 no-scrollbar" style={{ paddingBottom: floatingPanelHeight + 24 }}>
           <div
             onClick={handleHomeClick}
-            className={`flex items-center gap-3 px-2 h-[42px] rounded-[6px] cursor-pointer mb-[2px] transition-colors group ${
+            className={`flex items-center gap-3 px-2 h-[44px] rounded-[14px] cursor-pointer mb-[2px] transition-colors group ${
               activeHomeItem === 'friends'
-                ? 'bg-interactive-selected text-white'
-                : 'text-txt-tertiary hover:bg-interactive-hover hover:text-txt-secondary'
+                ? 'bg-accent-primary text-txt-on-primary font-bold'
+                : 'text-txt-secondary hover:bg-interactive-hover hover:text-txt-primary'
             }`}
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className={`flex-shrink-0 ${activeHomeItem === 'friends' ? 'text-white' : 'opacity-70 group-hover:opacity-100'}`}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className={`flex-shrink-0 ${activeHomeItem === 'friends' ? '' : 'opacity-70 group-hover:opacity-100'}`}>
               <path d="M13 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-2-4a2 2 0 1 1 4 0 2 2 0 0 1-4 0Z" />
               <path d="M3 18a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-1c0-2.76-5.37-4-8-4s-8 1.24-8 4v1Z" />
               <path d="M3.5 13.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" opacity=".5" />
@@ -481,13 +482,13 @@ export function ChannelSidebar() {
           {federationEnabled && (
             <div
               onClick={() => navigate('/explore')}
-              className={`flex items-center gap-3 px-2 h-[42px] rounded-[6px] cursor-pointer mb-[2px] transition-colors group ${
+              className={`flex items-center gap-3 px-2 h-[44px] rounded-[14px] cursor-pointer mb-[2px] transition-colors group ${
                 activeHomeItem === 'explore'
-                  ? 'bg-interactive-selected text-white'
-                  : 'text-txt-tertiary hover:bg-interactive-hover hover:text-txt-secondary'
+                  ? 'bg-accent-primary text-txt-on-primary font-bold'
+                  : 'text-txt-secondary hover:bg-interactive-hover hover:text-txt-primary'
               }`}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className={`flex-shrink-0 ${activeHomeItem === 'explore' ? 'text-white' : 'opacity-70 group-hover:opacity-100'}`}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className={`flex-shrink-0 ${activeHomeItem === 'explore' ? '' : 'opacity-70 group-hover:opacity-100'}`}>
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z" />
               </svg>
               <span className="font-medium text-[16px]">{t('spaces:sidebar.dmList.explore')}</span>
@@ -569,7 +570,7 @@ export function ChannelSidebar() {
 
   return (
     <>
-    <div className="w-60 desktop:w-full bg-surface-channel flex flex-col flex-shrink-0 select-none desktop:pl-[72px] border-r border-border-hard">
+    <div className="w-60 desktop:w-full bg-surface-channel flex flex-col flex-shrink-0 select-none desktop:ps-[72px] border-e border-border-hard">
       {/* Space header */}
       <div className="h-12 flex items-stretch border-b border-border-hard z-10 group/header">
         <button
@@ -577,7 +578,7 @@ export function ChannelSidebar() {
           className="flex-1 h-full px-4 flex items-center justify-between hover:bg-interactive-hover transition-colors min-w-0"
         >
           <div className="min-w-0">
-            <span className="font-bold text-[15px] tracking-[-0.02em] text-txt-primary truncate leading-tight block">{space.name}</span>
+            <span className="font-display font-extrabold text-[18px] tracking-[-0.02em] text-txt-primary truncate leading-tight block">{space.name}</span>
             {instanceLabel && (
               <span className="text-[10px] text-txt-tertiary font-medium truncate block leading-tight">
                 {instanceLabel}
@@ -601,12 +602,20 @@ export function ChannelSidebar() {
         )}
       </div>
 
+      <SpaceEventCard
+        spaceId={space.id}
+        origin={(space as TaggedSpace)._instanceOrigin ?? ''}
+        channels={visibleChannels}
+        canManage={canManageChannels}
+        className="px-3.5 pt-3"
+      />
+
       {/* Channels — dynamic category layout */}
       <div ref={scrollContainerRef} className="flex-1 overflow-y-auto pt-3 px-2 no-scrollbar" style={{ paddingBottom: floatingPanelHeight + 24 }} onDrop={containerHandlers.onDrop} onDragOver={containerHandlers.onDragOver} onContextMenu={handleSidebarContextMenu}>
         {showChannelSkeleton ? (
           <div className="px-2 pt-3" role="status" aria-label={t('spaces:channels.loading')}>
             {/* Category group 1 */}
-            <div className="skeleton skeleton-bar h-2 w-[45%] ml-2 mb-3" />
+            <div className="skeleton skeleton-bar h-2 w-[45%] ms-2 mb-3" />
             {Array.from({ length: 3 }, (_, i) => (
               <div key={i} className="flex items-center gap-2 px-2 py-1.5 mb-0.5" style={{ animationDelay: `${i * 0.1}s` }}>
                 <div className="skeleton w-3.5 h-3.5 rounded-sm flex-shrink-0" style={{ animationDelay: `${i * 0.1}s` }} />
@@ -614,7 +623,7 @@ export function ChannelSidebar() {
               </div>
             ))}
             {/* Category group 2 */}
-            <div className="skeleton skeleton-bar h-2 w-[55%] ml-2 mb-3 mt-5" style={{ animationDelay: '0.3s' }} />
+            <div className="skeleton skeleton-bar h-2 w-[55%] ms-2 mb-3 mt-5" style={{ animationDelay: '0.3s' }} />
             {Array.from({ length: 4 }, (_, i) => (
               <div key={i} className="flex items-center gap-2 px-2 py-1.5 mb-0.5" style={{ animationDelay: `${(i + 3) * 0.1}s` }}>
                 <div className="skeleton w-3.5 h-3.5 rounded-sm flex-shrink-0" style={{ animationDelay: `${(i + 3) * 0.1}s` }} />
@@ -694,7 +703,7 @@ export function ChannelSidebar() {
                       </svg>
                     )}
                     {hasUnread && (
-                      <div className="ml-1 w-1.5 h-1.5 rounded-full bg-accent-rose flex-shrink-0" />
+                      <div className="ms-1 w-1.5 h-1.5 rounded-full bg-accent-rose flex-shrink-0" />
                     )}
                   </div>
                   {canManageChannels && (
@@ -972,7 +981,7 @@ function UserAreaPanel({
     <div className="relative" ref={panelRef}>
       {/* Input settings panel */}
       {openPanel === 'input' && (
-        <div className="absolute bottom-full left-0 right-0 mb-0 bg-surface-channel rounded-t-lg shadow-lg z-[150] border-t border-x border-border-hard">
+        <div className="absolute bottom-full start-0 end-0 mb-0 bg-surface-channel rounded-t-lg shadow-lg z-[150] border-t border-x border-border-hard">
           {/* Input Device */}
           <div className="relative">
             <button
@@ -980,10 +989,10 @@ function UserAreaPanel({
               className="w-full px-4 py-3 flex items-center justify-between hover:bg-interactive-hover transition-colors"
             >
               <div className="min-w-0 flex-1">
-                <div className="text-[15px] font-semibold text-txt-primary text-left">{t('spaces:sidebar.userArea.inputDevice')}</div>
-                <div className="text-[13px] text-txt-tertiary truncate text-left">{selectedInputLabel}</div>
+                <div className="text-[15px] font-semibold text-txt-primary text-start">{t('spaces:sidebar.userArea.inputDevice')}</div>
+                <div className="text-[13px] text-txt-tertiary truncate text-start">{selectedInputLabel}</div>
               </div>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-txt-tertiary flex-shrink-0 ml-2">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-txt-tertiary flex-shrink-0 ms-2">
                 <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
               </svg>
             </button>
@@ -1070,7 +1079,7 @@ function UserAreaPanel({
           
                   {/* Output settings panel */}
                   {openPanel === 'output' && (
-                    <div className="absolute bottom-full left-0 right-0 mb-0 bg-surface-channel rounded-t-lg shadow-lg z-[150] border-t border-x border-border-hard">
+                    <div className="absolute bottom-full start-0 end-0 mb-0 bg-surface-channel rounded-t-lg shadow-lg z-[150] border-t border-x border-border-hard">
                       {/* Output Device */}
                       <div className="relative">
                         <button
@@ -1078,10 +1087,10 @@ function UserAreaPanel({
                           className="w-full px-4 py-3 flex items-center justify-between hover:bg-interactive-hover transition-colors"
                         >
                           <div className="min-w-0 flex-1">
-                            <div className="text-[15px] font-semibold text-txt-primary text-left">{t('spaces:sidebar.userArea.outputDevice')}</div>
-                            <div className="text-[13px] text-txt-tertiary truncate text-left">{selectedOutputLabel}</div>
+                            <div className="text-[15px] font-semibold text-txt-primary text-start">{t('spaces:sidebar.userArea.outputDevice')}</div>
+                            <div className="text-[13px] text-txt-tertiary truncate text-start">{selectedOutputLabel}</div>
                           </div>
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-txt-tertiary flex-shrink-0 ml-2">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-txt-tertiary flex-shrink-0 ms-2">
                             <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
                           </svg>
                         </button>
@@ -1170,7 +1179,7 @@ function UserAreaPanel({
           {/* Mic */}
           <button
             onClick={onMicToggle}
-            className={`w-8 h-8 flex items-center justify-center hover:bg-interactive-hover rounded-l-[4px] transition-colors ${
+            className={`w-8 h-8 flex items-center justify-center hover:bg-interactive-hover rounded-s-[4px] transition-colors ${
               (isSpaceMuted || isSpaceDeafened || isPermissionMuted) ? 'text-accent-amber cursor-not-allowed'
                 : isMuted || isDeafened ? 'text-txt-danger' : 'text-txt-tertiary hover:text-txt-primary'
             }`}
@@ -1185,7 +1194,7 @@ function UserAreaPanel({
           {/* Input chevron */}
           <button
             onClick={() => togglePanel('input')}
-            className={`w-[18px] h-8 flex items-center justify-center hover:bg-interactive-hover rounded-r-[4px] transition-colors ${
+            className={`w-[18px] h-8 flex items-center justify-center hover:bg-interactive-hover rounded-e-[4px] transition-colors ${
               openPanel === 'input' ? 'text-txt-primary bg-interactive-hover' : 'text-txt-tertiary hover:text-txt-primary'
             }`}
             title={t('spaces:sidebar.userArea.inputDevices')}
@@ -1198,7 +1207,7 @@ function UserAreaPanel({
           {/* Headphones */}
           <button
             onClick={onDeafenToggle}
-            className={`w-8 h-8 flex items-center justify-center hover:bg-interactive-hover rounded-l-[4px] transition-colors ${
+            className={`w-8 h-8 flex items-center justify-center hover:bg-interactive-hover rounded-s-[4px] transition-colors ${
               isSpaceDeafened ? 'text-accent-amber cursor-not-allowed'
                 : isDeafened ? 'text-txt-danger' : 'text-txt-tertiary hover:text-txt-primary'
             }`}
@@ -1212,7 +1221,7 @@ function UserAreaPanel({
           {/* Output chevron */}
           <button
             onClick={() => togglePanel('output')}
-            className={`w-[18px] h-8 flex items-center justify-center hover:bg-interactive-hover rounded-r-[4px] transition-colors ${
+            className={`w-[18px] h-8 flex items-center justify-center hover:bg-interactive-hover rounded-e-[4px] transition-colors ${
               openPanel === 'output' ? 'text-txt-primary bg-interactive-hover' : 'text-txt-tertiary hover:text-txt-primary'
             }`}
             title={t('spaces:sidebar.userArea.outputDevices')}
@@ -1233,7 +1242,7 @@ function UserAreaPanel({
               <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
             </svg>
             {updateBadge && (
-              <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-accent-amber" />
+              <span className="absolute top-1 end-1 w-1.5 h-1.5 rounded-full bg-accent-amber" />
             )}
           </button>
         </div>
@@ -1299,7 +1308,7 @@ function ChannelItem({
         className={`relative ${isDragging ? 'opacity-50' : ''}`}
         {...channelDragHandlers}
       >
-        {dropIndicator === 'before' && <div className="absolute -top-[1px] left-2 right-2 h-[2px] bg-accent-mint rounded-full z-10" />}
+        {dropIndicator === 'before' && <div className="absolute -top-[1px] start-2 end-2 h-[2px] bg-accent-mint rounded-full z-10" />}
         <VoiceChannel
           channelId={channel.id}
           channelName={channel.name}
@@ -1310,7 +1319,7 @@ function ChannelItem({
           voiceUserHandlers={voiceUserHandlers}
           dropZone={voiceChannelDropZone}
         />
-        {dropIndicator === 'after' && <div className="absolute -bottom-[1px] left-2 right-2 h-[2px] bg-accent-mint rounded-full z-10" />}
+        {dropIndicator === 'after' && <div className="absolute -bottom-[1px] start-2 end-2 h-[2px] bg-accent-mint rounded-full z-10" />}
       </div>
     );
   }
@@ -1320,31 +1329,25 @@ function ChannelItem({
       className={`relative ${isDragging ? 'opacity-50' : ''}`}
       {...channelDragHandlers}
     >
-      {dropIndicator === 'before' && <div className="absolute -top-[1px] left-2 right-2 h-[2px] bg-accent-mint rounded-full z-10" />}
+      {dropIndicator === 'before' && <div className="absolute -top-[1px] start-2 end-2 h-[2px] bg-accent-mint rounded-full z-10" />}
       <button
         onClick={onChannelClick}
-        className={`relative w-full flex items-center gap-1.5 px-[10px] h-8 rounded-[6px] group transition-colors ${
+        className={`relative w-full flex items-center gap-2 px-[10px] h-9 rounded-[12px] group transition-colors ${
           isActive
-            ? 'bg-surface-elevated text-txt-primary'
+            ? 'bg-accent-primary text-txt-on-primary'
             : isUnread
-              ? 'text-white hover:text-white hover:bg-interactive-hover'
-              : 'text-txt-tertiary hover:text-txt-secondary hover:bg-interactive-hover'
+              ? 'text-txt-primary hover:bg-interactive-hover'
+              : 'text-txt-secondary hover:text-txt-primary hover:bg-interactive-hover'
         }`}
       >
-        {isActive && (
-          <div
-            className="absolute -left-[2px] top-1/2 -translate-y-1/2 w-[3px] bg-white rounded-r-full"
-            style={{ height: '55%', opacity: 0.7 }}
-          />
+        {isUnread && !isActive && (
+          <div className="absolute end-2 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent-amber" />
         )}
-        {isUnread && (
-          <div className="absolute right-2 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent-rose" />
-        )}
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="flex-shrink-0 text-[#6e6e7a]">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className={`flex-shrink-0 ${isActive ? '' : 'text-txt-tertiary'}`}>
           <path d="M5.88657 21C5.57547 21 5.3399 20.7189 5.39427 20.4126L6.00001 17H2.59511C2.28449 17 2.04905 16.7198 2.10259 16.4138L2.27759 15.4138C2.31946 15.1746 2.52722 15 2.77011 15H6.35001L7.41001 9H4.00511C3.69449 9 3.45905 8.71977 3.51259 8.41381L3.68759 7.41381C3.72946 7.17456 3.93722 7 4.18011 7H7.76001L8.39677 3.41262C8.43914 3.17391 8.64664 3 8.88907 3H9.87344C10.1845 3 10.4201 3.28107 10.3657 3.58738L9.76001 7H15.76L16.3968 3.41262C16.4391 3.17391 16.6466 3 16.8891 3H17.8734C18.1845 3 18.4201 3.28107 18.3657 3.58738L17.76 7H21.1649C21.4755 7 21.711 7.28023 21.6574 7.58619L21.4824 8.58619C21.4406 8.82544 21.2328 9 20.9899 9H17.41L16.35 15H19.7549C20.0655 15 20.301 15.2802 20.2474 15.5862L20.0724 16.5862C20.0306 16.8254 19.8228 17 19.5799 17H16L15.3632 20.5874C15.3209 20.8261 15.1134 21 14.8709 21H13.8866C13.5755 21 13.3399 20.7189 13.3943 20.4126L14 17H8.00001L7.36325 20.5874C7.32088 20.8261 7.11337 21 6.87094 21H5.88657ZM9.41001 9L8.35001 15H14.35L15.41 9H9.41001Z" />
         </svg>
-        <span className={`truncate text-[15px] leading-5 tracking-[0.01em] flex-1 text-left ${isUnread ? 'font-semibold' : 'font-medium'}`}>{channel.name}</span>
-        <ChannelMutedIndicator channelId={channel.id} className={`text-txt-tertiary ${isUnread ? 'mr-3' : ''}`} />
+        <span className={`truncate text-[15px] leading-5 tracking-[0.01em] flex-1 text-start ${isActive ? 'font-bold' : isUnread ? 'font-semibold' : 'font-medium'}`}>{channel.name}</span>
+        <ChannelMutedIndicator channelId={channel.id} className={`${isActive ? '' : 'text-txt-tertiary'} ${isUnread ? 'me-3' : ''}`} />
         {canManage && (
           <svg
             width="16"
@@ -1361,7 +1364,7 @@ function ChannelItem({
           </svg>
         )}
       </button>
-      {dropIndicator === 'after' && <div className="absolute -bottom-[1px] left-2 right-2 h-[2px] bg-accent-mint rounded-full z-10" />}
+      {dropIndicator === 'after' && <div className="absolute -bottom-[1px] start-2 end-2 h-[2px] bg-accent-mint rounded-full z-10" />}
     </div>
   );
 }

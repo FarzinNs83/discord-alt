@@ -1,17 +1,55 @@
+/* Chai Pop type: Figtree for text, Bricolage Grotesque for headings and names.
+   Both files are the Latin subset; Persian/Arabic script in either family is
+   drawn by Vazirmatn through the unicode-range faces below, so a Persian
+   message in an English UI still gets a proper Persian face. */
 @font-face {
-  font-family: 'DM Sans';
-  src: url('/fonts/DMSans-Variable.woff2') format('woff2');
-  font-weight: 100 1000;
+  font-family: 'Figtree';
+  src: url('/fonts/Figtree-Variable.woff2') format('woff2');
+  font-weight: 300 900;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'DM Sans';
-  src: url('/fonts/DMSans-Variable-Italic.woff2') format('woff2');
-  font-weight: 100 1000;
+  font-family: 'Figtree';
+  src: url('/fonts/Figtree-Variable-Italic.woff2') format('woff2');
+  font-weight: 300 900;
   font-style: italic;
   font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url('/fonts/BricolageGrotesque-Variable.woff2') format('woff2');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('/fonts/Vazirmatn-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Figtree';
+  src: url('/fonts/Vazirmatn-Variable.woff2') format('woff2');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+200C-200F, U+066B-066C;
+}
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url('/fonts/Vazirmatn-Variable.woff2') format('woff2');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+200C-200F, U+066B-066C;
 }
 
 @font-face {
@@ -46,64 +84,68 @@
     --app-vh: calc(1vh / var(--interface-scale));
     --app-dvh: calc(1dvh / var(--interface-scale));
     --app-vw: calc(1vw / var(--interface-scale));
-    /* ── Matte Surfaces (RGB channels for Tailwind opacity support) ── */
-    --bg-base: 11 11 16;
-    --bg-channel: 26 26 35;
-    --bg-chat: 19 19 26;
-    --bg-members: 26 26 35;
-    --bg-elevated: 37 37 48;
-    --bg-input: 17 17 24;
-    --bg-overlay: rgba(0, 0, 0, 0.85);
+    /* ── Chai Pop surfaces: warm espresso, darkest at the rail (RGB channels for Tailwind opacity) ── */
+    --bg-base: 14 10 7;
+    --bg-channel: 25 18 13;
+    --bg-chat: 32 23 17;
+    --bg-members: 25 18 13;
+    --bg-elevated: 43 31 23;
+    --bg-input: 20 14 10;
+    --bg-overlay: rgba(8, 5, 3, 0.85);
 
     /* ── Borders ── */
-    --border-hard: 34 34 44;
-    --border-soft: 42 42 54;
+    --border-hard: 46 34 25;
+    --border-soft: 62 45 33;
 
-    /* ── Pastel Accents ── */
-    --accent-mint: 134 239 172;
-    --accent-peach: 252 165 165;
-    --accent-lavender: 196 181 253;
-    --accent-sky: 125 211 252;
-    --accent-amber: 252 211 77;
-    --accent-rose: 253 164 175;
-    --accent-coral: 251 146 60;
+    /* ── Accents: tea from the estekan logo, plus the sticker set ── */
+    --accent-mint: 127 216 176;
+    --accent-peach: 255 180 138;
+    --accent-lavender: 201 167 255;
+    --accent-sky: 142 197 255;
+    --accent-amber: 246 196 83;
+    --accent-rose: 255 143 163;
+    --accent-coral: 232 105 47;
 
-    /* ── Primary Action (replaces blurple) ── */
-    --accent-primary: 124 108 246;
-    --accent-primary-hover: 107 92 224;
-    --accent-primary-active: 95 79 208;
+    /* ── Primary action: tea. Text on it is dark (--text-on-primary); white fails contrast. ── */
+    --accent-primary: 232 105 47;
+    --accent-primary-hover: 242 125 70;
+    --accent-primary-active: 208 90 36;
 
-    /* ── Text Hierarchy ── */
-    --text-primary: 239 239 239;
-    --text-secondary: 160 160 170;
-    --text-tertiary: 92 92 104;
-    --text-category: 72 72 84;
-    --text-message: 216 216 222;
-    --text-link: 125 211 252;
-    --text-positive: 134 239 172;
-    --text-warning: 252 211 77;
-    --text-danger: 252 165 165;
+    /* ── Text Hierarchy: cream ── */
+    --text-primary: 255 243 224;
+    --text-secondary: 217 195 172;
+    --text-tertiary: 168 143 122;
+    --text-category: 168 143 122;
+    --text-message: 242 228 210;
+    --text-link: 255 180 138;
+    --text-positive: 127 216 176;
+    --text-warning: 246 196 83;
+    --text-danger: 255 143 163;
+    --text-on-primary: 26 14 7;
 
     /* ── Interactive ── */
-    --interactive-hover: rgba(255, 255, 255, 0.06);
-    --interactive-active: rgba(255, 255, 255, 0.12);
-    --interactive-selected: rgba(255, 255, 255, 0.16);
-    --interactive-muted: 58 58 68;
+    --interactive-hover: rgba(255, 243, 224, 0.06);
+    --interactive-active: rgba(255, 243, 224, 0.11);
+    --interactive-selected: rgba(255, 243, 224, 0.15);
+    --interactive-muted: 90 68 51;
 
     /* ── Status ── */
-    --status-online: 134 239 172;
-    --status-idle: 252 211 77;
-    --status-dnd: 252 165 165;
-    --status-offline: 58 58 68;
+    --status-online: 127 216 176;
+    --status-idle: 246 196 83;
+    --status-dnd: 255 143 163;
+    --status-offline: 90 68 51;
 
-    /* ── Glass Material ── */
-    --glass-bg: rgba(20, 20, 26, 0.52);
-    --glass-modal-bg: rgba(20, 20, 26, 0.82);
-    --glass-border: rgba(255, 255, 255, 0.07);
-    --glass-highlight: rgba(255, 255, 255, 0.05);
+    /* ── Floating surfaces: nearly opaque warm panels instead of cool glass ── */
+    --glass-bg: rgba(33, 24, 18, 0.94);
+    --glass-modal-bg: rgba(25, 18, 13, 0.97);
+    --glass-border: rgba(255, 243, 224, 0.08);
+    --glass-highlight: rgba(255, 243, 224, 0.05);
+
+    /* ── Sticker shadow: the hard offset shadow under active things ── */
+    --sticker-shadow: 4px 4px 0 rgb(var(--accent-primary));
 
     /* ── Notification ── */
-    --notification: 253 164 175;
+    --notification: 246 196 83;
   }
 
   * {
@@ -112,13 +154,13 @@
   }
 
   ::selection {
-    background: rgba(134, 239, 172, 0.25);
+    background: rgba(232, 105, 47, 0.35);
     color: rgb(var(--text-primary));
   }
 
   html, body, #root {
     @apply h-full w-full overflow-hidden bg-surface-base text-txt-message;
-    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-family: 'Figtree', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -130,7 +172,7 @@
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   }
 
-  /* Simplified Chinese takes the platform stack outright. Neither DM Sans
+  /* Simplified Chinese takes the platform stack outright. Neither Figtree
      nor the bundled Inter subset has Han glyphs, and a CJK face is several
      megabytes, so the fix is to stop naming a Latin webfont at all: each OS
      Latin face is listed directly ahead of the CJK companion it ships with,
@@ -182,8 +224,8 @@
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus {
-    -webkit-text-fill-color: #ffffff;
-    -webkit-box-shadow: 0 0 0px 1000px #111118 inset;
+    -webkit-text-fill-color: #FFF3E0;
+    -webkit-box-shadow: 0 0 0px 1000px #140E0A inset;
     transition: background-color 5000s ease-in-out 0s;
   }
 }
@@ -260,36 +302,39 @@
   .glass-pill {
     -webkit-backdrop-filter: blur(12px) saturate(110%);
     backdrop-filter: blur(12px) saturate(110%);
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    background: rgb(var(--bg-elevated));
+    border: 2px solid rgb(var(--border-soft));
+    box-shadow: none;
   }
   .glass-pill:hover {
-    background: rgba(255, 255, 255, 0.10);
-    border-color: rgba(255, 255, 255, 0.14);
+    background: rgb(var(--bg-elevated));
+    border-color: rgb(var(--accent-primary) / 0.6);
   }
+  /* My reaction: a solid tea sticker, tilted a little */
   .glass-pill-mine {
-    background: rgba(134, 239, 172, 0.10);
-    border-color: rgba(134, 239, 172, 0.25);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(134, 239, 172, 0.06);
+    background: rgb(var(--accent-primary));
+    border-color: rgb(var(--accent-primary));
+    transform: rotate(-2deg);
   }
   .glass-pill-mine:hover {
-    background: rgba(134, 239, 172, 0.16);
+    background: rgb(var(--accent-primary-hover));
+    border-color: rgb(var(--accent-primary-hover));
   }
 
   /* ── Input Tiers ── */
+  /* Focus = tea border plus the sticker shadow, so the focused field "lifts" like an active tile. */
   .input-standard {
-    @apply bg-surface-input rounded px-3 py-2 text-sm text-txt-primary
+    @apply bg-surface-input rounded-[12px] px-3 py-2 text-sm text-txt-primary
            placeholder:text-txt-tertiary outline-none
-           border border-white/[0.06] shadow-input
-           focus:ring-2 focus:ring-accent-primary focus:border-accent-primary/30
-           transition-colors;
+           border-2 border-border-soft
+           focus:border-accent-primary focus:shadow-sticker
+           transition-[border-color,box-shadow];
   }
   .input-search {
-    @apply bg-surface-input rounded px-3 py-1.5 text-sm text-txt-primary
+    @apply bg-surface-input rounded-[12px] px-3 py-1.5 text-sm text-txt-primary
            placeholder:text-txt-tertiary outline-none
-           border border-white/[0.06] shadow-input
-           focus:ring-1 focus:ring-accent-primary focus:border-accent-primary/30
+           border-2 border-border-soft
+           focus:border-accent-primary
            transition-colors;
   }
   .input-embedded {
@@ -297,11 +342,11 @@
            placeholder:text-txt-tertiary/60 outline-none;
   }
   .input-danger {
-    @apply bg-surface-input rounded px-3 py-2 text-sm text-txt-primary
+    @apply bg-surface-input rounded-[12px] px-3 py-2 text-sm text-txt-primary
            placeholder:text-txt-tertiary outline-none
-           border border-white/[0.06] shadow-input
-           focus:ring-2 focus:ring-accent-rose focus:border-accent-rose/30
-           transition-colors;
+           border-2 border-border-soft
+           focus:border-accent-rose focus:shadow-[4px_4px_0_rgb(var(--accent-rose))]
+           transition-[border-color,box-shadow];
   }
 
   /* iOS Safari auto-zooms on input focus when computed font-size is below
@@ -418,13 +463,13 @@
 
 /* ── Emoji Mart Overrides ── */
 .emoji-picker-wrapper em-emoji-picker {
-  --em-rgb-background: 20, 20, 26;
-  --em-rgb-input: 17, 17, 24;
-  --em-rgb-color: 216, 216, 222;
+  --em-rgb-background: 33, 24, 18;
+  --em-rgb-input: 20, 14, 10;
+  --em-rgb-color: 242, 228, 210;
   --em-color-border: rgba(255, 255, 255, 0.07);
   --em-color-border-over: rgba(255, 255, 255, 0.12);
   --rgb-accent: var(--accent-primary);
-  --font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-family: 'Figtree', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   border: none !important;
   background: transparent !important;
   max-height: 400px;

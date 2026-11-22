@@ -171,7 +171,8 @@ export class AudioManager {
     if (!this.ctx) this.initContext();
     
     try {
-      const response = await fetch(`/sounds/${name}.ogg`);
+      // A bare name is a built-in cue; a path or URL is a soundboard sound.
+      const response = await fetch(name.includes('/') ? name : `/sounds/${name}.ogg`);
       if (!response.ok) throw new Error(`Failed to load sound: ${name}`);
       const arrayBuffer = await response.arrayBuffer();
       const audioBuffer = await this.ctx!.decodeAudioData(arrayBuffer);

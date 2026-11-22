@@ -159,7 +159,7 @@ export function CreateSpaceModal() {
                   </svg>
                 ) : (
                   <>
-                    <span className="text-2xl font-bold">{(name || 'S').charAt(0).toUpperCase()}</span>
+                    <span className="text-2xl font-display font-bold">{(name || 'S').charAt(0).toUpperCase()}</span>
                     <span className="text-[9px] font-medium opacity-60">{t('spaces:create.icon.upload')}</span>
                   </>
                 )}
@@ -177,7 +177,7 @@ export function CreateSpaceModal() {
             <button
               type="button"
               onClick={handleRemoveIcon}
-              className="ml-2 self-start mt-1 text-txt-tertiary hover:text-txt-danger text-xs transition-colors"
+              className="ms-2 self-start mt-1 text-txt-tertiary hover:text-txt-danger text-xs transition-colors"
             >
               {t('common:actions.remove')}
             </button>
@@ -269,7 +269,7 @@ export function CreateSpaceModal() {
             rows={3}
             className="input-standard w-full resize-none"
           />
-          <div className="text-[11px] text-txt-tertiary text-right">
+          <div className="text-[11px] text-txt-tertiary text-end">
             {t('spaces:create.description.counter', { length: description.length, max: DESCRIPTION_MAX_LENGTH })}
           </div>
         </div>
@@ -288,7 +288,7 @@ export function CreateSpaceModal() {
               <button
                 type="submit"
                 disabled={isLoading || uploadingIcon}
-                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50"
               >
                 {isLoading ? t('spaces:create.submitting') : t('spaces:create.submit')}
               </button>

@@ -6,6 +6,14 @@ export default {
   ],
   theme: {
     extend: {
+      // Chai Pop is chunky: every named radius steps up, so buttons, inputs and cards round out together.
+      borderRadius: {
+        DEFAULT: '8px',
+        md: '10px',
+        lg: '14px',
+        xl: '18px',
+        '2xl': '22px',
+      },
       height: { screen: 'calc(100 * var(--app-vh))' },
       minHeight: { screen: 'calc(100 * var(--app-vh))' },
       colors: {
@@ -45,6 +53,7 @@ export default {
           positive:  'rgb(var(--text-positive) / <alpha-value>)',
           warning:   'rgb(var(--text-warning) / <alpha-value>)',
           danger:    'rgb(var(--text-danger) / <alpha-value>)',
+          'on-primary': 'rgb(var(--text-on-primary) / <alpha-value>)',
         },
         interactive: {
           hover:    'var(--interactive-hover)',
@@ -67,13 +76,16 @@ export default {
       },
       boxShadow: {
         'header': '0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05), 0 2px 0 rgba(4, 4, 5, 0.05)',
+        // Chai Pop: hard offset shadow under active, "stuck-on" things
+        'sticker': 'var(--sticker-shadow)',
         'elevation-low': '0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05), 0 2px 0 rgba(4, 4, 5, 0.05)',
         'elevation-high': '0 8px 16px rgba(0, 0, 0, 0.24)',
         'glass': '0 2px 8px rgba(0,0,0,0.25), 0 8px 24px rgba(0,0,0,0.15), inset 0 1px 0 var(--glass-highlight)',
         'input': 'inset 0 1px 2px rgba(0, 0, 0, 0.25)',
       },
       fontFamily: {
-        sans: ['DM Sans', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+        sans: ['Figtree', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+        display: ['Bricolage Grotesque', 'Figtree', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
       },
       animation: {
         'slide-up-sheet': 'slide-up-sheet 200ms ease-out',

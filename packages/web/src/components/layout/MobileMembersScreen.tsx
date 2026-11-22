@@ -38,7 +38,7 @@ function MobileMemberRow({
   const displayName = spaceMemberName(member, canonical);
 
   const rowClass = isRichActivity
-    ? `flex items-center gap-2.5 px-4 py-2.5 rounded-[10px] mb-1 cursor-pointer transition-colors glass-pill border-l-2 ${accentClass} active:bg-interactive-hover`
+    ? `flex items-center gap-2.5 px-4 py-2.5 rounded-[10px] mb-1 cursor-pointer transition-colors glass-pill border-s-2 ${accentClass} active:bg-interactive-hover`
     : 'flex items-center gap-2.5 px-4 py-2.5 rounded-[4px] cursor-pointer transition-colors active:bg-interactive-hover';
 
   return (

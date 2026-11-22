@@ -36,6 +36,7 @@ import {
   type PendingMessageView,
   type PendingAttachmentView,
 } from '../../stores/pendingMessageStore';
+import { useNetworkStatus } from '../../hooks/useNetworkStatus';
 import { useTransferStore } from '../../stores/transferStore';
 import { useMessageJump } from './messageJumpContext';
 import { ReactionPill } from './ReactionPill';
@@ -193,7 +194,10 @@ export function Message({ message, isCompact, isFirstInGroup, previousMessageId 
     const t = transfersForRow.get(tid);
     return t && (t.state === 'failed' || t.state === 'aborted');
   });
-  const showRetryDiscardRow = pending?.state === 'failed' || anyTransferTerminallyBad;
+  const online = useNetworkStatus();
+  // Offline, a message that has not gone out is waiting, not failed: it sends when the connection is back.
+  const waitingOffline = !online && !!pending && !anyTransferTerminallyBad;
+  const showRetryDiscardRow = !waitingOffline && (pending?.state === 'failed' || anyTransferTerminallyBad);
   // Retry is only feasible when we can re-source the bytes for every transfer in the
   // pending row — either the in-memory File ref still exists (same-session retry)
   // or a persisted FileSystemFileHandle can reacquire the bytes (Chrome/Edge drag-drop).
@@ -495,7 +499,7 @@ export function Message({ message, isCompact, isFirstInGroup, previousMessageId 
       aria-label={t('chat:message.rowLabel', { author: displayName, time: formatMessageTimestamp(t, fmt, message.createdAt) })}
       className={`group relative flex gap-4 px-5 py-[3px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-primary/60 ${isFirstInGroup || message.replyTo ? 'mt-[1.0625rem]' : ''} ${
         isMentioned
-          ? 'bg-accent-amber/10 border-l-2 border-l-accent-amber hover:bg-accent-amber/15'
+          ? 'bg-accent-amber/10 border-s-2 border-s-accent-amber hover:bg-accent-amber/15'
           : 'hover:bg-[rgba(255,255,255,0.025)]'
       }`}
       onMouseEnter={() => setIsHovered(true)}
@@ -509,7 +513,7 @@ export function Message({ message, isCompact, isFirstInGroup, previousMessageId 
     >
       {/* Reply Line */}
       {message.replyTo && (
-        <div className="absolute left-[40px] top-[-14px] w-[30px] h-[22px] border-l-2 border-t-2 border-interactive-muted rounded-tl-[6px] opacity-60" />
+        <div className="absolute start-[40px] top-[-14px] w-[30px] h-[22px] border-s-2 border-t-2 border-interactive-muted rounded-ss-[6px] opacity-60" />
       )}
 
       {/* Avatar or timestamp column */}
@@ -527,7 +531,7 @@ export function Message({ message, isCompact, isFirstInGroup, previousMessageId 
             />
           </div>
         ) : (
-          <span className={`text-[11px] text-txt-tertiary opacity-0 group-hover:opacity-100 select-none w-full text-right whitespace-nowrap leading-[1.375rem]`}>
+          <span className={`text-[11px] text-txt-tertiary opacity-0 group-hover:opacity-100 select-none w-full text-end whitespace-nowrap leading-[1.375rem]`}>
             {formatHoverTime(message.createdAt)}
           </span>
         )}
@@ -557,13 +561,13 @@ export function Message({ message, isCompact, isFirstInGroup, previousMessageId 
           );
           // Outside a message list (no jump handle) the preview stays inert.
           if (!jumpToMessage) {
-            return <div className="flex items-center gap-1 mb-1 ml-[-4px] opacity-80 min-w-0">{preview}</div>;
+            return <div className="flex items-center gap-1 mb-1 ms-[-4px] opacity-80 min-w-0">{preview}</div>;
           }
           return (
             <button
               type="button"
               onClick={() => jumpToMessage(replyTo.id)}
-              className="group/reply flex items-center gap-1 max-w-full min-w-0 mb-1 ml-[-8px] pl-1 pr-1.5 rounded-md text-left opacity-80 hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-accent-primary/60 transition-opacity cursor-pointer"
+              className="group/reply flex items-center gap-1 max-w-full min-w-0 mb-1 ms-[-8px] ps-1 pe-1.5 rounded-md text-start opacity-80 hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-accent-primary/60 transition-opacity cursor-pointer"
             >
               <span className="sr-only">{t('chat:message.reply.jump')}</span>
               {preview}
@@ -584,7 +588,7 @@ export function Message({ message, isCompact, isFirstInGroup, previousMessageId 
               <PersonName
                 name={displayName}
                 person={displayIdentity}
-                className="font-semibold cursor-pointer hover:underline text-[15px] leading-tight"
+                className="font-display font-bold cursor-pointer hover:underline text-[15.5px] leading-tight"
                 style={roleColor}
               />
             </span>
@@ -605,7 +609,7 @@ export function Message({ message, isCompact, isFirstInGroup, previousMessageId 
               rows={2}
               autoFocus
             />
-            <p className="text-[12px] text-txt-tertiary mt-1.5 ml-1">
+            <p className="text-[12px] text-txt-tertiary mt-1.5 ms-1">
               <Trans
                 t={t}
                 i18nKey="chat:message.edit.hint"
@@ -659,7 +663,7 @@ export function Message({ message, isCompact, isFirstInGroup, previousMessageId 
                       ? <StickerMessage token={message.content} />
                       : <MarkdownRenderer content={message.content} channelId={mentionChannelId} />}
                     {message.editedAt && (
-                      <span className="text-[10px] text-txt-tertiary ml-1 select-none font-medium">{t('chat:message.edited')}</span>
+                      <span className="text-[10px] text-txt-tertiary ms-1 select-none font-medium">{t('chat:message.edited')}</span>
                     )}
                   </div>
                 )}
@@ -686,6 +690,13 @@ export function Message({ message, isCompact, isFirstInGroup, previousMessageId 
                   return <AttachmentRenderer key={att.id} attachment={att} />;
                 })}
               </div>
+            )}
+
+            {waitingOffline && (
+              <span className="mt-1 flex items-center gap-1.5 text-[12px] font-bold text-accent-amber">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
+                {t('chat:message.waitingToSend')}
+              </span>
             )}
 
             {/* Failed-state retry/discard row */}
@@ -779,9 +790,9 @@ export function Message({ message, isCompact, isFirstInGroup, previousMessageId 
 
       {/* Action buttons on hover */}
       {showInteractions && (isHovered || reactionPicker === 'button' || confirmingDelete) && !isEditing && (
-        <div className="absolute -top-[18px] right-4 flex items-center glass rounded-[10px] overflow-hidden z-10 h-8">
+        <div className="absolute -top-[18px] end-4 flex items-center glass rounded-[10px] overflow-hidden z-10 h-8">
           {canAddReactions && (
-            <div className="flex items-center px-1 border-r border-white/[0.06] h-full">
+            <div className="flex items-center px-1 border-e border-white/[0.06] h-full">
               {['👍', '❤️', '😂', '😮'].map(emoji => (
                 <button
                   key={emoji}

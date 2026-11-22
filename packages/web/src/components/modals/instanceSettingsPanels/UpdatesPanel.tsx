@@ -212,10 +212,10 @@ export function UpdatesPanel() {
                 type="button"
                 onClick={() => setShowManual((v) => !v)}
                 aria-expanded={showManual}
-                className="flex items-center gap-1 -ml-1 px-1 py-0.5 rounded text-xs text-txt-secondary hover:text-txt-primary transition-colors"
+                className="flex items-center gap-1 -ms-1 px-1 py-0.5 rounded text-xs text-txt-secondary hover:text-txt-primary transition-colors"
               >
                 <svg
-                  className={`w-3 h-3 transition-transform ${showManual ? 'rotate-90' : ''}`}
+                  className={`w-3 h-3 transition-transform ${showManual ? 'rotate-90' : 'rtl:rotate-180'}`}
                   fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
                   aria-hidden="true"
                 >

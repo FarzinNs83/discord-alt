@@ -22,10 +22,10 @@ function formatElapsed(startMs: number, t: TFunction<'common'>): string {
 /** Returns the accent border color class for an activity type */
 export function getActivityAccentClass(type: Activity['type']): string {
   switch (type) {
-    case 'playing': return 'border-l-accent-mint';
-    case 'listening': return 'border-l-accent-sky';
-    case 'watching': return 'border-l-accent-lavender';
-    case 'streaming': return 'border-l-accent-rose';
+    case 'playing': return 'border-s-accent-mint';
+    case 'listening': return 'border-s-accent-sky';
+    case 'watching': return 'border-s-accent-lavender';
+    case 'streaming': return 'border-s-accent-rose';
     default: return '';
   }
 }

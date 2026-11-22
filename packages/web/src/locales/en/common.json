@@ -123,7 +123,8 @@
   },
   "chrome": {
     "toggleMemberList": "Toggle Member List",
-    "closeSettings": "Close settings"
+    "closeSettings": "Close settings",
+    "escKey": "Esc"
   },
   "sourceCode": {
     "label": "Source code (AGPL)",

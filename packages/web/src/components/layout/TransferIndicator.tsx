@@ -67,21 +67,21 @@ export function TransferIndicator() {
           <path d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
         </svg>
         {active.length > 0 && (
-          <span className={`absolute -top-0.5 -right-0.5 ${badgeColor} text-black text-[10px] font-medium rounded-full px-1.5 leading-4 min-w-[16px] text-center`}>
+          <span className={`absolute -top-0.5 -end-0.5 ${badgeColor} text-black text-[10px] font-medium rounded-full px-1.5 leading-4 min-w-[16px] text-center`}>
             {active.length}
           </span>
         )}
       </button>
       {open && (
-        // Desktop: anchor below the trigger via `absolute right-0 top-full`.
+        // Desktop: anchor below the trigger via `absolute end-0 top-full`.
         // Mobile (<768px): switch to `fixed` so the panel pins to the viewport
         // right edge with an 8px margin instead of inheriting the trigger's
         // x-position. This prevents left-edge clipping on narrow viewports
         // (e.g. 320px) where the trigger sits well to the left of the
-        // viewport's right edge — `right-0` would otherwise anchor the
+        // viewport's right edge — `end-0` would otherwise anchor the
         // panel to the trigger's right and let the 300px panel extend off
         // the left of the viewport.
-        <div className="fixed right-2 top-14 desktop:absolute desktop:right-0 desktop:top-full desktop:mt-2 w-[min(300px,calc(calc(100*var(--app-vw))-16px))] glass z-50 rounded-lg overflow-hidden">
+        <div className="fixed end-2 top-14 desktop:absolute desktop:end-0 desktop:top-full desktop:mt-2 w-[min(300px,calc(calc(100*var(--app-vw))-16px))] glass z-50 rounded-lg overflow-hidden">
           <div className="px-3 py-2 border-b border-border-soft text-xs flex justify-between items-center">
             <span className="text-txt-secondary">
               {t('uploads:transfers.count', { count: visible.length })}

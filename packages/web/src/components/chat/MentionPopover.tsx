@@ -60,7 +60,7 @@ function MentionMemberRow({
         </span>
         {showUsername && (
           <span className="flex min-w-0 overflow-hidden">
-            <span className={`text-[12px] text-txt-tertiary min-w-0 truncate ${mobile ? 'pl-3' : 'pl-2.5'}`}>
+            <span className={`text-[12px] text-txt-tertiary min-w-0 truncate ${mobile ? 'ps-3' : 'ps-2.5'}`}>
               @{canonical.username}
             </span>
           </span>
@@ -177,7 +177,7 @@ function MobileMention({
     <>
       <div className="fixed inset-0 z-[300] bg-black/30 pointer-events-none" />
       <div
-        className="fixed left-0 right-0 z-[301] rounded-t-2xl glass-modal animate-slide-up-sheet flex flex-col"
+        className="fixed start-0 end-0 z-[301] rounded-t-2xl glass-modal animate-slide-up-sheet flex flex-col"
         style={{
           bottom: 'var(--keyboard-inset)',
           paddingBottom: 'var(--safe-bottom)',

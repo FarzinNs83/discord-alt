@@ -1,0 +1,294 @@
+{
+  "chatPanel": {
+    "title": "گفتگو",
+    "close": "بستن گفتگو"
+  },
+  "badges": {
+    "mutedNoPermission": "بی‌صدا (اجازه‌ی صحبت ندارد)",
+    "spaceMuted": "بی‌صدا در فضا",
+    "mutedSpaceDeafened": "بی‌صدا (ناشنوا در فضا)",
+    "spaceDeafened": "ناشنوا در فضا",
+    "locallyMuted": "بی‌صدا برای تو",
+    "live": "زنده",
+    "you": "(تو)"
+  },
+  "moderation": {
+    "spaceMute": "بی‌صدا کردن در فضا",
+    "spaceUnmute": "برداشتن بی‌صدایی در فضا",
+    "spaceDeafen": "ناشنوا کردن در فضا",
+    "spaceUndeafen": "برداشتن ناشنوایی در فضا",
+    "disconnect": "قطع اتصال",
+    "moveTo": "انتقال به"
+  },
+  "participantMenu": {
+    "watchCamera": "دیدن دوربین",
+    "stopWatchingCamera": "قطع دیدن دوربین",
+    "muteUser": "بی‌صدا کردن کاربر",
+    "userVolume": "بلندی صدای کاربر"
+  },
+  "incomingCall": {
+    "status": "تماس صوتی ورودی...",
+    "notificationTitle": "تماس ورودی",
+    "notificationBody": "{{name}} دارد به تو زنگ می‌زند"
+  },
+  "grid": {
+    "waitingForOthers": "منتظر پیوستن بقیه...",
+    "returnToGridHint": "برای برگشت به نمای شبکه‌ای کلیک کن",
+    "backToGrid": "برگشت به نمای شبکه‌ای",
+    "gridButton": "شبکه",
+    "showMembers": "نمایش اعضا",
+    "hideMembers": "پنهان کردن اعضا"
+  },
+  "connectionInfo": {
+    "title": "اطلاعات اتصال",
+    "notConnected": "وصل نیست",
+    "gathering": "در حال جمع‌آوری آمار...",
+    "section": {
+      "network": "شبکه",
+      "audio": "صدا",
+      "video": "ویدیو"
+    },
+    "network": {
+      "ping": "پینگ",
+      "packetLoss": "از دست رفتن بسته",
+      "jitter": "لرزش",
+      "server": "سرور",
+      "protocol": "پروتکل"
+    },
+    "video": {
+      "requestedCodec": "کدک درخواستی",
+      "negotiatedCodec": "کدک توافق‌شده",
+      "encoderImplementation": "پیاده‌سازی رمزگذار",
+      "qpDelta": "تغییر مجموع QP",
+      "nackDelta": "تغییر NACK",
+      "pliDelta": "تغییر PLI"
+    },
+    "source": {
+      "microphone": "میکروفون",
+      "camera": "دوربین",
+      "screen": "صفحه",
+      "screenAudio": "صدای صفحه",
+      "unknown": "نامشخص"
+    },
+    "remoteParticipant": "راه دور"
+  },
+  "screenPicker": {
+    "title": "اشتراک‌گذاری صفحه",
+    "tabs": {
+      "screens": "صفحه‌ها",
+      "windows": "پنجره‌ها"
+    },
+    "searchWindows": "جستجوی پنجره‌ها...",
+    "noWindowsMatch": "هیچ پنجره‌ای با جستجوی تو جور نیست",
+    "noScreens": "صفحه‌ای در دسترس نیست",
+    "noWindows": "پنجره‌ای در دسترس نیست",
+    "loadingSources": "در حال پیدا کردن صفحه‌ها و پنجره‌ها…",
+    "chooseTitle": "انتخاب کن چه چیزی به اشتراک گذاشته شود",
+    "chooseHint": "مرورگرت می‌پرسد کدام صفحه، پنجره یا زبانه به اشتراک گذاشته شود.",
+    "chooseHintSystem": "سیستمت می‌پرسد کدام صفحه یا پنجره به اشتراک گذاشته شود.",
+    "choose": "انتخاب",
+    "chooseAgain": "انتخاب چیز دیگر",
+    "preview": "پیش‌نمایش",
+    "audioNeedsRepick": "تنظیم صدای سیستم بعد از انتخاب دوباره اعمال می‌شود.",
+    "cancelled": "چیزی انتخاب نشد.",
+    "unsupported": "این مرورگر نمی‌تواند صفحه‌ات را به اشتراک بگذارد.",
+    "captureFailed": "ضبط صفحه شروع نشد.",
+    "startFailed": "پخش شروع نشد.",
+    "audioCaptureFailed": "ضبط با صدای سیستم شروع نشد. اگر سیستمت پشتیبانی نمی‌کند، صدای سیستم را خاموش کن.",
+    "start": "شروع پخش",
+    "subtitle": "انتخاب کن چه چیزی پخش شود، کیفیت را تنظیم کن و شروع کن.",
+    "stageIdle": "هنوز چیزی انتخاب نشده",
+    "stageReady": "آماده‌ی پخش زنده",
+    "permissionHintMac": "macOS تا وقتی پاتوق اجازه‌ی ضبط صفحه نداشته باشد جلوی ضبط را می‌گیرد. آن را در System Settings ← Privacy & Security ← Screen Recording بده و دوباره امتحان کن.",
+    "retrySources": "دوباره امتحان کن",
+    "kind": {
+      "monitor": "صفحه",
+      "window": "پنجره"
+    }
+  },
+  "streamSettings": {
+    "title": "تنظیمات پخش",
+    "hostLimits": "محدودیت‌های تعیین‌شده توسط {{host}}",
+    "resolution": "وضوح",
+    "frameRate": "نرخ فریم",
+    "contentMode": "حالت محتوا",
+    "mode": {
+      "gaming": "بازی",
+      "text": "متن"
+    },
+    "codec": "کدک",
+    "codecOption": {
+      "vp9": "VP9",
+      "h264": "H264"
+    },
+    "bitrate": "نرخ بیت",
+    "custom": "سفارشی",
+    "auto": "خودکار",
+    "customBitrateDisabled": "نرخ بیت سفارشی توسط مدیر غیرفعال شده",
+    "customBitrateDisabledByHost": "نرخ بیت سفارشی توسط {{host}} خاموش شده",
+    "systemAudio": "صدای سیستم",
+    "chromeEchoNote": "کروم وقتی نوع ضبط اجازه دهد می‌تواند صدای پاتوق را کنار بگذارد",
+    "electronWindowsAudioNote": "اگر restrictOwnAudio پشتیبانی نشود، ضبط ویندوز ممکن است صدای تماس را هم بگیرد",
+    "electronMacAudioNote": "macOS 13 به بعد اجازه‌ی ضبط صفحه و صدای سیستم می‌خواهد",
+    "electronLinuxAudioNote": "لینوکس به سازگاری PulseAudio نیاز دارد؛ ممکن است صدای پاتوق هم ضبط شود",
+    "systemAudioNote": {
+      "excluded": "بیننده‌ها صدای کامپیوترت را می‌شنوند، ولی گفتگوی صوتی و بقیه‌ی صداهای پاتوق را نه.",
+      "excludedMac": "بیننده‌ها صدای مکت را می‌شنوند، ولی گفتگوی صوتی و بقیه‌ی صداهای پاتوق را نه. macOS اجازه‌ی ضبط صفحه و صدای سیستم را می‌خواهد.",
+      "includedWindows": "این نسخه‌ی ویندوز همه‌ی صداها را، از جمله گفتگوی صوتی، پخش می‌کند: بیننده‌ها صدای خودشان را می‌شنوند. در ویندوز ۱۱ صدای خود پاتوق کنار گذاشته می‌شود.",
+      "includedMac": "این نسخه‌ی macOS همه‌ی صداها را، از جمله گفتگوی صوتی، پخش می‌کند: بیننده‌ها صدای خودشان را می‌شنوند. در macOS 14.2 به بعد صدای خود پاتوق کنار گذاشته می‌شود. macOS اجازه‌ی ضبط صفحه و صدای سیستم را می‌خواهد.",
+      "includedLinux": "لینوکس همه‌ی صداها را، از جمله گفتگوی صوتی، پخش می‌کند: بیننده‌ها صدای خودشان را می‌شنوند. به PulseAudio یا PipeWire با pipewire-pulse نیاز دارد.",
+      "unavailableMac": "صدای سیستم به macOS 13 یا جدیدتر نیاز دارد."
+    },
+    "systemAudioStartFailed": "پخش با صدای سیستم شروع نشد. اگر این سیستم پشتیبانی نمی‌کند، اشتراک صدای سیستم را خاموش کن.",
+    "systemAudioAddFailed": "افزودن صدای سیستم به پخش ممکن نشد.",
+    "systemAudioAdding": "در حال افزودن صدای سیستم…",
+    "systemAudioLiveUnavailable": "صدای سیستم فقط هنگام شروع پخش اضافه می‌شود. برای داشتنش پخش را از نو شروع کن.",
+    "softwareH264Fallback": "رمزگذاری سخت‌افزاری H264 در دسترس نیست. OpenH264 نرم‌افزاری استفاده می‌شود؛ شاید VP9 بهتر باشد.",
+    "degradation": {
+      "maintainResolution": "حفظ وضوح",
+      "maintainFramerate": "حفظ نرخ فریم",
+      "balanced": "متعادل"
+    },
+    "summary": "{{bitrate}} · {{degradation}}"
+  },
+  "stream": {
+    "quality": "کیفیت پخش",
+    "qualityValue": "{{height}}p {{fps}} فریم",
+    "volume": "بلندی صدای پخش",
+    "attenuation": "کاهش صدای پخش",
+    "attenuationStrength": "شدت کاهش صدا",
+    "stop": "توقف پخش",
+    "change": "تغییر پخش",
+    "stopWatching": "قطع تماشا",
+    "watch": "تماشای پخش",
+    "watchShort": "تماشا",
+    "mute": "بی‌صدا کردن پخش",
+    "isStreaming": "{{name}} دارد پخش می‌کند"
+  },
+  "streamDiagnostics": {
+    "publisherNetwork": "شبکه‌ی پخش‌کننده ناپایدار است",
+    "publisherCpu": "کامپیوتر پخش‌کننده به‌اندازه‌ی کافی سریع ویدیو را رمزگذاری نمی‌کند",
+    "viewerNetwork": "اتصال تو ناپایدار است",
+    "reconnecting": "اتصال قطع شد — در حال اتصال دوباره…",
+    "unknown": "اتصال ناپایدار است؛ معلوم نشد مشکل از کدام طرف است"
+  },
+  "voiceDiagnostics": {
+    "selfNetwork": "اتصال تو ناپایدار است",
+    "participantNetwork": "اتصال {{name}} ناپایدار است",
+    "reconnecting": "اتصال به سرور صوتی قطع شد — در حال اتصال دوباره…"
+  },
+  "channelDuration": "کانال {{duration}} است که فعال است",
+  "controls": {
+    "spaceMutedSelfMuted": "بی‌صدا در فضا (خودت هم بی‌صدا کرده‌ای)",
+    "unmuteShortcut": "باصدا (M)",
+    "muteShortcut": "بی‌صدا (M)",
+    "undeafenShortcut": "برداشتن ناشنوایی (D)",
+    "deafenShortcut": "ناشنوا (D)",
+    "unmute": "باصدا",
+    "mute": "بی‌صدا",
+    "undeafen": "برداشتن ناشنوایی",
+    "deafen": "ناشنوا",
+    "cameraOff": "خاموش کردن دوربین",
+    "cameraOn": "روشن کردن دوربین",
+    "stopSharing": "توقف اشتراک",
+    "shareScreen": "اشتراک صفحه",
+    "shareOptions": "گزینه‌های اشتراک صفحه",
+    "toggleChat": "نمایش/پنهان کردن گفتگو",
+    "exitFullscreen": "خروج از تمام‌صفحه (Esc)",
+    "fullscreen": "تمام‌صفحه",
+    "disconnect": "قطع اتصال",
+    "connectionInfo": "اطلاعات اتصال",
+    "noiseSuppressionOff": "خاموش کردن حذف نویز هوشمند",
+    "noiseSuppressionOn": "روشن کردن حذف نویز هوشمند"
+  },
+  "status": {
+    "dmCall": "تماس خصوصی",
+    "voiceChannel": "کانال صوتی",
+    "voiceCall": "تماس صوتی",
+    "connectionFailed": "اتصال ناموفق بود",
+    "connected": "صدا وصل است",
+    "connecting": "در حال اتصال...",
+    "reconnecting": "در حال اتصال دوباره…",
+    "disconnected": "قطع شد",
+    "connectionLost": "اتصال قطع شد. دوباره امتحان کن.",
+    "retry": "دوباره"
+  },
+  "camera": {
+    "auto": "خودکار",
+    "autoSystemDefault": "خودکار (پیش‌فرض سیستم)",
+    "selected": "دوربین انتخاب‌شده",
+    "fallbackName": "دوربین {{index}}",
+    "select": "انتخاب دوربین",
+    "switch": "تعویض دوربین",
+    "turnOn": "روشن کردن دوربین",
+    "turnOff": "خاموش کردن دوربین"
+  },
+  "joinSheet": {
+    "peopleInVoice_one": "{{count}} نفر در صدا",
+    "peopleInVoice_other": "{{count}} نفر در صدا",
+    "switchNotice": "از <current>{{current}}</current> خارج می‌شوی و به <target>{{target}}</target> می‌پیوندی",
+    "checkingCamera": "در حال بررسی دوربین…",
+    "tapToPreview": "برای پیش‌نمایش دوربین بزن",
+    "cameraDenied": "اجازه‌ی دوربین داده نشد.",
+    "stopPreview": "توقف پیش‌نمایش",
+    "enablePreview": "روشن کردن پیش‌نمایش دوربین",
+    "previewError": {
+      "inUse": "دوربین دست برنامه‌ی دیگری است.",
+      "unavailable": "دوربین انتخاب‌شده در دسترس نیست.",
+      "notFound": "دوربینی پیدا نشد.",
+      "failed": "پیش‌نمایش دوربین شروع نشد."
+    },
+    "empty": {
+      "title": "هنوز کسی در این کانال نیست.",
+      "hint": "اولین نفر باش!"
+    },
+    "unmuteMicrophone": "روشن کردن میکروفون",
+    "muteMicrophone": "خاموش کردن میکروفون",
+    "switchChannel": "تعویض کانال",
+    "join": "پیوستن به صدا"
+  },
+  "mobileCall": {
+    "collapse": "کوچک کردن تماس",
+    "connectedCount_one": "{{count}} نفر وصل",
+    "connectedCount_other": "{{count}} نفر وصل",
+    "viewMembers": "دیدن اعضا",
+    "micDenied": {
+      "title": "اجازه‌ی میکروفون داده نشد",
+      "description": "فقط شنونده‌ای — بقیه صدایت را نمی‌شنوند.",
+      "allow": "اجازه دادن به میکروفون"
+    },
+    "shareScreen": "اشتراک صفحه",
+    "stopSharingScreen": "توقف اشتراک صفحه",
+    "disconnect": "قطع تماس"
+  },
+  "connectLocked": "اجازه‌ی وصل شدن به این کانال را نداری",
+  "micPrearm": {
+    "denied": "اجازه‌ی میکروفون داده نشد. به‌عنوان شنونده وارد شدی. برای دادن اجازه «اجازه دادن به میکروفون» را بزن.",
+    "notFound": "میکروفونی پیدا نشد. به‌عنوان شنونده وارد شدی."
+  },
+  "micRetry": {
+    "stillDenied": "اجازه‌ی میکروفون هنوز داده نشده. در تنظیمات مرورگر یا دستگاه برای این سایت اجازه بده.",
+    "notFound": "میکروفونی پیدا نشد.",
+    "failed": "دسترسی به میکروفون ممکن نشد."
+  },
+  "soundboard": {
+    "title": "ساندبورد",
+    "upload": "بارگذاری صدا",
+    "add": "افزودن",
+    "name": "نام صدا",
+    "emoji": "ایموجی",
+    "empty": "هنوز صدایی نیست. کسانی که کانال‌ها را مدیریت می‌کنند می‌توانند صدا بارگذاری کنند.",
+    "emptyManager": "هنوز صدایی نیست. یک کلیپ کوتاه تا ۶ ثانیه بارگذاری کن.",
+    "play": "پخش {{name}}",
+    "remove": "حذف {{name}}",
+    "tooLong": "صداها حداکثر {{seconds}} ثانیه و {{size}} مگابایت می‌توانند باشند.",
+    "cooldown_one": "{{count}} ثانیه‌ی دیگر می‌توانی صدای بعدی را پخش کنی",
+    "cooldown_other": "{{count}} ثانیه‌ی دیگر می‌توانی صدای بعدی را پخش کنی",
+    "volume": "بلندی صداها برای من",
+    "rule_one": "هر نفر هر {{count}} ثانیه یک صدا می‌تواند پخش کند.",
+    "rule_other": "هر نفر هر {{count}} ثانیه یک صدا می‌تواند پخش کند.",
+    "justPlayed": "تازه پخش‌شده",
+    "played": "{{name}}، {{sound}} را پخش کرد",
+    "someone": "یه نفر"
+  }
+}

@@ -30,7 +30,7 @@ function ActivityFriendRow({
   const friendDisplayName = canonical.displayName ?? baseName;
 
   const rowClass = isRichActivity
-    ? `flex items-center gap-2.5 px-2.5 py-2 rounded-[10px] mb-1 cursor-pointer transition-colors glass-pill border-l-2 ${accentClass}`
+    ? `flex items-center gap-2.5 px-2.5 py-2 rounded-[10px] mb-1 cursor-pointer transition-colors glass-pill border-s-2 ${accentClass}`
     : 'flex items-center gap-2.5 px-2 py-1.5 rounded-[4px] hover:bg-interactive-hover cursor-pointer group transition-colors';
 
   return (
@@ -145,9 +145,9 @@ export function ActivityPanel() {
   };
 
   return (
-    <div className="w-60 bg-surface-channel flex-shrink-0 overflow-y-auto select-none no-scrollbar hidden desktop:block border-l border-border-hard">
+    <div className="w-60 bg-surface-channel flex-shrink-0 overflow-y-auto select-none no-scrollbar hidden desktop:block border-s border-border-hard">
       <div className="p-3">
-        <h3 className="text-[20px] font-bold text-txt-primary mb-4 px-2">{t('social:activity.title')}</h3>
+        <h3 className="text-[20px] font-display font-bold text-txt-primary mb-4 px-2">{t('social:activity.title')}</h3>
 
         {activeFriends.length === 0 && onlineFriends.length === 0 && offlineFriends.length === 0 ? (
           <div className="text-center py-8">

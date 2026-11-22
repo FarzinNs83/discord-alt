@@ -111,7 +111,7 @@ function MembersPanelRow({
             <div className="text-sm font-medium truncate">
               {displayName}
               {isFederationGlobeApplicable(canonical) && (
-                <span className="ml-1 text-[10px] text-txt-tertiary opacity-60">@{parseFederatedUsername(canonical.username).domain}</span>
+                <span className="ms-1 text-[10px] text-txt-tertiary opacity-60">@{parseFederatedUsername(canonical.username).domain}</span>
               )}
             </div>
             <div className="flex items-center gap-1 flex-wrap">
@@ -155,7 +155,7 @@ function MembersPanelRow({
           )}
           {expandable && (
             <svg
-              className={`w-4 h-4 text-txt-tertiary transition-transform ${isExpanded ? 'rotate-90' : ''}`}
+              className={`w-4 h-4 text-txt-tertiary transition-transform ${isExpanded ? 'rotate-90' : 'rtl:rotate-180'}`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -169,7 +169,7 @@ function MembersPanelRow({
 
       {/* Role checkboxes — only shown when expanded */}
       {isExpanded && expandable && (
-        <div className="mt-1 mb-1 ml-10 space-y-1">
+        <div className="mt-1 mb-1 ms-10 space-y-1">
           {assignableRoles.map((role) => {
             const lock = roleLocks.get(role.id);
             const manageable = lock === undefined;
@@ -209,7 +209,7 @@ function MembersPanelRow({
             <div className="flex items-center gap-2 mt-1.5">
               <button
                 onClick={() => onSaveRoles(member.userId)}
-                className="px-2 py-0.5 text-xs bg-accent-primary hover:bg-accent-primary/80 text-white rounded transition-colors"
+                className="px-2 py-0.5 text-xs bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary rounded transition-colors"
               >
                 {t('common:actions.save')}
               </button>
@@ -330,7 +330,7 @@ export function MembersPanel({ spaceId }: MembersPanelProps) {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-lg font-semibold text-txt-primary mb-6">{t('common:labels.members')}</h2>
+      <h2 className="font-display font-extrabold text-[32px] leading-tight tracking-[-0.03em] text-txt-primary mb-6">{t('common:labels.members')}</h2>
       {error && (
         <div className="p-2 bg-accent-rose/10 border border-accent-rose/30 rounded text-txt-danger text-sm">{error}</div>
       )}

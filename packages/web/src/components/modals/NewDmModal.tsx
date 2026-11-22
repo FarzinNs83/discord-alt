@@ -24,7 +24,7 @@ function NewDmUserRow({
   return (
     <button
       onClick={() => onSelect(user)}
-      className="w-full flex items-center gap-3 px-3 py-2 rounded-[4px] hover:bg-interactive-hover transition-colors text-left"
+      className="w-full flex items-center gap-3 px-3 py-2 rounded-[4px] hover:bg-interactive-hover transition-colors text-start"
     >
       <Avatar src={canonical.avatar} name={displayName} size={36} status={canonical.status as any} userId={canonical.homeUserId ?? canonical.id} avatarColor={canonical.avatarColor} />
       <div className="flex-1 min-w-0">

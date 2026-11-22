@@ -268,5 +268,23 @@
     "stillDenied": "麦克风访问仍被拒绝。请在浏览器或设备设置中允许此网站使用麦克风。",
     "notFound": "未检测到麦克风。",
     "failed": "无法访问麦克风。"
+  },
+  "soundboard": {
+    "title": "音效板",
+    "upload": "上传音效",
+    "add": "添加",
+    "name": "音效名称",
+    "emoji": "表情",
+    "empty": "还没有音效。能管理频道的人可以上传。",
+    "emptyManager": "还没有音效。上传一段不超过 6 秒的短音频吧。",
+    "play": "播放 {{name}}",
+    "remove": "移除 {{name}}",
+    "tooLong": "音效最长 {{seconds}} 秒，最大 {{size}} MB。",
+    "cooldown_other": "{{count}} 秒后可以再播放",
+    "volume": "我听到的音效音量",
+    "rule_other": "每人每 {{count}} 秒可以播放一个音效。",
+    "justPlayed": "刚刚播放",
+    "played": "{{name}} 播放了 {{sound}}",
+    "someone": "有人"
   }
 }

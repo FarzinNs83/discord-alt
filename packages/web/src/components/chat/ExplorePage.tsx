@@ -234,7 +234,7 @@ export function ExplorePage() {
     <div className="flex-1 flex flex-col bg-surface-chat h-full">
       {/* Header */}
       <div className="h-12 px-4 flex items-center shadow-header flex-shrink-0 z-10 bg-surface-chat">
-        <div className="flex items-center gap-2 mr-4">
+        <div className="flex items-center gap-2 me-4">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-txt-tertiary">
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z" />
           </svg>
@@ -243,7 +243,7 @@ export function ExplorePage() {
 
         <div className="w-[1px] h-6 bg-surface-elevated mx-2" />
 
-        <div className="relative flex-1 max-w-xs ml-2">
+        <div className="relative flex-1 max-w-xs ms-2">
           <input
             type="text"
             placeholder={t('spaces:explore.searchPlaceholder')}
@@ -254,7 +254,7 @@ export function ExplorePage() {
           {searchQuery && (
             <button
               onClick={() => handleSearchChange('')}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-txt-tertiary hover:text-txt-secondary"
+              className="absolute end-2 top-1/2 -translate-y-1/2 text-txt-tertiary hover:text-txt-secondary"
               aria-label={t('common:actions.clear')}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -264,7 +264,7 @@ export function ExplorePage() {
           )}
         </div>
 
-        <div className="ml-auto flex items-center gap-1">
+        <div className="ms-auto flex items-center gap-1">
           <MemberListToggleButton />
         </div>
       </div>

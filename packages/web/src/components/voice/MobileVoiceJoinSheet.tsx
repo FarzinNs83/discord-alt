@@ -408,7 +408,7 @@ export function MobileVoiceJoinSheet({
           the open transform with the live finger offset. Releasing past the
           threshold extends the offset to off-screen and calls `onClose`. */}
       <div
-        className={`glass-bubble fixed bottom-0 left-0 right-0 z-50 rounded-t-2xl ${
+        className={`glass-bubble fixed bottom-0 start-0 end-0 z-50 rounded-t-2xl ${
           hasInteracted
             ? ''
             : `transition-transform duration-300 ease-out ${visible ? 'translate-y-0' : 'translate-y-full'}`
@@ -508,7 +508,7 @@ export function MobileVoiceJoinSheet({
               <button
                 type="button"
                 onClick={stopPreviewFromUser}
-                className="absolute top-2 right-2 rounded-md bg-black/60 text-white/90 text-[11px] px-2.5 py-1.5"
+                className="absolute top-2 end-2 rounded-md bg-black/60 text-white/90 text-[11px] px-2.5 py-1.5"
               >
                 {t('voice:joinSheet.stopPreview')}
               </button>
@@ -519,7 +519,7 @@ export function MobileVoiceJoinSheet({
                 the popup portals to document.body so it can extend above the
                 tile when the device list is long. */}
             {showCameraPicker && (
-              <div ref={pickerAnchorRef} className="absolute bottom-2 left-2">
+              <div ref={pickerAnchorRef} className="absolute bottom-2 start-2">
                 <button
                   type="button"
                   onClick={() => setPickerOpen((v) => !v)}
@@ -659,7 +659,7 @@ export function MobileVoiceJoinSheet({
               setCameraDeviceId(null);
               setPickerOpen(false);
             }}
-            className={`w-full text-left px-3 py-2 text-[12px] truncate ${
+            className={`w-full text-start px-3 py-2 text-[12px] truncate ${
               cameraDeviceId === null ? 'text-txt-primary' : 'text-txt-secondary'
             } active:bg-interactive-hover`}
           >
@@ -673,7 +673,7 @@ export function MobileVoiceJoinSheet({
                 setCameraDeviceId(d.deviceId);
                 setPickerOpen(false);
               }}
-              className={`w-full text-left px-3 py-2 text-[12px] truncate ${
+              className={`w-full text-start px-3 py-2 text-[12px] truncate ${
                 cameraDeviceId === d.deviceId ? 'text-txt-primary' : 'text-txt-secondary'
               } active:bg-interactive-hover`}
             >

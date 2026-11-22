@@ -487,7 +487,7 @@ export function VideoSection() {
           </div>
           <button
             onClick={startPreviewFromUser}
-            className="w-full text-[13px] px-3 py-2 rounded-md bg-accent-primary hover:bg-accent-primary-hover active:bg-accent-primary-active text-white font-medium transition-colors"
+            className="w-full text-[13px] px-3 py-2 rounded-md bg-accent-primary hover:bg-accent-primary-hover active:bg-accent-primary-active text-txt-on-primary font-medium transition-colors"
           >
             {t('voice.video.permissionPrompt.enable')}
           </button>
@@ -548,7 +548,7 @@ export function VideoSection() {
               onClick={stopPreviewFromUser}
               // Mobile: always visible (no hover state) and 44 px tap target
               // per iOS HIG. Desktop: original hover-reveal compact pill.
-              className="absolute top-2 right-2 rounded-md bg-black/60 hover:bg-black/75 text-white/90 transition-colors focus-visible:opacity-100
+              className="absolute top-2 end-2 rounded-md bg-black/60 hover:bg-black/75 text-white/90 transition-colors focus-visible:opacity-100
                          min-h-[44px] min-w-[44px] px-3 py-2 text-xs flex items-center justify-center
                          desktop:min-h-0 desktop:min-w-0 desktop:text-[11px] desktop:px-2 desktop:py-1 desktop:opacity-0 desktop:group-hover:opacity-100"
             >
@@ -575,13 +575,13 @@ export function VideoSection() {
             onClick={() => setListOpen((v) => !v)}
             className="w-full px-3 py-2 flex items-center justify-between rounded-md bg-surface-base hover:bg-interactive-hover transition-colors"
           >
-            <span className="text-[13px] text-txt-primary truncate text-left">{selectedLabel}</span>
+            <span className="text-[13px] text-txt-primary truncate text-start">{selectedLabel}</span>
             <svg
               width="16"
               height="16"
               viewBox="0 0 24 24"
               fill="currentColor"
-              className={`text-txt-tertiary flex-shrink-0 ml-2 transition-transform ${listOpen ? 'rotate-90' : ''}`}
+              className={`text-txt-tertiary flex-shrink-0 ms-2 transition-transform ${listOpen ? 'rotate-90' : ''}`}
             >
               <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
             </svg>
@@ -634,7 +634,7 @@ function DropdownItem({ label, active, onClick }: DropdownItemProps) {
     <button
       type="button"
       onClick={onClick}
-      className={`w-full px-3 py-2 text-left text-[13px] hover:bg-interactive-hover transition-colors flex items-center gap-2 ${
+      className={`w-full px-3 py-2 text-start text-[13px] hover:bg-interactive-hover transition-colors flex items-center gap-2 ${
         active ? 'text-txt-primary' : 'text-txt-secondary'
       }`}
     >
@@ -649,7 +649,7 @@ function DropdownItem({ label, active, onClick }: DropdownItemProps) {
           <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
         </svg>
       )}
-      <span className={`truncate ${active ? '' : 'pl-6'}`}>{label}</span>
+      <span className={`truncate ${active ? '' : 'ps-6'}`}>{label}</span>
     </button>
   );
 }

@@ -171,7 +171,7 @@ function AddInstanceFlow({ onDone }: { onDone: () => void }) {
             <button
               onClick={handleProbe}
               disabled={isLoading || !url.trim()}
-              className="px-4 py-2 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded transition-colors disabled:opacity-50"
+              className="px-4 py-2 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded transition-colors disabled:opacity-50"
             >
               {isLoading ? t('federation:connections.add.probing') : t('federation:connections.add.connect')}
             </button>
@@ -282,7 +282,7 @@ function RegistryFilterBar({
               filter === tab.key ? 'bg-white/[0.08] text-txt-primary' : 'text-txt-tertiary hover:text-txt-secondary'
             }`}
           >
-            {tab.label} <span className="text-[10px] text-txt-tertiary ml-0.5">{tab.count}</span>
+            {tab.label} <span className="text-[10px] text-txt-tertiary ms-0.5">{tab.count}</span>
           </button>
         ))}
       </div>
@@ -303,14 +303,14 @@ function RegistryFilterBar({
         {sortOpen && (
           <>
             <div className="fixed inset-0 z-40" onClick={() => setSortOpen(false)} />
-            <div className="absolute right-0 top-full mt-1 z-50 glass rounded-lg p-1.5 w-44">
+            <div className="absolute end-0 top-full mt-1 z-50 glass rounded-lg p-1.5 w-44">
               <div className="text-[10px] font-semibold text-txt-tertiary uppercase tracking-wider px-2 py-1">{t('common:actions.sortBy')}</div>
               {sortOptions.map((opt) => (
                 <button
                   key={opt.key}
                   type="button"
                   onClick={() => { setSortBy(opt.key); setSortOpen(false); }}
-                  className={`w-full text-left px-2 py-1.5 text-xs rounded ${
+                  className={`w-full text-start px-2 py-1.5 text-xs rounded ${
                     sortBy === opt.key ? 'text-accent-lavender bg-accent-lavender/[0.08]' : 'text-txt-primary'
                   } hover:bg-white/[0.06] transition-colors`}
                 >
@@ -441,7 +441,7 @@ function DeleteIdentityDialog({
             type="button"
             onClick={() => setMode('leave')}
             disabled={loading}
-            className={`w-full text-left p-3 rounded-lg border transition-colors ${
+            className={`w-full text-start p-3 rounded-lg border transition-colors ${
               mode === 'leave'
                 ? 'bg-white/[0.03] border-white/[0.08]'
                 : 'bg-transparent border-white/[0.04] hover:border-white/[0.06]'
@@ -458,7 +458,7 @@ function DeleteIdentityDialog({
             type="button"
             onClick={() => setMode('soft')}
             disabled={loading}
-            className={`w-full text-left p-3 rounded-lg border transition-colors ${
+            className={`w-full text-start p-3 rounded-lg border transition-colors ${
               mode === 'soft'
                 ? 'bg-white/[0.03] border-white/[0.08]'
                 : 'bg-transparent border-white/[0.04] hover:border-white/[0.06]'
@@ -475,7 +475,7 @@ function DeleteIdentityDialog({
             type="button"
             onClick={() => setMode('full')}
             disabled={loading}
-            className={`w-full text-left p-3 rounded-lg border transition-colors ${
+            className={`w-full text-start p-3 rounded-lg border transition-colors ${
               mode === 'full'
                 ? 'bg-accent-rose/[0.04] border-accent-rose/20'
                 : 'bg-transparent border-white/[0.04] hover:border-white/[0.06]'
@@ -652,13 +652,13 @@ function RegistryRow({
               <div className="text-[11px] text-txt-tertiary truncate">
                 {safeHost(entry.origin)}
                 {entry.username && (
-                  <span className="ml-1">{t('federation:connections.row.asUser', { username: entry.username })}</span>
+                  <span className="ms-1">{t('federation:connections.row.asUser', { username: entry.username })}</span>
                 )}
               </div>
               <div className="text-[10px] text-txt-tertiary">{metadataText}</div>
             </div>
           </div>
-          <span className="text-txt-tertiary text-xs shrink-0 ml-2">{expanded ? '▾' : '▸'}</span>
+          <span className="text-txt-tertiary text-xs shrink-0 ms-2">{expanded ? '▾' : '▸'}</span>
         </div>
 
         {/* Expanded details */}
@@ -908,7 +908,7 @@ function PendingSubscriptionRow({ subscription }: { subscription: PeeringSubscri
             components={{ peer: <span className="text-txt-secondary" /> }}
           />
           {subscription.peerInstanceName && (
-            <span className="ml-1 text-txt-tertiary/70">({host})</span>
+            <span className="ms-1 text-txt-tertiary/70">({host})</span>
           )}
         </div>
       </div>
@@ -1259,12 +1259,12 @@ export function ConnectedInstances() {
               <div className="text-xs text-txt-tertiary truncate">
                 {window.location.host}
                 {user?.username && (
-                  <span className="ml-1">{t('federation:connections.home.asUser', { username: user.username })}</span>
+                  <span className="ms-1">{t('federation:connections.home.asUser', { username: user.username })}</span>
                 )}
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-2 shrink-0 ml-2">
+          <div className="flex items-center gap-2 shrink-0 ms-2">
             <span className="text-xs text-txt-tertiary">{t('federation:connections.home.local')}</span>
             {isElectron() && (
               <button

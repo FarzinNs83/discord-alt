@@ -11,6 +11,7 @@ import {
   ConnectionsPanel,
   PrivacyPanel,
   KeybindsPanel,
+  WeakNetPanel,
   DesktopPanel,
   DesktopDownloadPanel,
   SettingsPanelSuspense,
@@ -31,6 +32,7 @@ type PanelTitleKey =
   | 'settings:nav.tabs.privacy'
   | 'settings:nav.tabs.connections'
   | 'settings:nav.tabs.keybinds'
+  | 'settings:nav.tabs.weakNet'
   | 'settings:nav.tabs.desktop';
 
 /**
@@ -51,6 +53,7 @@ const panelConfig: Record<
   privacy: { titleKey: 'settings:nav.tabs.privacy', body: () => <PrivacyPanel /> },
   connections: { titleKey: 'settings:nav.tabs.connections', body: () => <ConnectionsPanel /> },
   keybinds: { titleKey: 'settings:nav.tabs.keybinds', body: () => <KeybindsPanel /> },
+  weakNet: { titleKey: 'settings:nav.tabs.weakNet', body: () => <WeakNetPanel /> },
   desktop: {
     titleKey: 'settings:nav.tabs.desktop',
     body: (instanceVersion) =>
@@ -87,6 +90,11 @@ const sectionIcons: Record<string, React.ReactNode> = {
   instance: (
     <svg className="w-5 h-5 text-txt-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3m3 3a3 3 0 100 6h13.5a3 3 0 100-6m-16.5-3a3 3 0 013-3h13.5a3 3 0 013 3m-19.5 0a4.5 4.5 0 01.9-2.7L5.737 5.1a3.375 3.375 0 012.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 01.9 2.7m0 0a3 3 0 01-3 3m0 3h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008zm-3 6h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008z" />
+    </svg>
+  ),
+  weakNet: (
+    <svg className="w-5 h-5 text-txt-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 20h.01M9 20v-4M14 20v-8M19 20V8" />
     </svg>
   ),
   keybinds: (
@@ -153,9 +161,11 @@ export function MobileSettingsScreen({ initialPanel }: MobileSettingsScreenProps
     { id: 'appearance', label: t('settings:nav.tabs.appearance') },
     { id: 'voice', label: t('settings:nav.tabs.voice') },
     { id: 'privacy', label: t('settings:nav.tabs.privacy') },
+    { id: 'weakNet', label: t('settings:nav.tabs.weakNet') },
     ...(federationEnabled ? [{ id: 'connections', label: t('settings:nav.tabs.connections') }] : []),
     ...(isElectron() ? [{ id: 'keybinds', label: t('settings:nav.tabs.keybinds') }] : []),
-    { id: 'desktop', label: t('settings:nav.tabs.desktop') },
+    // shortcut: the browser's desktop-download entry is hidden for now, like the settings modal.
+    ...(isElectron() ? [{ id: 'desktop', label: t('settings:nav.tabs.desktop') }] : []),
     ...(isAdmin ? [{ id: 'instance', label: t('settings:nav.tabs.instance'), dot: updateBadge }] : []),
   ];
 
@@ -167,12 +177,12 @@ export function MobileSettingsScreen({ initialPanel }: MobileSettingsScreenProps
           <button
             key={section.id}
             onClick={() => pushMobileScreen(`settings-${section.id}`)}
-            className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-interactive-hover text-left transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-interactive-hover text-start transition-colors"
           >
             {sectionIcons[section.id]}
             <span className="text-sm text-txt-primary flex-1">{section.label}</span>
             {section.dot && <span className="w-1.5 h-1.5 rounded-full bg-accent-amber" />}
-            <svg className="w-4 h-4 text-txt-tertiary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg className="w-4 h-4 text-txt-tertiary rtl:-scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
             </svg>
           </button>

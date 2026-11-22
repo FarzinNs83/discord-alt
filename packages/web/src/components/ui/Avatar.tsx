@@ -69,6 +69,8 @@ export function Avatar({ src, name, size = 40, status, className = '', onClick, 
 
   const ringWidth = ring?.width ?? 0;
   const outerSize = size + ringWidth * 2;
+  // Chai Pop squircle: corner radius is about a third of the size (44 → 15, 24 → 8).
+  const radius = Math.round(size * 0.34);
 
   // Only compute mask when status dot is visible
   const cutoutMask = status ? buildCutoutMask(size, ringWidth) : undefined;
@@ -85,10 +87,11 @@ export function Avatar({ src, name, size = 40, status, className = '', onClick, 
       style={{ width: outerSize, height: outerSize }}
       onClick={onClick}
     >
-      {/* Inner masked circle — ring background + avatar content */}
+      {/* Inner masked tile — ring background + avatar content */}
       <div
-        className="w-full h-full rounded-full"
+        className="w-full h-full"
         style={{
+          borderRadius: radius + ringWidth,
           padding: ringWidth,
           backgroundColor: ring?.color,
           ...maskStyle,
@@ -100,7 +103,8 @@ export function Avatar({ src, name, size = 40, status, className = '', onClick, 
               ? src : `/api/uploads/${src}`}
             alt={name}
             loading="lazy"
-            className="w-full h-full rounded-full object-cover"
+            className="w-full h-full object-cover"
+            style={{ borderRadius: radius }}
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = 'none';
               const parent = (e.target as HTMLImageElement).parentElement;
@@ -112,8 +116,8 @@ export function Avatar({ src, name, size = 40, status, className = '', onClick, 
           />
         ) : null}
         <div
-          className={`avatar-fallback w-full h-full rounded-full flex items-center justify-center font-bold text-white ${src ? 'hidden' : 'flex'}`}
-          style={{ background: gradient.gradient, fontSize: fontPx, ...(src ? { display: 'none' } : {}) }}
+          className={`avatar-fallback w-full h-full flex items-center justify-center font-bold text-white ${src ? 'hidden' : 'flex'}`}
+          style={{ borderRadius: radius, background: gradient.gradient, fontSize: fontPx, ...(src ? { display: 'none' } : {}) }}
         >
           {initials}
         </div>

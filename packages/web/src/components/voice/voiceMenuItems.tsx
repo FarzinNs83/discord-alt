@@ -143,7 +143,7 @@ export function VolumeSliderItem({ userId }: { userId: string }) {
           onChange={(e) => setParticipantVolume(userId, parseInt(e.target.value))}
           className="flex-1 min-w-0 accent-accent-primary h-1"
         />
-        <span className="text-xs text-txt-secondary min-w-[32px] flex-shrink-0 text-right">
+        <span className="text-xs text-txt-secondary min-w-[32px] flex-shrink-0 text-end">
           {f.formatPercent(volume)}
         </span>
       </div>

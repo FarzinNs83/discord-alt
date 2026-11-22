@@ -258,7 +258,7 @@ function ConnectionChip({ entry, retrying, expanded, onExpand, onCollapse, onRet
   }
 
   return (
-    <li className="glass-pill text-[13px] leading-5 rounded-full pl-2.5 pr-3 py-1 inline-flex items-center gap-2 max-w-full">
+    <li className="glass-pill text-[13px] leading-5 rounded-full ps-2.5 pe-3 py-1 inline-flex items-center gap-2 max-w-full">
       <ChipIdentity label={label} stateWord={stateWord} expired={expired} dimmed={retrying} />
       {expired ? (
         <button
@@ -266,7 +266,7 @@ function ConnectionChip({ entry, retrying, expanded, onExpand, onCollapse, onRet
           type="button"
           onClick={() => onExpand(entry.origin)}
           aria-label={`${reconnectWord} ${label}`}
-          className="ml-1 text-accent-primary hover:text-accent-primary/80 font-medium transition-colors whitespace-nowrap"
+          className="ms-1 text-accent-primary hover:text-accent-primary/80 font-medium transition-colors whitespace-nowrap"
         >
           {reconnectWord}
         </button>
@@ -276,7 +276,7 @@ function ConnectionChip({ entry, retrying, expanded, onExpand, onCollapse, onRet
           onClick={() => onRetry(entry.origin)}
           disabled={retrying}
           aria-label={`${retryWord} ${label}`}
-          className="ml-1 text-accent-primary hover:text-accent-primary/80 font-medium transition-colors whitespace-nowrap disabled:text-txt-tertiary disabled:cursor-default"
+          className="ms-1 text-accent-primary hover:text-accent-primary/80 font-medium transition-colors whitespace-nowrap disabled:text-txt-tertiary disabled:cursor-default"
         >
           {retryWord}
         </button>

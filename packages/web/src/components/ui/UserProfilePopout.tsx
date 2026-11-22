@@ -230,7 +230,7 @@ export function UserProfilePopout({ user: propUser, origin, onClose, anchor, pla
             <span className="text-[11px] uppercase tracking-wide font-semibold text-txt-tertiary">
               {t('social:profile.memberSince')}
             </span>
-            <span className="text-[12px] text-txt-secondary ml-2">
+            <span className="text-[12px] text-txt-secondary ms-2">
               {f.formatMediumDate(user.createdAt)}
             </span>
           </div>

@@ -127,7 +127,7 @@ function seedSpace(space: TaggedSpace): void {
 function SidebarIconSample({ space }: { space: TaggedSpace }) {
   const grad = getSpaceGradient(space.id, space.name, space.avatarColor);
   return (
-    <div className="fixed left-4 top-4 z-[10000] flex items-center gap-3 rounded-lg bg-surface-channel px-3 py-2 text-xs text-txt-tertiary">
+    <div className="fixed start-4 top-4 z-[10000] flex items-center gap-3 rounded-lg bg-surface-channel px-3 py-2 text-xs text-txt-tertiary">
       <div
         className="flex h-12 w-12 items-center justify-center rounded-2xl text-lg font-bold text-white"
         style={{ background: grad.gradient }}

@@ -25,6 +25,8 @@ import { presenceSubjectOf, readyActivityEntries, readyRowIndex } from '../utils
 import { useDiscoverStore } from '../stores/discoverStore';
 import { useFederationStore } from '../stores/federationStore';
 import { notePendingOriginReady } from '../stores/pendingMessageRehydrate';
+import { useEventStore } from '../stores/eventStore';
+import { useSoundboardStore } from '../stores/soundboardStore';
 import { useNotificationSettingsStore } from '../stores/notificationSettingsStore';
 import { ConnectionState as LiveKitConnectionState } from 'livekit-client';
 
@@ -1333,6 +1335,21 @@ function handleEvent(origin: string, event: ServerEvent, readyAlreadyDelivered =
       }
       const { spaces: currentSpaces, setSpaces } = useSpaceStore.getState();
       setSpaces(currentSpaces.map(s => s.id === event.space.id ? { ...s, ...event.space } : s));
+      break;
+    }
+
+    case 'space_events_changed': {
+      useEventStore.getState().refreshIfLoaded(event.spaceId, origin);
+      break;
+    }
+
+    case 'space_sounds_changed': {
+      useSoundboardStore.getState().refreshIfLoaded(event.spaceId, origin);
+      break;
+    }
+
+    case 'soundboard_played': {
+      useSoundboardStore.getState().onPlayed(event, origin);
       break;
     }
 

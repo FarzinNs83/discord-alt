@@ -681,5 +681,24 @@
     "suppressRoles": "屏蔽 @身份组 提醒",
     "massHeading": "群组提及",
     "massNote": "@here 与 @everyone 通知的成员相同。直接提及你的消息始终会通知你。"
+  },
+  "events": {
+    "schedule": "安排活动",
+    "titleIn": "{{title}}，地点：{{place}}",
+    "imIn": "我参加",
+    "going_other": "{{count}} 人参加",
+    "cancel": "取消活动",
+    "cancelConfirm": {
+      "title": "取消这个活动？",
+      "description": "{{title}} 将对所有人移除。"
+    },
+    "form": {
+      "what": "活动",
+      "whatPlaceholder": "狼人杀之夜",
+      "when": "时间",
+      "where": "地点",
+      "nowhere": "不指定频道",
+      "submit": "安排"
+    }
   }
 }

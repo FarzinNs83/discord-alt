@@ -28,7 +28,8 @@
       "bySelf": "Você reagiu",
       "byOne": "{{name}} reagiu",
       "byMany": "{{names}} reagiram"
-    }
+    },
+    "waitingToSend": "Aguardando envio"
   },
   "list": {
     "noHistoryPermission": "Você não tem permissão para ver o histórico de mensagens neste canal",
@@ -229,5 +230,29 @@
     "action": "Cutucar",
     "received": "{{actor}} cutucou {{target}}",
     "disconnected": "Não foi possível cutucar: sem conexão com o servidor"
+  },
+  "offline": {
+    "title": "Você está offline",
+    "hint": "As mensagens que você escrever agora serão enviadas quando você voltar a ficar online.",
+    "waiting_one": "{{count}} mensagem aguardando · ela será enviada quando você voltar",
+    "waiting_other": "{{count}} mensagens aguardando · elas serão enviadas quando você voltar",
+    "waiting_many": "{{count}} de mensagens aguardando · elas serão enviadas quando você voltar"
+  },
+  "tapToLoad": {
+    "label": "Toque para carregar",
+    "withSize": "Toque para carregar · {{size}}"
+  },
+  "voiceMessage": {
+    "play": "Reproduzir mensagem de voz",
+    "pause": "Pausar mensagem de voz",
+    "seek": "Posição na mensagem de voz",
+    "position": "{{current}} de {{total}}",
+    "speed": "Velocidade {{speed}}×, alterar",
+    "speedValue": "{{speed}}×",
+    "record": "Gravar mensagem de voz",
+    "recording": "Gravando · {{time}}",
+    "send": "Enviar mensagem de voz",
+    "discard": "Descartar gravação",
+    "micUnavailable": "Não foi possível usar seu microfone. Verifique se o navegador tem permissão."
   }
 }

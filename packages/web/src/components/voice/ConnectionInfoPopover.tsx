@@ -90,10 +90,10 @@ function AudioTrackRow({ track }: { track: AudioTrackStat }) {
   const label = trackLabel(track.direction, track.source, track.participantName);
   return (
     <div className="flex items-center justify-between py-[3px]">
-      <span className="text-[12px] text-txt-tertiary truncate mr-2">{label}</span>
+      <span className="text-[12px] text-txt-tertiary truncate me-2">{label}</span>
       <span className="text-[12px] font-medium text-txt-secondary whitespace-nowrap">
         {formatBitrate(track.bitrate)}
-        {track.codec && <span className="text-txt-tertiary ml-2">{track.codec}</span>}
+        {track.codec && <span className="text-txt-tertiary ms-2">{track.codec}</span>}
       </span>
     </div>
   );
@@ -106,14 +106,14 @@ function VideoTrackRow({ track }: { track: VideoTrackStat }) {
   return (
     <div className="py-[3px]">
       <div className="flex items-center justify-between">
-        <span className="text-[12px] text-txt-tertiary truncate mr-2">{label}</span>
+        <span className="text-[12px] text-txt-tertiary truncate me-2">{label}</span>
         <span className="text-[12px] font-medium text-txt-secondary whitespace-nowrap">
           {formatBitrate(track.bitrate)}
-          {track.codec && <span className="text-txt-tertiary ml-2">{track.codec}</span>}
+          {track.codec && <span className="text-txt-tertiary ms-2">{track.codec}</span>}
         </span>
       </div>
       {(resolution || track.fps !== null || track.qualityLimitation || track.simulcastLayer || track.encoderImpl) && (
-        <div className="flex items-center justify-between pl-3">
+        <div className="flex items-center justify-between ps-3">
           <span className="text-[11px] text-txt-tertiary">
             {resolution && `${resolution}`}
             {track.fps !== null && ` @${track.fps}`}

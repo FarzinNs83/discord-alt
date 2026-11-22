@@ -428,7 +428,7 @@ export function RegisterPage() {
         {step === 1 ? (
           <div key="step1" className={`w-full${direction === 'back' ? ' animate-step-back' : ''}`}>
             <div className="text-center mb-6">
-              <h1 className="text-2xl font-bold text-txt-primary">{t('auth:register.title')}</h1>
+              <h1 className="text-2xl font-display font-bold text-txt-primary">{t('auth:register.title')}</h1>
             </div>
 
             <form onSubmit={handleContinue}>
@@ -583,7 +583,7 @@ export function RegisterPage() {
                 disabled={continueDisabled}
                 // py-3 on mobile yields ≥44 px tap target (Apple HIG); py-2.5 keeps the
                 // tighter desktop look from before.
-                className="w-full py-3 md:py-2.5 bg-accent-primary hover:bg-accent-primary/80 text-white font-medium rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-3 md:py-2.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary font-medium rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {t('common:actions.continue')}
               </button>
@@ -609,7 +609,7 @@ export function RegisterPage() {
         ) : (
           <div key="step2" className={`w-full${direction === 'forward' ? ' animate-step-forward' : ''}`}>
             <div className="text-center mb-6">
-              <h1 className="text-2xl font-bold text-txt-primary">{t('auth:register.personalize.title')}</h1>
+              <h1 className="text-2xl font-display font-bold text-txt-primary">{t('auth:register.personalize.title')}</h1>
               <p className="text-txt-tertiary text-sm mt-1">{t('auth:register.personalize.subtitle')}</p>
             </div>
 
@@ -713,7 +713,7 @@ export function RegisterPage() {
               type="button"
               onClick={() => handleRegister(false)}
               disabled={isDisabled}
-              className="w-full py-3 md:py-2.5 bg-accent-primary hover:bg-accent-primary/80 text-white font-medium rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 md:py-2.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary font-medium rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {retryAfter > 0
                 ? t('auth:register.rateLimited.retryIn', { seconds: retryAfter })

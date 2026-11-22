@@ -59,6 +59,10 @@ import type {
   SpaceLayoutItem,
   SpaceFolder,
   InvitePreview,
+  SpaceEvent,
+  CreateSpaceEventRequest,
+  SpaceSound,
+  UploadSpaceSoundRequest,
   GifResult,
   FederationRegistryEntry,
   FederationIdentityDeleteRequest,
@@ -267,6 +271,14 @@ export class PatoghApiClient {
     unban: (spaceId: string, userId: string) => Promise<{ success: boolean }>;
     transferOwnership: (spaceId: string, newOwnerId: string) => Promise<Space>;
     invitePreview: (code: string) => Promise<InvitePreview>;
+    events: (spaceId: string) => Promise<SpaceEvent[]>;
+    createEvent: (spaceId: string, data: CreateSpaceEventRequest) => Promise<SpaceEvent>;
+    deleteEvent: (spaceId: string, eventId: string) => Promise<{ success: boolean }>;
+    rsvp: (spaceId: string, eventId: string, going: boolean) => Promise<SpaceEvent | null>;
+    sounds: (spaceId: string) => Promise<SpaceSound[]>;
+    uploadSound: (spaceId: string, data: UploadSpaceSoundRequest) => Promise<SpaceSound>;
+    deleteSound: (spaceId: string, soundId: string) => Promise<{ success: boolean }>;
+    playSound: (spaceId: string, soundId: string) => Promise<{ success: boolean }>;
   };
 
   readonly channels: {
@@ -616,6 +628,20 @@ export class PatoghApiClient {
         request<Space>('PATCH', `/spaces/${spaceId}/transfer-ownership`, { newOwnerId }),
       invitePreview: (code: string) =>
         request<InvitePreview>('GET', `/spaces/invite/${encodeURIComponent(code)}/preview`, undefined, false),
+      events: (spaceId: string) => request<SpaceEvent[]>('GET', `/spaces/${spaceId}/events`),
+      createEvent: (spaceId: string, data: CreateSpaceEventRequest) =>
+        request<SpaceEvent>('POST', `/spaces/${spaceId}/events`, data),
+      deleteEvent: (spaceId: string, eventId: string) =>
+        request<{ success: boolean }>('DELETE', `/spaces/${spaceId}/events/${eventId}`),
+      rsvp: (spaceId: string, eventId: string, going: boolean) =>
+        request<SpaceEvent | null>(going ? 'PUT' : 'DELETE', `/spaces/${spaceId}/events/${eventId}/rsvp`),
+      sounds: (spaceId: string) => request<SpaceSound[]>('GET', `/spaces/${spaceId}/sounds`),
+      uploadSound: (spaceId: string, data: UploadSpaceSoundRequest) =>
+        request<SpaceSound>('POST', `/spaces/${spaceId}/sounds`, data),
+      deleteSound: (spaceId: string, soundId: string) =>
+        request<{ success: boolean }>('DELETE', `/spaces/${spaceId}/sounds/${soundId}`),
+      playSound: (spaceId: string, soundId: string) =>
+        request<{ success: boolean }>('POST', `/spaces/${spaceId}/sounds/${soundId}/play`),
     };
 
     this.channels = {

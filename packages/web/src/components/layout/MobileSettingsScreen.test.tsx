@@ -139,23 +139,11 @@ afterEach(() => {
 });
 
 describe('MobileSettingsScreen Desktop entry', () => {
-  it('opens the download offer in the browser', async () => {
+  it('lists neither Desktop nor Keybinds in the browser', () => {
     render(<MobileSettingsScreen />);
 
-    // Desktop is listed outside Electron; Keybinds still is not.
-    expect(screen.getByRole('button', { name: 'Desktop' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Desktop' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Keybinds' })).not.toBeInTheDocument();
-
-    openDesktopPanel();
-
-    expect(await screen.findByRole('link', { name: 'All releases on GitHub' })).toBeInTheDocument();
-    // The version reaches the panel, so the links name release assets.
-    expect(await screen.findByRole('link', { name: 'Download for Windows' })).toHaveAttribute(
-      'href',
-      'https://github.com/FarzinNs83/patogh/releases/download/v1.2.1/Patogh-1.2.1-win-x64.exe',
-    );
-    // The Electron-only panel stays out of the browser.
-    expect(screen.queryByRole('button', { name: 'Change Instance' })).not.toBeInTheDocument();
   });
 
   it('opens the desktop app settings inside Electron', async () => {

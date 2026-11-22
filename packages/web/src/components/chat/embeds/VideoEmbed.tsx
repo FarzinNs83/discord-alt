@@ -67,7 +67,7 @@ export function VideoEmbed({ embed }: VideoEmbedProps) {
               <svg
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="w-6 h-6 text-white ml-1"
+                className="w-6 h-6 text-white ms-1"
               >
                 <path d="M8 5v14l11-7z" />
               </svg>

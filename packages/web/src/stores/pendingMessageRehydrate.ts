@@ -204,6 +204,7 @@ async function deferredSend(b: PendingBubble, attempt = 0): Promise<void> {
     // 4xx (client error) and rate limits are permanent — mark failed,
     // user retries manually.
     if ((status >= 400 && status < 500) || isRateLimited) {
+      sentClientIds.delete(b.clientId);
       usePendingMessageStore.getState().markFailed(b.clientId);
       return;
     }
@@ -213,6 +214,8 @@ async function deferredSend(b: PendingBubble, attempt = 0): Promise<void> {
       void deferredSend(b, 1);
       return;
     }
+    // Failed for now: Retry, or coming back online, may dispatch it again.
+    sentClientIds.delete(b.clientId);
     usePendingMessageStore.getState().markFailed(b.clientId);
   }
 }

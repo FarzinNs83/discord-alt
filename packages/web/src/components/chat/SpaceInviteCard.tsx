@@ -164,7 +164,7 @@ export function SpaceInviteCard({ payload, senderName }: Props) {
             {t('chat:invite.memberCount', { count: memberCount })}
             {payload.snapshot.instanceName ? ` · ${payload.snapshot.instanceName}` : ''}
             {live.kind === 'loading' && (
-              <span aria-hidden className="ml-1 inline-block h-1.5 w-1.5 rounded-full bg-txt-tertiary animate-pulse" />
+              <span aria-hidden className="ms-1 inline-block h-1.5 w-1.5 rounded-full bg-txt-tertiary animate-pulse" />
             )}
           </div>
         </div>

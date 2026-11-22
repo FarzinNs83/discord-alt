@@ -310,7 +310,7 @@ function MemberRolesBody({
   return (
     <div className="flex flex-col h-full">
       {/* Header: who is being edited, plus the way back to the profile card */}
-      <div className="flex items-center gap-3 px-6 py-4 pr-16 border-b border-white/[0.06] flex-shrink-0">
+      <div className="flex items-center gap-3 px-6 py-4 pe-16 border-b border-white/[0.06] flex-shrink-0">
         <Avatar
           src={canonical.avatar}
           name={displayName}
@@ -331,7 +331,7 @@ function MemberRolesBody({
 
       <div className="flex-1 min-h-0 flex">
         {/* Left pane: membership checkboxes; clicking a row edits that role */}
-        <div className="w-72 flex-shrink-0 border-r border-white/[0.06] overflow-y-auto scrollbar-thin p-4">
+        <div className="w-72 flex-shrink-0 border-e border-white/[0.06] overflow-y-auto scrollbar-thin p-4">
           <div className="text-[11px] font-semibold text-txt-tertiary uppercase tracking-wider mb-1.5">
             {t('spaces:roles.listHeading')}
           </div>
@@ -466,7 +466,7 @@ function MemberRolesBody({
                               >
                                 <div
                                   className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${
-                                    isOn ? 'translate-x-4' : 'translate-x-0.5'
+                                    isOn ? 'translate-x-4 rtl:-translate-x-4' : 'translate-x-0.5 rtl:-translate-x-0.5'
                                   }`}
                                 />
                               </div>
@@ -506,7 +506,7 @@ function MemberRolesBody({
                   <button
                     onClick={handleSave}
                     disabled={saving}
-                    className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+                    className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50"
                   >
                     {saving ? t('common:states.saving') : t('common:actions.save')}
                   </button>

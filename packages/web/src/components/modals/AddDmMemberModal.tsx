@@ -64,7 +64,7 @@ function AddDmFriendRow({
     <button
       onClick={() => onToggle(friendKey(friend))}
       disabled={isInDm || isAdding || atCapacity}
-      className={`w-full flex items-center gap-3 px-3 py-2 rounded-[4px] transition-colors text-left ${
+      className={`w-full flex items-center gap-3 px-3 py-2 rounded-[4px] transition-colors text-start ${
         isInDm
           ? 'opacity-40 cursor-not-allowed'
           : isSelected
@@ -260,7 +260,7 @@ export function AddDmMemberModal() {
           <p className="text-[13px] text-txt-tertiary">
             {t('dm:addMember.description')}
           </p>
-          <span className="text-[12px] text-txt-tertiary flex-shrink-0 ml-2">
+          <span className="text-[12px] text-txt-tertiary flex-shrink-0 ms-2">
             {t('dm:addMember.capacity', { current: memberCount, max: maxMembers })}
           </span>
         </div>

@@ -1,0 +1,138 @@
+{
+  "appName": "پاتوق",
+  "actions": {
+    "save": "ذخیره",
+    "cancel": "لغو",
+    "close": "بستن",
+    "delete": "حذف",
+    "confirm": "تأیید",
+    "copy": "کپی",
+    "copied": "کپی شد",
+    "retry": "دوباره",
+    "back": "برگشت",
+    "done": "تمام",
+    "edit": "ویرایش",
+    "remove": "برداشتن",
+    "add": "افزودن",
+    "apply": "اعمال",
+    "reset": "بازنشانی",
+    "continue": "ادامه",
+    "dismiss": "رد کردن",
+    "ok": "باشه",
+    "search": "جستجو",
+    "clear": "پاک کردن",
+    "change": "تغییر",
+    "refresh": "تازه‌سازی",
+    "openLink": "باز کردن لینک",
+    "tryAgain": "دوباره امتحان کن",
+    "reply": "پاسخ",
+    "addReaction": "افزودن واکنش",
+    "share": "اشتراک‌گذاری",
+    "accept": "پذیرفتن",
+    "decline": "رد کردن",
+    "pause": "مکث",
+    "resume": "ادامه",
+    "abort": "لغو",
+    "dismissAll": "رد کردن همه",
+    "filter": "فیلتر",
+    "sort": "مرتب‌سازی",
+    "sortBy": "مرتب‌سازی بر اساس",
+    "leave": "ترک کردن",
+    "invitePeople": "دعوت آدم‌ها",
+    "previous": "قبلی",
+    "next": "بعدی",
+    "preview": "پیش‌نمایش",
+    "logIn": "ورود"
+  },
+  "states": {
+    "loading": "در حال بارگذاری…",
+    "saving": "در حال ذخیره…",
+    "saved": "ذخیره شد",
+    "unknown": "نامشخص",
+    "none": "هیچ",
+    "enabled": "فعال",
+    "disabled": "غیرفعال",
+    "on": "روشن",
+    "off": "خاموش",
+    "yes": "بله",
+    "no": "نه",
+    "optional": "اختیاری",
+    "required": "الزامی",
+    "default": "پیش‌فرض",
+    "recommended": "پیشنهادی",
+    "online": "آنلاین",
+    "idle": "بیکار",
+    "doNotDisturb": "مزاحم نشوید",
+    "offline": "آفلاین",
+    "loadingSettings": "در حال بارگذاری تنظیمات…",
+    "loadSettingsFailed": "تنظیمات بارگذاری نشد.",
+    "settingsSaved": "تنظیمات ذخیره شد",
+    "saveFailed": "ذخیره نشد",
+    "scanning": "در حال بررسی…",
+    "pleaseWait": "لطفاً صبر کن…"
+  },
+  "labels": {
+    "username": "نام کاربری",
+    "password": "رمز عبور",
+    "displayName": "نام نمایشی",
+    "friends": "دوستان",
+    "members": "اعضا",
+    "settings": "تنظیمات",
+    "dangerZone": "منطقه‌ی خطر",
+    "searchMembers": "جستجوی اعضا…",
+    "noMembersFound": "عضوی پیدا نشد",
+    "or": "یا",
+    "nameAZ": "نام (الفبایی)"
+  },
+  "time": {
+    "today": "امروز ساعت {{time}}",
+    "yesterday": "دیروز ساعت {{time}}",
+    "never": "هرگز",
+    "justNow": "همین الان",
+    "minutesShort": "{{minutes}} دقیقه",
+    "hoursMinutesShort": "{{hours}} ساعت و {{minutes}} دقیقه",
+    "elapsed": "{{duration}} گذشته"
+  },
+  "units": {
+    "ms": "{{value}} میلی‌ثانیه",
+    "percent": "{{value}}٪",
+    "kbps": "{{value}} کیلوبیت بر ثانیه",
+    "mbps": "{{value}} مگابیت بر ثانیه"
+  },
+  "colors": {
+    "mint": "نعنایی",
+    "sky": "آسمانی",
+    "lavender": "یاسی",
+    "coral": "مرجانی",
+    "rose": "گلی",
+    "teal": "سبزآبی",
+    "amber": "کهربایی",
+    "peach": "هلویی"
+  },
+  "language": {
+    "label": "زبان",
+    "description": "منوها، دکمه‌ها و پیام‌های سیستم به این زبان نشان داده می‌شوند. پیام‌های دیگران همان‌طور که نوشته شده‌اند می‌مانند."
+  },
+  "crash": {
+    "title": "یه چیزی خراب شد",
+    "reload": "بارگذاری دوباره‌ی صفحه",
+    "details": "جزئیات خطا"
+  },
+  "app": {
+    "loading": "در حال بارگذاری پاتوق"
+  },
+  "chrome": {
+    "toggleMemberList": "نمایش/پنهان کردن فهرست اعضا",
+    "closeSettings": "بستن تنظیمات",
+    "escKey": "Esc"
+  },
+  "sourceCode": {
+    "label": "کد منبع (AGPL)",
+    "labelWithBuild": "کد منبع (AGPL) · {{build}}",
+    "title": "دیدن کد منبع نسخه‌ای که این سرور اجرا می‌کند (AGPL-3.0)"
+  },
+  "devices": {
+    "newAudioInput": "{{label}} شناسایی شد. برای استفاده، در تنظیمات صدا انتخابش کن.",
+    "unnamedAudioInput": "دستگاه صوتی جدید"
+  }
+}

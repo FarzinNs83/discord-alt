@@ -54,7 +54,7 @@ function ModalSurface({ onClose, title, children, maxWidth = 'max-w-md', size, m
       <div className="fixed inset-0 z-[200] flex flex-col bg-surface-base animate-fade-in">
         {(title || size === 'settings') && (
           <div className="flex items-center justify-between px-4 pt-4 flex-shrink-0" style={{ paddingTop: 'calc(16px + var(--safe-top))' }}>
-            {title ? <h2 className="text-xl font-bold text-txt-primary">{title}</h2> : <div />}
+            {title ? <h2 className="text-xl font-display font-bold text-txt-primary">{title}</h2> : <div />}
             <button
               onClick={onClose}
               className="text-txt-tertiary hover:text-txt-primary transition-colors p-1"
@@ -84,7 +84,7 @@ function ModalSurface({ onClose, title, children, maxWidth = 'max-w-md', size, m
         <div className="relative w-full max-h-[calc(85*var(--app-vh))] flex flex-col glass-modal rounded-t-2xl animate-slide-up" style={{ paddingBottom: 'var(--safe-bottom)' }}>
           {title && (
             <div className="flex items-center justify-between px-4 pt-4 flex-shrink-0">
-              <h2 className="text-xl font-bold text-txt-primary">{title}</h2>
+              <h2 className="text-xl font-display font-bold text-txt-primary">{title}</h2>
               <button
                 onClick={onClose}
                 className="text-txt-tertiary hover:text-txt-primary transition-colors p-1"
@@ -116,12 +116,13 @@ function ModalSurface({ onClose, title, children, maxWidth = 'max-w-md', size, m
           {/* Floating close button */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 z-10 p-1.5 rounded-full bg-surface-elevated/50 backdrop-blur-sm text-txt-tertiary hover:text-txt-primary transition-colors"
+            className="absolute top-5 end-5 z-10 w-12 h-12 rounded-[16px] bg-surface-elevated text-txt-secondary hover:text-txt-primary flex flex-col items-center justify-center transition-colors"
             aria-label={closeLabel}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z" />
             </svg>
+            <span aria-hidden="true" className="text-[9px] font-extrabold tracking-[0.08em] leading-none uppercase">{t('chrome.escKey')}</span>
           </button>
           {children}
         </div>
@@ -139,7 +140,7 @@ function ModalSurface({ onClose, title, children, maxWidth = 'max-w-md', size, m
       <div className={`relative ${maxWidth} w-full mx-4 max-h-[calc(calc(100*var(--app-vh))-2rem)] flex flex-col glass-modal rounded-lg animate-slide-up`}>
         {title && (
           <div className="flex items-center justify-between px-4 pt-4 flex-shrink-0">
-            <h2 className="text-xl font-bold text-txt-primary">{title}</h2>
+            <h2 className="text-xl font-display font-bold text-txt-primary">{title}</h2>
             <button
               onClick={onClose}
               className="text-txt-tertiary hover:text-txt-primary transition-colors p-1"

@@ -68,7 +68,7 @@ export function LoginPage() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgb(var(--accent-primary)/0.06)_0%,transparent_50%)]" />
       <div className="my-auto flex-shrink-0 w-full max-w-[480px] bg-surface-elevated rounded-md p-8 shadow-elevation-high relative z-10">
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-txt-primary">{t('auth:login.title')}</h1>
+          <h1 className="text-2xl font-display font-bold text-txt-primary">{t('auth:login.title')}</h1>
           <p className="text-txt-tertiary mt-1">{t('auth:login.subtitle')}</p>
         </div>
 
@@ -116,7 +116,7 @@ export function LoginPage() {
           <button
             type="submit"
             disabled={isDisabled}
-            className="w-full py-2.5 bg-accent-primary hover:bg-accent-primary/80 text-white font-medium rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-2.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary font-medium rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {retryAfter > 0
               ? t('auth:login.rateLimited.retryIn', { seconds: retryAfter })

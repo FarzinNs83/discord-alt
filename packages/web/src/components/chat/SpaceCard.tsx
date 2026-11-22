@@ -114,7 +114,7 @@ export function SpaceCard({
 
         {/* Joined badge (top-left) */}
         {isJoined && (
-          <div className="absolute top-2 left-2 z-[2]">
+          <div className="absolute top-2 start-2 z-[2]">
             <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-accent-mint/25 text-accent-mint backdrop-blur-sm">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
@@ -126,7 +126,7 @@ export function SpaceCard({
 
         {/* Closed-registration badge (top-left, Outer cards only; an Outer card is never joined) */}
         {closedToNewAccounts && (
-          <div className="absolute top-2 left-2 z-[2]">
+          <div className="absolute top-2 start-2 z-[2]">
             <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-accent-rose/20 text-accent-rose backdrop-blur-sm">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
@@ -137,7 +137,7 @@ export function SpaceCard({
         )}
 
         {/* Visibility badge */}
-        <div className="absolute top-2 right-2 z-[2]">
+        <div className="absolute top-2 end-2 z-[2]">
           <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider backdrop-blur-sm ${
             isPublic
               ? 'bg-accent-mint/20 text-accent-mint'
@@ -159,7 +159,7 @@ export function SpaceCard({
           />
         ) : (
           <div
-            className="w-14 h-14 rounded-xl ring-[3px] ring-surface-channel shadow-lg flex items-center justify-center text-xl font-bold text-white/90"
+            className="w-14 h-14 rounded-xl ring-[3px] ring-surface-channel shadow-lg flex items-center justify-center text-xl font-display font-bold text-white/90"
             style={{ background: fallbackGradient }}
           >
             {space.name.charAt(0).toUpperCase()}
@@ -205,7 +205,7 @@ export function SpaceCard({
           isPublic ? (
             <button
               onClick={() => outer.onConnect(outer.entry)}
-              className="w-full py-2 bg-accent-primary hover:bg-accent-primary-hover text-white text-sm font-medium rounded transition-colors"
+              className="w-full py-2 bg-accent-primary hover:bg-accent-primary-hover text-txt-on-primary text-sm font-medium rounded transition-colors"
             >
               {t('spaces:explore.outer.connectAndJoin')}
             </button>
@@ -228,7 +228,7 @@ export function SpaceCard({
           <button
             onClick={handlePublicJoin}
             disabled={joining}
-            className="w-full py-2 bg-accent-primary hover:bg-accent-primary-hover text-white text-sm font-medium rounded transition-colors disabled:opacity-50"
+            className="w-full py-2 bg-accent-primary hover:bg-accent-primary-hover text-txt-on-primary text-sm font-medium rounded transition-colors disabled:opacity-50"
           >
             {joining ? (
               <span className="flex items-center justify-center gap-2">

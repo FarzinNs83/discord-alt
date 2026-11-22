@@ -5,6 +5,9 @@ import { useUIStore } from '../../stores/uiStore';
 import { useTransferStore } from '../../stores/transferStore';
 import { Tooltip } from '../ui/Tooltip';
 import { useFormatters } from '../../i18n/formatters';
+import { TapToLoad } from './TapToLoad';
+import { VoiceMessagePlayer } from './VoiceMessagePlayer';
+import { isVoiceMessage } from './voiceMessage';
 
 interface AttachmentRendererProps {
   attachment: Attachment;
@@ -102,7 +105,7 @@ function VideoAttachment({ attachment, attUrl, thumbUrl, federationInlineBadge }
           onClick={() => {
             void startDownload(attUrl, { filename: originalName, size, mimetype, tray: true });
           }}
-          className="block w-full text-left rounded-lg overflow-hidden border border-border-hard bg-surface-channel/50 hover:bg-interactive-hover transition-all group/vid"
+          className="block w-full text-start rounded-lg overflow-hidden border border-border-hard bg-surface-channel/50 hover:bg-interactive-hover transition-all group/vid"
         >
           {thumbUrl && (
             <div className="relative w-full" style={sizing}>
@@ -236,6 +239,7 @@ export function AttachmentRenderer({ attachment }: AttachmentRendererProps) {
   if (mimetype.startsWith('image/')) {
     const { width, height } = attachment;
     return (
+      <TapToLoad size={attachment.size} width={width} height={height}>
       <div className="mt-1 max-w-fit">
         <div
           className="relative rounded-lg overflow-hidden border border-white/[0.06]"
@@ -252,6 +256,7 @@ export function AttachmentRenderer({ attachment }: AttachmentRendererProps) {
         </div>
         {federationInlineBadge && <div className="mt-1">{federationInlineBadge}</div>}
       </div>
+      </TapToLoad>
     );
   }
 
@@ -263,6 +268,15 @@ export function AttachmentRenderer({ attachment }: AttachmentRendererProps) {
         thumbUrl={thumbUrl}
         federationInlineBadge={federationInlineBadge}
       />
+    );
+  }
+
+  if (mimetype.startsWith('audio/') && isVoiceMessage(originalName)) {
+    return (
+      <>
+        <VoiceMessagePlayer src={attUrl} mimetype={mimetype} duration={attachment.duration} />
+        {federationInlineBadge && <div className="mt-1">{federationInlineBadge}</div>}
+      </>
     );
   }
 
@@ -317,7 +331,7 @@ export function AttachmentRenderer({ attachment }: AttachmentRendererProps) {
           tray: true,
         });
       }}
-      className="mt-1 max-w-full desktop:max-w-[400px] flex items-center gap-3 p-4 bg-surface-channel/50 rounded-lg border border-border-hard hover:bg-interactive-hover transition-all group/att text-left w-full min-w-0"
+      className="mt-1 max-w-full desktop:max-w-[400px] flex items-center gap-3 p-4 bg-surface-channel/50 rounded-lg border border-border-hard hover:bg-interactive-hover transition-all group/att text-start w-full min-w-0"
     >
       <div className="p-2 bg-surface-base rounded text-txt-tertiary group-hover/att:text-txt-primary transition-colors flex-shrink-0">
         <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">

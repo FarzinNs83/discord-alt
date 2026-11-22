@@ -13,7 +13,7 @@ export function MobileNav() {
       {/* Hamburger button in header */}
       <button
         onClick={toggleSidebar}
-        className="fixed top-3 left-3 z-[120] p-1.5 rounded bg-surface-channel text-txt-primary desktop:hidden"
+        className="fixed top-3 start-3 z-[120] p-1.5 rounded bg-surface-channel text-txt-primary desktop:hidden"
       >
         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
           {sidebarOpen ? (

@@ -24,7 +24,7 @@ export function Toggle({ enabled, onChange, disabled, ariaLabel }: ToggleProps) 
     >
       <span
         className={`inline-block h-4 w-4 rounded-full bg-white transition-transform ${
-          enabled ? 'translate-x-6' : 'translate-x-1'
+          enabled ? 'translate-x-6 rtl:-translate-x-6' : 'translate-x-1 rtl:-translate-x-1'
         }`}
       />
     </button>

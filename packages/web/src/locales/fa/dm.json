@@ -1,0 +1,146 @@
+{
+  "names": {
+    "group": "گروه",
+    "directMessage": "پیام خصوصی",
+    "theGroup": "گروه",
+    "unknownHandle": "ناشناس",
+    "groupFallback": "گروه خصوصی",
+    "emptyGroup": "گروه خالی"
+  },
+  "preview": {
+    "image": "تصویر",
+    "video": "ویدیو",
+    "audio": "صدا",
+    "files_one": "📎 {{count}} فایل",
+    "files_other": "📎 {{count}} فایل",
+    "withSender": "{{name}}: {{text}}"
+  },
+  "system": {
+    "spaceInviteNamed": "📨 دعوت به {{spaceName}} فرستاده شد",
+    "memberAdded": "{{actor}}، {{target}} را اضافه کرد",
+    "memberAddedToGroup": "{{actor}}، {{target}} را به گروه اضافه کرد",
+    "memberLeft": "{{target}} گروه را ترک کرد",
+    "memberRemoved": "{{actor}}، {{target}} را حذف کرد",
+    "memberRemovedFromGroup": "{{actor}}، {{target}} را از گروه حذف کرد",
+    "ownerChanged": "{{newOwner}} حالا مالک گروه است",
+    "renamed": "{{actor}} نام گروه را عوض کرد",
+    "renamedTo": "{{actor}} نام گروه را به «{{name}}» تغییر داد",
+    "nameCleared": "{{actor}} نام گروه را پاک کرد",
+    "iconChanged": "{{actor}} نماد گروه را به‌روز کرد",
+    "generic": "پیام سیستم"
+  },
+  "deletedNotice": {
+    "accountDeleted": "حساب این کاربر حذف شده است"
+  },
+  "memberRow": {
+    "viewProfile": "دیدن نمایه",
+    "transferOwnership": "انتقال مالکیت",
+    "removeFromGroup": "حذف از گروه",
+    "removeFriend": "حذف دوست",
+    "ownerTooltip": "مالک گروه",
+    "actions": "کارهای مربوط به عضو"
+  },
+  "roster": {
+    "owner": "مالک",
+    "sectionCount": "{{label}} — {{total}}"
+  },
+  "kick": {
+    "title": "حذف از گروه",
+    "description": "{{name}} از این گروه حذف شود؟ دیگر پیام‌های جدید را نمی‌بیند.",
+    "success": "{{name}} از گروه حذف شد",
+    "failed": "حذف عضو ناموفق بود"
+  },
+  "transfer": {
+    "title": "انتقال مالکیت",
+    "description": "مالکیت به {{name}} منتقل شود؟ اختیارات مالک را از دست می‌دهی.",
+    "confirm": "انتقال",
+    "success": "مالکیت به {{name}} منتقل شد",
+    "failed": "انتقال مالکیت ناموفق بود"
+  },
+  "removeFriend": {
+    "failed": "حذف دوست ناموفق بود"
+  },
+  "leave": {
+    "title": "ترک گروه",
+    "description": "«{{name}}» را ترک می‌کنی؟ دیگر پیام‌های این گفتگو را دریافت نمی‌کنی.",
+    "inProgress": "در حال ترک…",
+    "failed": "ترک گروه ناموفق بود",
+    "explanation": "دیگر پیام‌های این گفتگو را دریافت نمی‌کنی. بقیه‌ی اعضا یک پیام سیستم می‌بینند."
+  },
+  "search": {
+    "trigger": "یک گفتگو پیدا یا شروع کن",
+    "placeholder": "جستجو…",
+    "emptyHint": "برای شروع گفتگو، یک کاربر را جستجو کن",
+    "conversations": "گفتگوها",
+    "users": "کاربران",
+    "searching": "در حال جستجو…",
+    "noResults": "چیزی پیدا نشد",
+    "createFailed": "ساختن پیام خصوصی ناموفق بود"
+  },
+  "list": {
+    "title": "پیام‌ها",
+    "empty": "هنوز گفتگویی نداری.",
+    "leaveGroup": "ترک گروه",
+    "justNow": "الان",
+    "minutesShort_one": "{{count}} د",
+    "minutesShort_other": "{{count}} د",
+    "hoursShort_one": "{{count}} س",
+    "hoursShort_other": "{{count}} س",
+    "daysShort_one": "{{count}} ر",
+    "daysShort_other": "{{count}} ر",
+    "close": "بستن پیام خصوصی"
+  },
+  "newDm": {
+    "title": "پیام خصوصی جدید",
+    "searchPlaceholder": "جستجوی کاربر…",
+    "noUsers": "کاربری پیدا نشد"
+  },
+  "addMember": {
+    "title": "افزودن دوستان به گفتگو",
+    "description": "دوستانی را که می‌خواهی به این گفتگو اضافه شوند انتخاب کن.",
+    "capacity": "{{current}} از {{max}}",
+    "searchPlaceholder": "جستجوی دوستان…",
+    "limitReached": "این گروه به سقف {{max}} عضو رسیده است.",
+    "alreadyInDm": "از قبل در این گفتگو است",
+    "noMatch": "هیچ دوستی با جستجوی تو جور نیست",
+    "noFriends": "هنوز دوستی نداری",
+    "selectFriends": "انتخاب دوستان",
+    "addCount_one": "افزودن {{count}} دوست",
+    "addCount_other": "افزودن {{count}} دوست",
+    "adding": "در حال افزودن…",
+    "noOtherMember": "عضو دیگر این گفتگو مشخص نشد.",
+    "failed": "افزودن اعضا ناموفق بود"
+  },
+  "groupSettings": {
+    "title": "تنظیمات گروه",
+    "general": "عمومی",
+    "overview": "نمای کلی",
+    "backToMenu": "برگشت به منوی تنظیمات گروه",
+    "changeIcon": "تغییر نماد گروه",
+    "icon": "نماد گروه",
+    "clickToUpload": "برای بارگذاری کلیک کن",
+    "removeIcon": "حذف نماد گروه",
+    "nameLabel": "نام گروه",
+    "nameAria": "نام گروه",
+    "nameCount": "{{current}} از {{max}}",
+    "addMember": "افزودن عضو",
+    "groupFull": "گروه پر است",
+    "groupFullSuffix": "— گروه پر است",
+    "cropTitle": "برش نماد گروه",
+    "saveFailed": "ذخیره‌ی تنظیمات ناموفق بود"
+  },
+  "groupInfo": {
+    "title": "اطلاعات گروه",
+    "plainTitle": "اطلاعات",
+    "notFound": "گفتگو پیدا نشد.",
+    "notGroup": "این گفتگو اطلاعات گروهی ندارد.",
+    "cancelEdit": "لغو ویرایش",
+    "federated": "گروه فدره",
+    "memberCount_one": "{{count}} عضو",
+    "memberCount_other": "{{count}} عضو"
+  },
+  "ownerActions": {
+    "ownerNotConnected": "این گروه روی {{host}} مدیریت می‌شود. برای تغییرش به آن سرور وصل شو.",
+    "ownerNotListed": "{{host}} هنوز این گروه را برایت فهرست نکرده. کمی بعد دوباره امتحان کن."
+  }
+}

@@ -47,7 +47,7 @@ export function MentionTextarea({ model, textareaRef, mentionAnchorRef, mentionS
     </div>
     {/* The mirror paints the text; the textarea keeps only its caret,
         selection and placeholder. */}
-    <textarea {...props} ref={textareaRef} value={model.text}
+    <textarea dir={model.text ? 'auto' : undefined} {...props} ref={textareaRef} value={model.text}
       className={`${props.className ?? ''} text-transparent caret-txt-primary`}
       onScroll={event => {
         if (mirrorRef.current) mirrorRef.current.style.transform = 'translateY(-' + event.currentTarget.scrollTop + 'px)';

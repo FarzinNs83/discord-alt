@@ -31,7 +31,7 @@ export function DropdownItem({ label, active, onClick }: DropdownItemProps) {
     <button
       type="button"
       onClick={onClick}
-      className={`w-full px-3 py-2 text-left text-[13px] hover:bg-interactive-hover transition-colors flex items-center gap-2 ${
+      className={`w-full px-3 py-2 text-start text-[13px] hover:bg-interactive-hover transition-colors flex items-center gap-2 ${
         active ? 'text-txt-primary' : 'text-txt-secondary'
       }`}
     >
@@ -40,7 +40,7 @@ export function DropdownItem({ label, active, onClick }: DropdownItemProps) {
           <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
         </svg>
       )}
-      <span className={`truncate ${active ? '' : 'pl-6'}`}>{label}</span>
+      <span className={`truncate ${active ? '' : 'ps-6'}`}>{label}</span>
     </button>
   );
 }

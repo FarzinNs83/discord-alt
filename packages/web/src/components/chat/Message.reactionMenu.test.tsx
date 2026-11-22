@@ -208,8 +208,8 @@ describe('the picker the mobile long-press sheet opens', () => {
 
     const sheet = screen.getByRole('dialog', { name: 'Add reaction' });
     expect(sheet.className).toContain('fixed');
-    expect(sheet.className).toContain('left-0');
-    expect(sheet.className).toContain('right-0');
+    expect(sheet.className).toContain('start-0');
+    expect(sheet.className).toContain('end-0');
     expect(sheet.style.left).toBe('');
     expect(sheet.style.top).toBe('');
     expect(sheet.style.width).toBe('');

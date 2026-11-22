@@ -395,7 +395,7 @@ function DmListColumn({ channelId }: { channelId: string }) {
   const entries = useSpaceStore.getState().dmChannels.filter((d) => d.id === NAMES_DM_ID || d.id === NAMES_DISPLAY_DM_ID);
   const noop = () => {};
   return (
-    <div className="flex flex-col gap-0.5 px-2 py-3 bg-surface-channel border-r border-border-hard shrink-0" style={{ width: LIST_WIDTH }}>
+    <div className="flex flex-col gap-0.5 px-2 py-3 bg-surface-channel border-e border-border-hard shrink-0" style={{ width: LIST_WIDTH }}>
       {entries.map((entry) => (
         <DmListItem key={entry.id} dm={entry} isActive={entry.id === channelId} isUnread={false} user={ME} onSelect={noop} onClose={noop} onLeave={noop} />
       ))}

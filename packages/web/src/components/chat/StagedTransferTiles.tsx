@@ -77,7 +77,7 @@ export function StagedTransferTiles({ stagedTransfers, previewUrls, onRemove }: 
             {isFinal && (
               <button
                 onClick={() => onRemove(transfer.id)}
-                className="absolute -top-2 -right-2 w-7 h-7 bg-accent-rose hover:bg-accent-rose/80 shadow-elevation-high rounded-lg flex items-center justify-center text-white transition-colors z-10"
+                className="absolute -top-2 -end-2 w-7 h-7 bg-accent-rose hover:bg-accent-rose/80 shadow-elevation-high rounded-lg flex items-center justify-center text-white transition-colors z-10"
                 aria-label={t('composer.removeAttachment')}
               >
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
