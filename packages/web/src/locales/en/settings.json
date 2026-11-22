@@ -130,7 +130,8 @@
       "connections": "Connections",
       "keybinds": "Keybinds",
       "desktop": "Desktop",
-      "instance": "Instance"
+      "instance": "Instance",
+      "weakNet": "Weak internet"
     },
     "logOut": "Log Out",
     "backToMenu": "Back to settings menu"
@@ -428,5 +429,61 @@
     },
     "version": "Version {{version}}",
     "allReleases": "All releases on GitHub"
+  },
+  "weakNet": {
+    "title": "Weak internet",
+    "subtitle": "Keep chatting and talking when the connection is slow, shaky or capped.",
+    "now": {
+      "unknown": "Couldn't reach the server",
+      "weak": "Your connection is shaky right now",
+      "good": "Your connection looks fine",
+      "rtt": "Round trip {{ms}} ms",
+      "on": {
+        "auto": "weak internet mode is on (automatic)",
+        "always": "weak internet mode is on (always)"
+      },
+      "off": "weak internet mode is off",
+      "bars_one": "Connection: {{count}} of 4 bars",
+      "bars_other": "Connection: {{count}} of 4 bars",
+      "test": "Test again",
+      "testing": "Testing…"
+    },
+    "mode": {
+      "label": "When to use weak internet mode",
+      "auto": {
+        "label": "Automatic",
+        "description": "Turns on by itself when the connection gets bad, and off when it recovers."
+      },
+      "always": {
+        "label": "Always on",
+        "description": "For capped mobile data or a connection that is always slow."
+      },
+      "off": {
+        "label": "Off",
+        "description": "Full quality everywhere, whatever the connection."
+      }
+    },
+    "groups": {
+      "voice": "Voice and video",
+      "chat": "Chat and media"
+    },
+    "features": {
+      "voiceOnly": {
+        "label": "Voice only in calls",
+        "description": "Don't download other people's cameras until you choose Watch camera."
+      },
+      "lighterVoice": {
+        "label": "Lighter voice",
+        "description": "Sends your voice at a lower bitrate. Still clear, much smaller."
+      },
+      "tapToLoad": {
+        "label": "Tap to load images and GIFs",
+        "description": "Images and voice clips download only when you tap them."
+      },
+      "shrinkImages": {
+        "label": "Shrink images I send",
+        "description": "Resize photos before upload. Other files stay untouched."
+      }
+    }
   }
 }

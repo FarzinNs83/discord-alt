@@ -116,7 +116,7 @@ export function systemAudioSwitch(
 }
 
 const pillBase = 'px-2.5 py-1.5 rounded-full text-[13px] font-medium transition-colors cursor-pointer select-none text-center';
-const pillSelected = 'bg-accent-primary text-white';
+const pillSelected = 'bg-accent-primary text-txt-on-primary';
 const pillUnselected = 'bg-surface-elevated text-txt-secondary hover:bg-interactive-hover';
 
 export function StreamQualityControls() {
@@ -272,7 +272,7 @@ export function StreamQualityControls() {
                     [&::-moz-range-thumb]:w-3.5 [&::-moz-range-thumb]:h-3.5 [&::-moz-range-thumb]:rounded-full
                     [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer"
                 />
-                <span className="text-[12px] font-medium text-txt-primary min-w-[64px] flex-shrink-0 text-right">
+                <span className="text-[12px] font-medium text-txt-primary min-w-[64px] flex-shrink-0 text-end">
                   {formatKbps(effective.customBitrateKbps)}
                 </span>
               </div>

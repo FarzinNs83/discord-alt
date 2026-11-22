@@ -1,0 +1,34 @@
+{
+  "input": {
+    "placeholder": "جستجو در پیام‌ها…"
+  },
+  "filters": {
+    "toggle": "فیلترها",
+    "from": {
+      "label": "از طرف",
+      "placeholder": "نام کاربری"
+    },
+    "has": {
+      "label": "دارای",
+      "any": "هر چیزی",
+      "file": "فایل",
+      "image": "تصویر",
+      "link": "لینک"
+    },
+    "before": {
+      "label": "قبل از"
+    },
+    "after": {
+      "label": "بعد از"
+    }
+  },
+  "results": {
+    "empty": "چیزی پیدا نشد",
+    "hint": "برای جستجو در پیام‌های این کانال بنویس",
+    "count_one": "{{count}} نتیجه",
+    "count_other": "{{count}} نتیجه",
+    "loadMore": "بیشتر ({{remaining}} مانده)",
+    "attachments_one": "{{count}} پیوست",
+    "attachments_other": "{{count}} پیوست"
+  }
+}

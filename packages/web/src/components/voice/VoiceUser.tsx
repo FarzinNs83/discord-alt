@@ -6,7 +6,7 @@ import { useContextMenuStore, type ContextMenuItem } from '../../stores/contextM
 import { buildVoiceModMenuItems, VolumeSliderItem } from './voiceMenuItems';
 import { useSpaceStore } from '../../stores/spaceStore';
 import { useVoiceParticipantMeta } from '../../hooks/useVoiceParticipantMeta';
-import { getActiveRoom, setCameraSubscription } from '../../hooks/useLiveKit';
+import { getActiveRoom, setCameraSubscription, noteCameraRewatched } from '../../hooks/useLiveKit';
 import type { UserTile } from '../../hooks/useLiveKit';
 
 interface VoiceUserProps {
@@ -107,6 +107,7 @@ export function VoiceUser({ tile, large }: VoiceUserProps) {
             const identity = targetParticipant?.identity;
             if (isCameraUnwatched) {
               useVoiceStore.getState().rewatchCamera(targetUserId);
+              noteCameraRewatched(targetUserId);
               if (identity) setCameraSubscription(room, identity, true);
             } else {
               useVoiceStore.getState().unwatchCamera(targetUserId);
@@ -144,9 +145,9 @@ export function VoiceUser({ tile, large }: VoiceUserProps) {
   return (
     <div
       data-context-menu
-      className={`relative bg-surface-base rounded-xl overflow-hidden flex items-center justify-center group transition-all duration-200 ${
+      className={`relative bg-surface-elevated rounded-[22px] overflow-hidden flex items-center justify-center group transition-all duration-200 ${
         isSpeaking
-          ? 'ring-[3px] ring-status-online shadow-[0_0_12px_rgba(134,239,172,0.25)]'
+          ? 'ring-[3px] ring-status-online shadow-[0_0_14px_rgba(127,216,176,0.3)]'
           : 'ring-1 ring-white/[0.06] hover:ring-white/10'
       } h-full w-full`}
       onContextMenu={handleContextMenu}
@@ -177,7 +178,7 @@ export function VoiceUser({ tile, large }: VoiceUserProps) {
         </div>
       )}
 
-      <div className="absolute bottom-0 left-0 right-0 px-3 py-2 bg-gradient-to-t from-black/70 via-black/30 to-transparent">
+      <div className="absolute bottom-0 start-0 end-0 px-3 py-2 bg-gradient-to-t from-black/70 via-black/30 to-transparent">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 min-w-0">
             <span

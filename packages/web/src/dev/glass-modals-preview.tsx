@@ -23,6 +23,7 @@ import type { MemberWithUser, Role, User } from '@patogh/shared';
 import { SpaceSettingsModal } from '../components/modals/SpaceSettings';
 import { CreateSpaceModal } from '../components/modals/CreateSpace';
 import { JoinSpaceModal } from '../components/modals/JoinSpace';
+import { UserSettingsModal } from '../components/modals/UserSettings';
 import { TransferOwnershipModal } from '../components/modals/TransferOwnershipModal';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog';
 import { useSpaceStore, type TaggedSpace } from '../stores/spaceStore';
@@ -33,8 +34,8 @@ import { initI18n } from '../i18n';
 import { initializeInterfaceScale } from '../platform/interfaceScale';
 import '../styles/globals.css';
 
-type Scene = 'space-settings' | 'create-space' | 'join-space' | 'transfer' | 'confirm';
-const SCENES: readonly Scene[] = ['space-settings', 'create-space', 'join-space', 'transfer', 'confirm'];
+type Scene = 'space-settings' | 'create-space' | 'join-space' | 'transfer' | 'confirm' | 'user-settings';
+const SCENES: readonly Scene[] = ['space-settings', 'create-space', 'join-space', 'transfer', 'confirm', 'user-settings'];
 
 const SPACE_ID = 'space-1';
 const SPACE: TaggedSpace = {
@@ -120,6 +121,7 @@ function Workbench({ scene }: { scene: Scene }) {
       {scene === 'space-settings' && <SpaceSettingsModal />}
       {scene === 'create-space' && <CreateSpaceModal />}
       {scene === 'join-space' && <JoinSpaceModal />}
+      {scene === 'user-settings' && <UserSettingsModal />}
       {scene === 'transfer' && <TransferOwnershipModal spaceId={SPACE_ID} onClose={() => undefined} />}
       {scene === 'confirm' && (
         <ConfirmDialog
@@ -151,8 +153,8 @@ async function start(): Promise<void> {
     spacePermissions: new Map([[SPACE_ID, permissionsToString(ALL_PERMISSIONS)]]),
     loadSpaceDetail: async () => undefined,
   });
-  const modal = scene === 'space-settings' ? 'spaceSettings' : scene === 'create-space' ? 'createSpace' : scene === 'join-space' ? 'joinSpace' : null;
-  useUIStore.setState({ activeModal: modal, modalData: {} });
+  const modal = scene === 'space-settings' ? 'spaceSettings' : scene === 'create-space' ? 'createSpace' : scene === 'join-space' ? 'joinSpace' : scene === 'user-settings' ? 'userSettings' : null;
+  useUIStore.setState({ activeModal: modal, modalData: scene === 'user-settings' ? { tab: new URLSearchParams(window.location.search).get('tab') ?? 'weakNet' } : {} });
   const host = document.getElementById('root');
   if (!host) throw new Error('missing #root');
   createRoot(host).render(<Workbench scene={scene} />);

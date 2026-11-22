@@ -797,3 +797,36 @@ export const personalStickers = sqliteTable('personal_stickers', {
   name: text('name').notNull(),
   createdAt: integer('created_at').notNull(),
 }, (table) => ({ pk: primaryKey({ columns: [table.userId, table.stickerId] }) }));
+
+/** Scheduled space events (game nights and the like), shown as a card above the channel list. */
+export const spaceEvents = sqliteTable('space_events', {
+  id: text('id').primaryKey(),
+  spaceId: text('space_id').notNull().references(() => spaces.id, { onDelete: 'cascade' }),
+  /** Where it happens, usually a voice channel; null once that channel is deleted. */
+  channelId: text('channel_id').references(() => channels.id, { onDelete: 'set null' }),
+  title: text('title').notNull(),
+  startsAt: integer('starts_at').notNull(),
+  createdBy: text('created_by').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  createdAt: integer('created_at').notNull(),
+}, (table) => ({
+  spaceStartsIdx: index('idx_space_events_space_starts').on(table.spaceId, table.startsAt),
+}));
+
+export const spaceEventRsvps = sqliteTable('space_event_rsvps', {
+  eventId: text('event_id').notNull().references(() => spaceEvents.id, { onDelete: 'cascade' }),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  createdAt: integer('created_at').notNull(),
+}, (table) => ({ pk: primaryKey({ columns: [table.eventId, table.userId] }) }));
+
+/** A space's soundboard. `file` is `<sha256>.<ext>` under the upload directory's `sounds/`, shared by identical uploads. */
+export const spaceSounds = sqliteTable('space_sounds', {
+  id: text('id').primaryKey(),
+  spaceId: text('space_id').notNull().references(() => spaces.id, { onDelete: 'cascade' }),
+  name: text('name').notNull(),
+  emoji: text('emoji'),
+  file: text('file').notNull(),
+  uploadedBy: text('uploaded_by').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  createdAt: integer('created_at').notNull(),
+}, (table) => ({
+  spaceIdx: index('idx_space_sounds_space').on(table.spaceId),
+}));

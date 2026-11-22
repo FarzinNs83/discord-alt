@@ -109,7 +109,7 @@ function StreamVolumeItem({ userId }: { userId: string }) {
           onChange={(e) => setStreamVolume(userId, parseInt(e.target.value))}
           className="flex-1 min-w-0 accent-accent-primary h-1"
         />
-        <span className="text-xs text-txt-secondary min-w-[32px] flex-shrink-0 text-right">
+        <span className="text-xs text-txt-secondary min-w-[32px] flex-shrink-0 text-end">
           {f.formatPercent(streamVolume)}
         </span>
       </div>
@@ -131,7 +131,7 @@ function StreamAttenuationItem() {
       <div className="py-1.5">
         <button
           onClick={() => setAttenuationEnabled(!streamAttenuationEnabled)}
-          className="w-full text-left px-2 py-1.5 mx-1.5 text-sm rounded-sm flex items-center gap-2 text-txt-secondary hover:bg-accent-primary hover:text-white"
+          className="w-full text-start px-2 py-1.5 mx-1.5 text-sm rounded-sm flex items-center gap-2 text-txt-secondary hover:bg-accent-primary hover:text-txt-on-primary"
           style={{ width: 'calc(100% - 12px)' }}
         >
           <span className="flex-1">{t('voice:stream.attenuation')}</span>
@@ -164,7 +164,7 @@ function StreamAttenuationItem() {
               onChange={(e) => setAttenuationStrength(parseInt(e.target.value))}
               className="flex-1 min-w-0 accent-accent-primary h-1"
             />
-            <span className="text-xs text-txt-secondary min-w-[32px] flex-shrink-0 text-right">
+            <span className="text-xs text-txt-secondary min-w-[32px] flex-shrink-0 text-end">
               {f.formatPercent(streamAttenuationStrength)}
             </span>
           </div>
@@ -420,7 +420,7 @@ export function StreamTile({ tile, large, stats }: StreamTileProps) {
   return (
     <div
       data-context-menu
-      className={`relative bg-surface-base rounded-xl overflow-hidden flex items-center justify-center group transition-all duration-200 ring-1 ring-white/[0.06] hover:ring-white/10 ${
+      className={`relative bg-surface-base rounded-[22px] overflow-hidden flex items-center justify-center group transition-all duration-200 ring-1 ring-white/[0.06] hover:ring-white/10 ${
         'h-full w-full'
       }`}
       onContextMenu={handleContextMenu}
@@ -439,7 +439,7 @@ export function StreamTile({ tile, large, stats }: StreamTileProps) {
             <div className="relative flex-shrink-0">
               <Avatar src={avatar} name={displayName} size={large ? 80 : 44} userId={avatarUserId} user={user ?? undefined} />
             </div>
-            <div className={`${large ? 'text-center' : 'text-left flex-1'} min-w-0`}>
+            <div className={`${large ? 'text-center' : 'text-start flex-1'} min-w-0`}>
               <p className={`text-txt-primary font-semibold ${large ? 'text-sm' : 'text-xs leading-tight line-clamp-2'}`}>
                 {t('voice:stream.isStreaming', { name: displayName })}
               </p>
@@ -458,14 +458,14 @@ export function StreamTile({ tile, large, stats }: StreamTileProps) {
       )}
 
       {/* LIVE badge — top left */}
-      <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-accent-rose rounded text-[11px] font-bold text-white uppercase tracking-wide">
+      <div className="absolute top-2 start-2 px-1.5 py-0.5 bg-accent-rose rounded text-[11px] font-bold text-white uppercase tracking-wide">
         {t('voice:badges.live')}
       </div>
 
       {/* Stream status — in focus mode this is the visual peer of the Grid
           action: same top edge, height, radius, and surface treatment. */}
       {(healthWarning || (qualityBadge && hasVideo)) && (
-        <div className={`absolute top-2 left-20 ${large ? 'right-24' : 'right-2'} flex items-start justify-end gap-1.5 pointer-events-none`}>
+        <div className={`absolute top-2 start-20 ${large ? 'end-24' : 'end-2'} flex items-start justify-end gap-1.5 pointer-events-none`}>
           {healthWarning && (
             <div className={`${large ? 'h-7 rounded-lg' : 'rounded'} min-w-0 max-w-full px-2 bg-black/75 border border-status-idle/40 flex items-center text-[10px] leading-[15px] text-white/90 truncate`}>
               {t(STREAM_HEALTH_KEYS[healthWarning])}
@@ -483,7 +483,7 @@ export function StreamTile({ tile, large, stats }: StreamTileProps) {
       )}
 
       {/* Bottom overlay */}
-      {hasVideo && isWatching && <div data-testid="stream-tile-caption" className="absolute bottom-0 left-0 right-0 px-3 py-2 bg-gradient-to-t from-black/70 via-black/30 to-transparent">
+      {hasVideo && isWatching && <div data-testid="stream-tile-caption" className="absolute bottom-0 start-0 end-0 px-3 py-2 bg-gradient-to-t from-black/70 via-black/30 to-transparent">
         <div className="flex items-center gap-1.5 min-w-0">
           {/* Screen icon */}
           <svg

@@ -16,6 +16,7 @@ import {
 import { VoiceGrid } from '../voice/VoiceGrid';
 import { deriveGridTiles } from '../../hooks/useLiveKit';
 import { requestMicPermission } from '../../utils/voice';
+import { SoundboardPanel, useSoundboardAvailable } from '../voice/SoundboardPanel';
 
 /**
  * Full-screen mobile voice/video call view.
@@ -55,6 +56,8 @@ export function MobileVoiceFullScreen() {
   const cameraDeviceId = useVoiceStore((s) => s.cameraDeviceId);
   const setCameraDeviceId = useVoiceStore((s) => s.setCameraDeviceId);
   const micPermissionDenied = useVoiceStore((s) => s.micPermissionDenied);
+  const soundboardAvailable = useSoundboardAvailable();
+  const [soundboardOpen, setSoundboardOpen] = useState(false);
 
   // ── In-call camera switcher ───────────────────────────────────────────────
   // On mobile, users typically have a front+back camera and need to flip
@@ -484,7 +487,7 @@ export function MobileVoiceFullScreen() {
               aria-label={t('voice:camera.switch')}
               aria-haspopup="menu"
               aria-expanded={cameraPickerOpen}
-              className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-surface-elevated text-txt-primary flex items-center justify-center shadow-md border border-border-soft active:scale-95 transition-transform"
+              className="absolute -top-1 -end-1 w-6 h-6 rounded-full bg-surface-elevated text-txt-primary flex items-center justify-center shadow-md border border-border-soft active:scale-95 transition-transform"
             >
               <svg
                 width="14"
@@ -540,6 +543,19 @@ export function MobileVoiceFullScreen() {
           </svg>
         </button>
 
+        {/* Soundboard (space calls only) */}
+        {soundboardAvailable && (
+          <button
+            onClick={() => setSoundboardOpen(true)}
+            className="w-12 h-12 rounded-full bg-accent-amber text-txt-on-primary flex items-center justify-center"
+            aria-label={t('voice:soundboard.title')}
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="2" /><rect x="14" y="3" width="7" height="7" rx="2" /><rect x="3" y="14" width="7" height="7" rx="2" /><rect x="14" y="14" width="7" height="7" rx="2" />
+            </svg>
+          </button>
+        )}
+
         {/* Disconnect */}
         <button
           onClick={handleDisconnect}
@@ -561,6 +577,8 @@ export function MobileVoiceFullScreen() {
           </svg>
         </button>
       </div>
+
+      {soundboardOpen && <SoundboardPanel variant="sheet" onClose={() => setSoundboardOpen(false)} />}
 
       {/* Camera picker popup — portaled to document.body so the upward
           expansion isn't clipped by the control bar's glass-bubble.
@@ -590,7 +608,7 @@ export function MobileVoiceFullScreen() {
               role="menuitemradio"
               aria-checked={cameraDeviceId === null}
               onClick={() => handlePickCamera(null)}
-              className={`w-full text-left px-3 py-2 text-[12px] truncate ${
+              className={`w-full text-start px-3 py-2 text-[12px] truncate ${
                 cameraDeviceId === null ? 'text-txt-primary' : 'text-txt-secondary'
               } active:bg-interactive-hover`}
             >
@@ -603,7 +621,7 @@ export function MobileVoiceFullScreen() {
                 role="menuitemradio"
                 aria-checked={cameraDeviceId === d.deviceId}
                 onClick={() => handlePickCamera(d.deviceId)}
-                className={`w-full text-left px-3 py-2 text-[12px] truncate ${
+                className={`w-full text-start px-3 py-2 text-[12px] truncate ${
                   cameraDeviceId === d.deviceId ? 'text-txt-primary' : 'text-txt-secondary'
                 } active:bg-interactive-hover`}
               >

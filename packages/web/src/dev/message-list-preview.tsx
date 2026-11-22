@@ -187,7 +187,7 @@ function Column({ width }: { width: number }) {
     <div className="flex h-full justify-center bg-surface-base">
       <div className="flex-1 flex flex-col bg-surface-chat min-w-0 relative" style={{ maxWidth: width, height: 'calc(100 * var(--app-vh))' }}>
         <div className="h-12 px-5 flex items-center border-b border-border-hard flex-shrink-0 z-10 bg-surface-chat">
-          <span className="text-[20px] font-medium text-txt-tertiary leading-none mr-[10px]">#</span>
+          <span className="text-[20px] font-medium text-txt-tertiary leading-none me-[10px]">#</span>
           <span className="font-bold text-[15px] tracking-[-0.02em] text-txt-primary">release</span>
         </div>
         <MessageList channelId={CHANNEL} />

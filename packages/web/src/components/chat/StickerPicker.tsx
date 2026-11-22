@@ -129,7 +129,7 @@ export function StickerPicker({ onSelect, mobile = false }: { onSelect: (token: 
           closeRename();
         }} /> : <>
         <div className="flex shrink-0 items-center justify-between gap-2 px-4 pt-3 pb-2">
-          <h3 className="text-sm font-semibold">{t('stickers.title')} <span className="ml-1 text-xs font-normal text-txt-tertiary">{!loading && items.length}</span></h3>
+          <h3 className="text-sm font-semibold">{t('stickers.title')} <span className="ms-1 text-xs font-normal text-txt-tertiary">{!loading && items.length}</span></h3>
           <div className="flex items-center gap-1">
             {items.length > 0 && <button type="button" disabled={!!removing} aria-pressed={managing}
               className="sticker-secondary-button" onClick={() => setManaging(!managing)}>{t(managing ? 'stickers.done' : 'stickers.manage')}</button>}
@@ -140,14 +140,14 @@ export function StickerPicker({ onSelect, mobile = false }: { onSelect: (token: 
         </div>
         <p className="px-4 pb-3 text-xs text-txt-tertiary">{t(managing ? 'stickers.manageHint' : full ? 'stickers.full' : 'stickers.collectionHint')}</p>
         {items.length > 0 && <div className="relative mx-4 mb-3 flex shrink-0 items-center">
-          <svg className="pointer-events-none absolute left-2.5 h-3.5 w-3.5 text-txt-tertiary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+          <svg className="pointer-events-none absolute start-2.5 h-3.5 w-3.5 text-txt-tertiary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
             <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
           </svg>
           <input type="text" role="searchbox" value={search} onChange={event => setSearch(event.target.value)}
             placeholder={t('stickers.search')} aria-label={t('stickers.search')} maxLength={100}
-            className="input-search w-full pl-8 pr-8 text-xs" />
+            className="input-search w-full ps-8 pe-8 text-xs" />
           {search && <button type="button" onClick={() => setSearch('')} aria-label={t('common:actions.clear')}
-            className="absolute right-1.5 flex h-6 w-6 items-center justify-center rounded-md text-txt-tertiary hover:bg-interactive-hover hover:text-txt-primary">
+            className="absolute end-1.5 flex h-6 w-6 items-center justify-center rounded-md text-txt-tertiary hover:bg-interactive-hover hover:text-txt-primary">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
           </button>}
         </div>}

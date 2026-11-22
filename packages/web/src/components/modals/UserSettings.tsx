@@ -17,6 +17,7 @@ import {
   DesktopDownloadPanel,
   InstancePanel,
   KeybindsPanel,
+  WeakNetPanel,
   SettingsPanelSuspense,
 } from './lazySettingsPanels';
 import { isElectron } from '../../platform/platform';
@@ -34,6 +35,7 @@ const USER_SETTINGS_TABS = [
   { id: 'appearance', group: 'user', label: 'settings:nav.tabs.appearance' },
   { id: 'voice', group: 'user', label: 'settings:nav.tabs.voice' },
   { id: 'privacy', group: 'user', label: 'settings:nav.tabs.privacy' },
+  { id: 'weakNet', group: 'app', label: 'settings:nav.tabs.weakNet' },
   { id: 'connections', group: 'app', label: 'settings:nav.tabs.connections' },
   { id: 'keybinds', group: 'app', label: 'settings:nav.tabs.keybinds' },
   { id: 'desktop', group: 'app', label: 'settings:nav.tabs.desktop' },
@@ -51,11 +53,20 @@ const GROUP_HEADINGS = {
 
 const GROUP_ORDER: readonly TabGroup[] = ['user', 'app', 'admin'];
 
+/** Each nav group's diamond colour, as on the board. */
+const GROUP_DOT = {
+  user: 'bg-accent-sky',
+  app: 'bg-accent-lavender',
+  admin: 'bg-accent-rose',
+} as const satisfies Record<TabGroup, string>;
+
 function isUserSettingsTab(value: unknown): value is UserSettingsTab {
   return typeof value === 'string' && USER_SETTINGS_TABS.some((tab) => tab.id === value);
 }
 
 function tabVisible(tab: UserSettingsTab, isAdmin: boolean): boolean {
+  // shortcut: the browser's desktop-download tab is hidden for now; drop this line to bring it back.
+  if (tab === 'desktop' && !isElectron()) return false;
   return USER_SETTINGS_TABS.find((entry) => entry.id === tab)?.group !== 'admin' || isAdmin;
 }
 
@@ -69,7 +80,7 @@ export function SidebarSubLinks() {
         <button
           key={section.id}
           onClick={() => ctx.scrollToSection(section.id)}
-          className={`w-full flex items-center gap-1.5 text-left pl-6 pr-2 py-1 text-xs rounded-md transition-colors ${
+          className={`w-full flex items-center gap-1.5 text-start ps-6 pe-2 py-1 text-xs rounded-md transition-colors ${
             ctx.activeSection === section.id
               ? 'text-txt-primary'
               : 'text-txt-tertiary hover:text-txt-secondary'
@@ -94,7 +105,7 @@ export function SidebarSubLinks() {
 function SettingsScrollContainer({ children }: { children: React.ReactNode }) {
   const ctx = useSettingsSectionsContext();
   return (
-    <div ref={ctx?.scrollContainerRef} className="flex-1 min-w-0 overflow-y-auto scrollbar-thin py-6">
+    <div ref={ctx?.scrollContainerRef} className="flex-1 min-w-0 overflow-y-auto scrollbar-thin py-7 bg-surface-members desktop:rounded-ss-[28px]">
       {children}
     </div>
   );
@@ -147,9 +158,42 @@ export function UserSettingsModal() {
   };
 
   const tabClass = (target: UserSettingsTab) =>
-    `w-full min-w-0 truncate text-left px-3 py-2 rounded-md text-sm transition-colors ${
-      tab === target ? 'bg-interactive-selected text-txt-primary font-medium' : 'text-txt-tertiary hover:text-txt-secondary hover:bg-interactive-hover'
+    `w-full min-w-0 h-10 flex items-center gap-2.5 text-start px-3 rounded-[13px] text-sm transition-colors ${
+      tab === target ? 'bg-accent-primary text-txt-on-primary font-extrabold' : 'text-txt-secondary font-semibold hover:text-txt-primary hover:bg-interactive-hover'
     }`;
+
+  const dot = (group: TabGroup, target: UserSettingsTab) => (
+    <span
+      aria-hidden="true"
+      className={`shrink-0 w-2.5 h-2.5 rounded-[4px] rotate-45 ${tab === target ? 'bg-txt-on-primary' : GROUP_DOT[group]}`}
+    />
+  );
+
+  const userHeader = (
+    <div className="flex items-center gap-3 px-2">
+      <Avatar
+        src={user?.avatar}
+        name={user?.displayName || user?.username || ''}
+        size={44}
+        userId={user?.id}
+        avatarColor={user?.avatarColor}
+        className="-rotate-[5deg]"
+      />
+      <div className="min-w-0">
+        <div className="font-display font-extrabold text-lg leading-tight text-txt-primary">{t('common:labels.settings')}</div>
+        <div className="text-xs text-txt-tertiary truncate">{user?.displayName || user?.username} · @{user?.username}</div>
+      </div>
+    </div>
+  );
+
+  const logoutButton = (
+    <button
+      onClick={handleLogout}
+      className="w-full h-[42px] rounded-[13px] border-2 border-dashed border-border-hard text-accent-rose font-extrabold text-sm hover:bg-accent-rose/10 transition-colors"
+    >
+      {t('settings:nav.logOut')}
+    </button>
+  );
 
   const handleTabClick = (target: UserSettingsTab) => {
     setTab(target);
@@ -159,16 +203,16 @@ export function UserSettingsModal() {
   const renderNav = (layout: 'desktop' | 'mobile'): ReactNode =>
     GROUP_ORDER.filter((group) => group !== 'admin' || isAdmin).map((group, index) => (
       <Fragment key={group}>
-        {index > 0 && <div className="border-t border-white/[0.04] my-2 mx-2" />}
-        <div className="text-[10px] font-semibold text-txt-tertiary uppercase tracking-wider px-3 py-1">{t(GROUP_HEADINGS[group])}</div>
-        {USER_SETTINGS_TABS.filter((entry) => entry.group === group && (federationEnabled || entry.id !== 'connections')).map((entry) => (
+        <div className={`text-[11px] font-bold text-txt-tertiary uppercase tracking-[0.12em] px-3 pb-1.5 ${index > 0 ? 'pt-4' : ''}`}>{t(GROUP_HEADINGS[group])}</div>
+        {USER_SETTINGS_TABS.filter((entry) => entry.group === group && (federationEnabled || entry.id !== 'connections') && tabVisible(entry.id, isAdmin === true)).map((entry) => (
           entry.id === 'instance' && layout === 'desktop' ? (
             <Fragment key={entry.id}>
               <button
                 onClick={() => handleTabClick(entry.id)}
-                className={`${tabClass(entry.id)} flex items-center gap-1.5`}
+                className={tabClass(entry.id)}
                 aria-current={tab === entry.id ? 'page' : undefined}
               >
+                {dot(group, entry.id)}
                 <span className="flex-1 min-w-0 truncate">{t(entry.label)}</span>
                 {updateBadge && <span className="shrink-0 w-1.5 h-1.5 rounded-full bg-accent-amber" />}
               </button>
@@ -181,7 +225,8 @@ export function UserSettingsModal() {
               className={tabClass(entry.id)}
               aria-current={tab === entry.id ? 'page' : undefined}
             >
-              {t(entry.label)}
+              {dot(group, entry.id)}
+              <span className="flex-1 min-w-0 truncate">{t(entry.label)}</span>
             </button>
           )
         ))}
@@ -193,6 +238,7 @@ export function UserSettingsModal() {
     appearance: () => <AppearancePanel />,
     voice: () => <VoicePanel />,
     privacy: () => <PrivacyPanel />,
+    weakNet: () => <WeakNetPanel />,
     connections: () => <ConnectionsPanel />,
     keybinds: () => <KeybindsPanel />,
     desktop: () => (isElectron()
@@ -206,76 +252,29 @@ export function UserSettingsModal() {
       <SettingsSectionsProvider>
       <div className="flex h-full">
         {/* Desktop Sidebar */}
-        <div className="hidden desktop:flex w-52 flex-shrink-0 flex-col p-4 gap-3">
-          {/* User card */}
-          <div className="glass-bubble rounded-lg p-3 flex items-center gap-3">
-            <Avatar
-              src={user?.avatar}
-              name={user?.displayName || user?.username || ''}
-              size={36}
-              userId={user?.id}
-              avatarColor={user?.avatarColor}
-            />
-            <div className="min-w-0">
-              <div className="text-sm font-medium text-txt-primary truncate">{user?.displayName || user?.username}</div>
-              <div className="text-xs text-txt-tertiary truncate">@{user?.username}</div>
-            </div>
-          </div>
-
-          {/* Nav list */}
-          <div className="glass-bubble rounded-lg p-2 flex-1 flex flex-col">
+        <div className="hidden desktop:flex w-64 flex-shrink-0 flex-col px-3.5 py-6 gap-5 overflow-y-auto no-scrollbar">
+          {userHeader}
+          <nav className="flex flex-col gap-0.5" aria-label={t('common:labels.settings')}>
             {renderNav('desktop')}
-
-            <div className="flex-1" />
-
-            <div className="border-t border-white/[0.04] my-2 mx-2" />
-            <button
-              onClick={handleLogout}
-              className="w-full text-left px-3 py-2 rounded-md text-sm text-txt-danger hover:bg-accent-rose/10 transition-colors"
-            >
-              {t('settings:nav.logOut')}
-            </button>
-
-          </div>
+          </nav>
+          <div className="mt-auto">{logoutButton}</div>
         </div>
 
         {/* Mobile: Tab list */}
         {isMobile && mobileView === 'tabs' && (
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
-            {/* Mobile user card */}
-            <div className="glass-bubble rounded-lg p-3 flex items-center gap-3">
-              <Avatar
-                src={user?.avatar}
-                name={user?.displayName || user?.username || ''}
-                size={36}
-                userId={user?.id}
-                avatarColor={user?.avatarColor}
-              />
-              <div className="min-w-0">
-                <div className="text-sm font-medium text-txt-primary truncate">{user?.displayName || user?.username}</div>
-                <div className="text-xs text-txt-tertiary truncate">@{user?.username}</div>
-              </div>
-            </div>
-
-            <div className="glass-bubble rounded-lg p-2 space-y-0.5">
+          <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-5">
+            {userHeader}
+            <nav className="flex flex-col gap-0.5" aria-label={t('common:labels.settings')}>
               {renderNav('mobile')}
-
-              <div className="border-t border-white/[0.04] my-2 mx-2" />
-              <button
-                onClick={handleLogout}
-                className="w-full text-left px-3 py-2 rounded-md text-sm text-txt-danger hover:bg-accent-rose/10 transition-colors"
-              >
-                {t('settings:nav.logOut')}
-              </button>
-
-            </div>
+            </nav>
+            {logoutButton}
           </div>
         )}
 
         {/* Content area (desktop always, mobile only when viewing content) */}
         {(!isMobile || mobileView === 'content') && (
           <SettingsScrollContainer>
-            <div className="px-6 max-w-[640px] mx-auto">
+            <div className="px-8 max-w-[720px]">
               {/* Mobile back button */}
               {isMobile && (
                 <button

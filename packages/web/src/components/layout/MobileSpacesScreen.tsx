@@ -4,6 +4,7 @@ import { useHomeInstanceInfo } from '../../hooks/useHomeInstanceInfo';
 import { useUIStore } from '../../stores/uiStore';
 import { useSpaceStore, getMyUserIdForOrigin, getChannelOrigin } from '../../stores/spaceStore';
 import type { TaggedSpace } from '../../stores/spaceStore';
+import { SpaceEventCard } from './SpaceEventCard';
 import { resolveSpaceLayout } from '../../utils/spaceLayout';
 import { spaceInviteUrl } from '../../utils/inviteParser';
 import { useChatStore } from '../../stores/chatStore';
@@ -607,8 +608,8 @@ export function MobileSpacesScreen() {
           onClick={() => handleChannelTap(channel)}
           onContextMenu={(e) => handleChannelContextMenu(e, channel.id)}
           data-context-menu={`channel-${channel.id}`}
-          className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-colors ${
-            isActive ? 'bg-interactive-selected text-txt-primary' :
+          className={`w-full flex items-center gap-2 px-3 py-2 rounded-[14px] text-start transition-colors ${
+            isActive ? 'bg-accent-primary text-txt-on-primary font-bold' :
             isInVoice ? 'bg-accent-mint/10 text-accent-mint' :
             'text-txt-secondary hover:bg-interactive-hover hover:text-txt-primary'
           }`}
@@ -629,7 +630,7 @@ export function MobileSpacesScreen() {
 
         {/* Inline voice users */}
         {isVoice && vUsers.length > 0 && (
-          <div className="ml-7 mt-0.5 space-y-0.5">
+          <div className="ms-7 mt-0.5 space-y-0.5">
             {vUsers.map((userId) => {
               const member = members.find(m => m.userId === userId);
               const displayName = member?.user.displayName ?? member?.user.username ?? userId;
@@ -704,16 +705,16 @@ export function MobileSpacesScreen() {
             const isSelected = item.spaces.some(s => s.id === selectedSpaceId);
             return (
               <div key={`folder-${folder.id}`} className="relative">
-                <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-1 flex items-center">
-                  <div className={`bg-white rounded-r-full transition-all duration-200 w-full ${
+                <div className="absolute -start-1 top-1/2 -translate-y-1/2 w-1 flex items-center">
+                  <div className={`bg-txt-primary rounded-e-full transition-all duration-200 w-full ${
                     isSelected ? 'h-8' : hasUnread ? 'h-2' : 'h-0'
                   }`} />
                 </div>
                 <button
                   onClick={() => setOpenFolderId(folder.id)}
                   onContextMenu={(e) => e.preventDefault()}
-                  className={`w-10 h-10 rounded-2xl flex items-center justify-center transition-all ${
-                    isSelected ? 'rounded-xl ring-2 ring-accent-primary/50' : 'hover:rounded-xl'
+                  className={`w-10 h-10 flex items-center justify-center transition-all ${
+                    isSelected ? 'rounded-[13px] rotate-[5deg] shadow-sticker' : 'rounded-[20px] hover:rounded-[13px]'
                   } bg-surface-elevated`}
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke={folder.color || 'currentColor'} strokeWidth={1.5}>
@@ -738,9 +739,9 @@ export function MobileSpacesScreen() {
           return (
             <div key={space.id} className="relative">
               {/* Unread / selected pill */}
-              <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-1 flex items-center">
+              <div className="absolute -start-1 top-1/2 -translate-y-1/2 w-1 flex items-center">
                 <div
-                  className={`bg-white rounded-r-full transition-all duration-200 w-full ${
+                  className={`bg-txt-primary rounded-e-full transition-all duration-200 w-full ${
                     isSelected ? 'h-8' : hasUnread ? 'h-2' : 'h-0'
                   }`}
                 />
@@ -749,8 +750,8 @@ export function MobileSpacesScreen() {
                 data-context-menu
                 onClick={() => handleSpaceSelect(space.id)}
                 onContextMenu={(e) => handleSpaceContextMenu(e, space.id)}
-                className={`w-10 h-10 rounded-2xl overflow-hidden flex items-center justify-center transition-all ${
-                  isSelected ? 'rounded-xl ring-2 ring-accent-primary/50' : 'hover:rounded-xl'
+                className={`w-10 h-10 overflow-hidden flex items-center justify-center transition-all ${
+                  isSelected ? 'rounded-[13px] rotate-[5deg] shadow-sticker' : 'rounded-[20px] hover:rounded-[13px]'
                 }`}
                 style={!iconUrl ? { background: grad.gradient } : undefined}
               >
@@ -769,7 +770,7 @@ export function MobileSpacesScreen() {
                 const inst = instances.find(i => i.origin === origin);
                 const isDisconnected = inst ? inst.status !== 'connected' : false;
                 return (
-                  <div className="absolute -bottom-0.5 -right-0.5 w-[14px] h-[14px] rounded-full bg-surface-base flex items-center justify-center">
+                  <div className="absolute -bottom-0.5 -end-0.5 w-[14px] h-[14px] rounded-full bg-surface-base flex items-center justify-center">
                     {isDisconnected ? (
                       <div className="w-[8px] h-[8px] rounded-full bg-accent-amber" />
                     ) : (
@@ -831,6 +832,16 @@ export function MobileSpacesScreen() {
           </header>
         )}
 
+        {selectedSpace && (
+          <SpaceEventCard
+            spaceId={selectedSpace.id}
+            origin={(selectedSpace as TaggedSpace)._instanceOrigin ?? ''}
+            channels={spaceChannels}
+            canManage={hasPermissionBit(myPerms, PermissionBits.MANAGE_CHANNELS)}
+            className="px-3 pt-3"
+          />
+        )}
+
         {/* Channel list */}
         <div className="flex-1 overflow-y-auto px-2 py-2">
           {showChannelSkeleton ? (
@@ -857,7 +868,7 @@ export function MobileSpacesScreen() {
               {/* Category group */}
               <div className="mt-4">
                 <div
-                  className="skeleton skeleton-bar h-2 w-[42%] ml-1 mb-2"
+                  className="skeleton skeleton-bar h-2 w-[42%] ms-1 mb-2"
                   style={{ animationDelay: '0.3s' }}
                 />
                 {Array.from({ length: 4 }, (_, i) => (
@@ -895,10 +906,10 @@ export function MobileSpacesScreen() {
                       data-context-menu
                       onClick={() => toggleCategory(category.id)}
                       onContextMenu={(e) => handleCategoryContextMenu(e, category.id)}
-                      className="flex items-center gap-1 px-1 py-1 w-full text-left"
+                      className="flex items-center gap-1 px-1 py-1 w-full text-start"
                     >
                       <svg
-                        className={`w-3 h-3 text-txt-tertiary transition-transform ${isCollapsed ? '' : 'rotate-90'}`}
+                        className={`w-3 h-3 text-txt-tertiary transition-transform ${isCollapsed ? 'rtl:rotate-180' : 'rotate-90'}`}
                         fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -930,14 +941,14 @@ export function MobileSpacesScreen() {
         <>
           <div className="fixed inset-0 z-[300] bg-black/50" onClick={() => setShowAddSheet(false)} />
           <div
-            className="fixed bottom-0 left-0 right-0 z-[301] rounded-t-2xl glass-bubble animate-slide-up-sheet"
+            className="fixed bottom-0 start-0 end-0 z-[301] rounded-t-2xl glass-bubble animate-slide-up-sheet"
             style={{ paddingBottom: 'var(--safe-bottom)' }}
           >
             <div className="w-10 h-1 bg-txt-tertiary/30 rounded-full mx-auto mt-2 mb-1" />
             <div className="py-2">
               <button
                 onClick={() => { setShowAddSheet(false); openModal('joinSpace'); }}
-                className="w-full flex items-center gap-3 px-5 py-3 text-left hover:bg-interactive-hover"
+                className="w-full flex items-center gap-3 px-5 py-3 text-start hover:bg-interactive-hover"
               >
                 <svg className="w-5 h-5 text-accent-sky" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
@@ -946,7 +957,7 @@ export function MobileSpacesScreen() {
               </button>
               <button
                 onClick={() => { setShowAddSheet(false); pushMobileScreen('explore'); }}
-                className="w-full flex items-center gap-3 px-5 py-3 text-left hover:bg-interactive-hover"
+                className="w-full flex items-center gap-3 px-5 py-3 text-start hover:bg-interactive-hover"
               >
                 <svg className="w-5 h-5 text-accent-lavender" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />

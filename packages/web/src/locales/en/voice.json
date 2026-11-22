@@ -270,5 +270,25 @@
     "stillDenied": "Microphone access is still denied. Allow it for this site in your browser or device settings.",
     "notFound": "No microphone detected.",
     "failed": "Could not access the microphone."
+  },
+  "soundboard": {
+    "title": "Soundboard",
+    "upload": "Upload a sound",
+    "add": "Add",
+    "name": "Sound name",
+    "emoji": "Emoji",
+    "empty": "No sounds yet. People who can manage channels can upload some.",
+    "emptyManager": "No sounds yet. Upload a short clip of up to 6 seconds.",
+    "play": "Play {{name}}",
+    "remove": "Remove {{name}}",
+    "tooLong": "Sounds can be up to {{seconds}} seconds and {{size}} MB.",
+    "cooldown_one": "You can play another sound in {{count}} s",
+    "cooldown_other": "You can play another sound in {{count}} s",
+    "volume": "How loud I hear sounds",
+    "rule_one": "Each person can play one sound every {{count}} second.",
+    "rule_other": "Each person can play one sound every {{count}} seconds.",
+    "justPlayed": "Just played",
+    "played": "{{name}} played {{sound}}",
+    "someone": "Someone"
   }
 }

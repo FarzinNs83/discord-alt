@@ -1,0 +1,19 @@
+{
+  "transfers": {
+    "title": "انتقال‌ها",
+    "count_one": "{{count}} انتقال",
+    "count_other": "{{count}} انتقال",
+    "clearCompleted": "پاک کردن تمام‌شده‌ها",
+    "empty": "هیچ انتقال فعالی نیست.",
+    "status": {
+      "done": "تمام شد",
+      "failed": "ناموفق: {{reason}}",
+      "aborted": "لغو شد",
+      "progress": "{{loaded}} از {{total}}"
+    }
+  },
+  "crop": {
+    "title": "برش تصویر",
+    "applying": "در حال اعمال…"
+  }
+}

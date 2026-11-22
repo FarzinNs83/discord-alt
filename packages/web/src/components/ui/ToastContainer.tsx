@@ -3,9 +3,9 @@ import { useUIStore } from '../../stores/uiStore';
 import { useVoiceStore } from '../../stores/voiceStore';
 
 const borderColors = {
-  info: 'border-l-accent-sky',
-  warning: 'border-l-accent-amber',
-  success: 'border-l-accent-mint',
+  info: 'border-s-accent-sky',
+  warning: 'border-s-accent-amber',
+  success: 'border-s-accent-mint',
 } as const;
 
 /**
@@ -71,8 +71,8 @@ export function ToastContainer() {
   const inVoice = currentVoiceChannelId !== null;
 
   // Mobile: lift above bottom chrome and center horizontally so the toast
-  // doesn't get cropped by `right-6` against narrow viewports. Desktop:
-  // keep the existing `bottom-6 right-6` anchor.
+  // doesn't get cropped by `end-6` against narrow viewports. Desktop:
+  // keep the existing `bottom-6 end-6` anchor.
   const containerStyle: React.CSSProperties = isMobile
     ? {
         position: 'fixed',
@@ -95,7 +95,7 @@ export function ToastContainer() {
       {toasts.map((toast) => (
         <div
           key={toast.id}
-          className={`glass-pill border-l-2 ${borderColors[toast.type]} rounded-[10px] px-4 py-2.5 max-w-[320px] animate-slide-up pointer-events-auto cursor-pointer flex items-center gap-3`}
+          className={`glass-pill border-s-2 ${borderColors[toast.type]} rounded-[10px] px-4 py-2.5 max-w-[320px] animate-slide-up pointer-events-auto cursor-pointer flex items-center gap-3`}
           onClick={() => removeToast(toast.id)}
         >
           <span className="flex-1 text-sm text-txt-primary leading-snug">{toast.message}</span>

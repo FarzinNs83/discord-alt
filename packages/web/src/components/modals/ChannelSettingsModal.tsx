@@ -235,8 +235,8 @@ export function ChannelSettingsModal() {
   const showTabs = canManageRoles;
 
   const tabClass = (target: typeof tab) =>
-    `w-full text-left px-2.5 py-1.5 rounded text-sm transition-colors ${
-      tab === target ? 'bg-interactive-selected text-txt-primary' : 'text-txt-tertiary hover:text-txt-secondary hover:bg-interactive-hover'
+    `w-full text-start px-2.5 py-1.5 rounded text-sm transition-colors ${
+      tab === target ? 'bg-accent-primary text-txt-on-primary font-bold' : 'text-txt-tertiary hover:text-txt-secondary hover:bg-interactive-hover'
     }`;
 
   return (

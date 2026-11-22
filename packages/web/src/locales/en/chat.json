@@ -27,7 +27,8 @@
       "bySelf": "You reacted",
       "byOne": "{{name}} reacted",
       "byMany": "{{names}} reacted"
-    }
+    },
+    "waitingToSend": "Waiting to send"
   },
   "list": {
     "noHistoryPermission": "You do not have permission to view message history in this channel",
@@ -221,5 +222,28 @@
     "action": "Poke",
     "received": "{{actor}} poked {{target}}",
     "disconnected": "Disconnected. Poke was not sent."
+  },
+  "offline": {
+    "title": "You're offline",
+    "hint": "Messages you write now will send when you are back online.",
+    "waiting_one": "{{count}} message waiting · it sends when you are back",
+    "waiting_other": "{{count}} messages waiting · they send when you are back"
+  },
+  "tapToLoad": {
+    "label": "Tap to load",
+    "withSize": "Tap to load · {{size}}"
+  },
+  "voiceMessage": {
+    "play": "Play voice message",
+    "pause": "Pause voice message",
+    "seek": "Position in voice message",
+    "position": "{{current}} / {{total}}",
+    "speed": "Playback speed {{speed}}×, change",
+    "speedValue": "{{speed}}×",
+    "record": "Record a voice message",
+    "recording": "Recording · {{time}}",
+    "send": "Send voice message",
+    "discard": "Discard recording",
+    "micUnavailable": "Couldn't use your microphone. Check that the browser may use it."
   }
 }

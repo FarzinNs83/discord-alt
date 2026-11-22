@@ -26,7 +26,8 @@
       "bySelf": "您做出了反应",
       "byOne": "{{name}} 做出了反应",
       "byMany": "{{names}} 做出了反应"
-    }
+    },
+    "waitingToSend": "等待发送"
   },
   "list": {
     "noHistoryPermission": "您没有权限查看此频道的历史消息",
@@ -213,5 +214,27 @@
     "action": "戳一戳",
     "received": "{{actor}} 戳了戳 {{target}}",
     "disconnected": "连接已断开，戳一戳未发送"
+  },
+  "offline": {
+    "title": "你已离线",
+    "hint": "现在写的消息会在你重新联网后发送。",
+    "waiting_other": "{{count}} 条消息等待中 · 恢复联网后发送"
+  },
+  "tapToLoad": {
+    "label": "点按加载",
+    "withSize": "点按加载 · {{size}}"
+  },
+  "voiceMessage": {
+    "play": "播放语音消息",
+    "pause": "暂停语音消息",
+    "seek": "语音消息进度",
+    "position": "{{current}} / {{total}}",
+    "speed": "播放速度 {{speed}}×，点按更改",
+    "speedValue": "{{speed}}×",
+    "record": "录制语音消息",
+    "recording": "正在录音 · {{time}}",
+    "send": "发送语音消息",
+    "discard": "放弃录音",
+    "micUnavailable": "无法使用你的麦克风。请检查浏览器是否有权限。"
   }
 }

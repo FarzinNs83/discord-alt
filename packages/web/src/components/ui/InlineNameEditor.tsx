@@ -148,7 +148,7 @@ export function InlineNameEditor({
           <button
             type="submit"
             disabled={isSaving}
-            className="flex-shrink-0 px-2.5 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded transition-colors disabled:opacity-50"
+            className="flex-shrink-0 px-2.5 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded transition-colors disabled:opacity-50"
           >
             {isSaving ? t('states.saving') : t('actions.save')}
           </button>
@@ -167,7 +167,7 @@ export function InlineNameEditor({
           type="button"
           onClick={startEditing}
           title={editLabel}
-          className="group -mx-1 flex min-w-0 items-center gap-1.5 rounded px-1 text-left text-sm font-medium transition-colors hover:bg-interactive-hover"
+          className="group -mx-1 flex min-w-0 items-center gap-1.5 rounded px-1 text-start text-sm font-medium transition-colors hover:bg-interactive-hover"
         >
           <span className="min-w-0 truncate">{name}</span>
           <span className="sr-only">{editLabel}</span>

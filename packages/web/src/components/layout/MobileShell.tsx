@@ -65,6 +65,7 @@ export const mobileScreenMap: Readonly<Record<string, (params?: Record<string, s
   'settings-privacy': () => <MobileSettingsScreen initialPanel="privacy" />,
   'settings-connections': () => <MobileSettingsScreen initialPanel="connections" />,
   'settings-keybinds': () => <MobileSettingsScreen initialPanel="keybinds" />,
+  'settings-weakNet': () => <MobileSettingsScreen initialPanel="weakNet" />,
   'settings-desktop': () => <MobileSettingsScreen initialPanel="desktop" />,
   'settings-instance': () => <MobileInstancePanel />,
   'settings-instance-general': () => (

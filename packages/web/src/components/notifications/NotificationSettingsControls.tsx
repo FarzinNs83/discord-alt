@@ -153,7 +153,7 @@ export function NotificationSettingsControls({ origin, spaceId, channelId }: Not
                 disabled={saving}
                 onClick={() => onChoose(choice)}
                 onKeyDown={(e) => onRadioKeyDown(e, index)}
-                className={`w-full flex items-center gap-2.5 px-2.5 h-9 rounded-[6px] text-left text-[14px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary disabled:opacity-60 ${
+                className={`w-full flex items-center gap-2.5 px-2.5 h-9 rounded-[6px] text-start text-[14px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary disabled:opacity-60 ${
                   checked ? 'text-txt-primary bg-interactive-selected' : 'text-txt-secondary hover:text-txt-primary hover:bg-interactive-hover'
                 }`}
               >
@@ -195,7 +195,7 @@ export function NotificationSettingsControls({ origin, spaceId, channelId }: Not
                 type="button"
                 disabled={saving}
                 onClick={() => void save({ mute: duration })}
-                className="px-2.5 h-8 rounded-[6px] text-left text-[13px] text-txt-secondary hover:text-txt-primary hover:bg-interactive-hover transition-colors truncate focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary disabled:opacity-60"
+                className="px-2.5 h-8 rounded-[6px] text-start text-[13px] text-txt-secondary hover:text-txt-primary hover:bg-interactive-hover transition-colors truncate focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary disabled:opacity-60"
               >
                 {durationLabel(duration)}
               </button>

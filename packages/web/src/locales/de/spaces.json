@@ -694,5 +694,25 @@
     "suppressRoles": "Rollenerwähnungen unterdrücken",
     "massHeading": "Gruppenerwähnungen",
     "massNote": "@here erreicht dieselben Mitglieder wie @everyone. Erwähnungen von dir mit Namen benachrichtigen dich immer."
+  },
+  "events": {
+    "schedule": "Event planen",
+    "titleIn": "{{title}} in {{place}}",
+    "imIn": "Ich bin dabei",
+    "going_one": "{{count}} dabei",
+    "going_other": "{{count}} dabei",
+    "cancel": "Event absagen",
+    "cancelConfirm": {
+      "title": "Dieses Event absagen?",
+      "description": "{{title}} wird für alle entfernt."
+    },
+    "form": {
+      "what": "Was",
+      "whatPlaceholder": "Mafia-Abend",
+      "when": "Wann",
+      "where": "Wo",
+      "nowhere": "Kein Kanal",
+      "submit": "Planen"
+    }
   }
 }

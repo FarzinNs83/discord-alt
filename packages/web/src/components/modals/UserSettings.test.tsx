@@ -125,14 +125,6 @@ function installDesktopHost() {
   });
 }
 
-/** True when the nodes appear in this order in the document, each one after the last. */
-function inDocumentOrder(...nodes: HTMLElement[]): boolean {
-  return nodes.every(
-    (node, i) =>
-      i === 0 ||
-      Boolean(nodes[i - 1].compareDocumentPosition(node) & Node.DOCUMENT_POSITION_FOLLOWING),
-  );
-}
 
 /**
  * Renders the modal and waits for the instance info fetch to land. The panels
@@ -155,32 +147,6 @@ afterEach(() => {
 });
 
 describe('UserSettingsModal Desktop tab', () => {
-  it('shows the download offer in the browser', async () => {
-    await openSettings();
-
-    const tab = screen.getByRole('button', { name: 'Desktop' });
-    // The tab sits inside App Settings: after that group's heading and its last
-    // entry, and before the next thing in the nav list. This account is not an
-    // admin, so what follows the group is the log out button in the footer.
-    expect(
-      inDocumentOrder(
-        screen.getByText('App Settings'),
-        screen.getByRole('button', { name: 'Keybinds' }),
-        tab,
-        screen.getByRole('button', { name: 'Log Out' }),
-      ),
-    ).toBe(true);
-    // Nothing starts a new group between the heading and the tab: the only
-    // group headings rendered are User Settings and App Settings.
-    expect(screen.getAllByText(/^(User Settings|App Settings|Administration)$/)).toHaveLength(2);
-
-    fireEvent.click(tab);
-
-    expect(await screen.findByRole('link', { name: 'All releases on GitHub' })).toBeInTheDocument();
-    // The Electron-only panel stays out of the browser.
-    expect(screen.queryByRole('button', { name: 'Change Instance' })).not.toBeInTheDocument();
-  });
-
   it('shows the desktop app settings inside Electron', async () => {
     installDesktopHost();
     await openSettings();
@@ -214,10 +180,11 @@ describe('UserSettingsModal deep links (#330)', () => {
     expect(screen.queryByText('AccountPanel stub')).not.toBeInTheDocument();
   });
 
-  it('opens on the desktop tab a caller names', async () => {
+  it('hides the desktop download tab in the browser', async () => {
     mocks.ui.modalData = { tab: 'desktop' };
     await openSettings();
-    expect(await screen.findByRole('link', { name: 'All releases on GitHub' })).toBeInTheDocument();
+    expect(await screen.findByText('AccountPanel stub')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Desktop' })).not.toBeInTheDocument();
   });
 
   it('falls back to Account for the instance tab when the user is not an admin', async () => {

@@ -455,7 +455,7 @@ export function PictureInPicture() {
 
       {/* LIVE badge */}
       {isScreen && (
-        <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-accent-rose rounded text-[11px] font-bold text-white uppercase tracking-wide">
+        <div className="absolute top-2 start-2 px-1.5 py-0.5 bg-accent-rose rounded text-[11px] font-bold text-white uppercase tracking-wide">
           {t('badges.live')}
         </div>
       )}
@@ -464,7 +464,7 @@ export function PictureInPicture() {
       <button
         data-pip-action="close"
         onClick={handleClose}
-        className="absolute top-2 right-2 w-6 h-6 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white/80 hover:text-white transition-colors"
+        className="absolute top-2 end-2 w-6 h-6 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white/80 hover:text-white transition-colors"
       >
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
           <path d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z" />
@@ -472,7 +472,7 @@ export function PictureInPicture() {
       </button>
 
       {/* Bottom overlay with name */}
-      <div className="absolute bottom-0 left-0 right-0 px-3 py-2 bg-gradient-to-t from-black/70 to-transparent">
+      <div className="absolute bottom-0 start-0 end-0 px-3 py-2 bg-gradient-to-t from-black/70 to-transparent">
         <div className="flex items-center gap-1.5">
           <span className="text-white text-xs font-semibold truncate">{displayName}</span>
           {displayParticipant && speakingParticipantIds.has(displayParticipant.identity) && (
@@ -483,7 +483,7 @@ export function PictureInPicture() {
       </div>
 
       {/* Expand icon hint (bottom-right) */}
-      <div className="absolute bottom-2 right-2 w-5 h-5 flex items-center justify-center text-white/40">
+      <div className="absolute bottom-2 end-2 w-5 h-5 flex items-center justify-center text-white/40">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
           <path d="M21 11V3h-8l3.29 3.29-10 10L3 13v8h8l-3.29-3.29 10-10z" />
         </svg>

@@ -92,7 +92,7 @@ function KeybindRow({ actionId, label, keybind, isRecording, recordingDisplay, o
           )}
         </div>
       </div>
-      <div className="flex items-center gap-1.5 ml-3">
+      <div className="flex items-center gap-1.5 ms-3">
         {!isRecording && (
           <>
             <button
@@ -318,7 +318,7 @@ export function KeybindsPanel() {
   if (portal) {
     return (
       <div className="space-y-5">
-        <h2 className="text-lg font-semibold text-txt-primary mb-6">{t('keybinds.title')}</h2>
+        <h2 className="font-display font-extrabold text-[32px] leading-tight tracking-[-0.03em] text-txt-primary mb-6">{t('keybinds.title')}</h2>
         <div className="rounded-lg bg-surface-elevated p-3.5 text-sm text-txt-secondary" role="status">
           <p>{t('keybinds.portal.description')}</p>
           <p className="mt-2">{t(`keybinds.portal.${portal.state}`)}</p>
@@ -347,7 +347,7 @@ export function KeybindsPanel() {
 
   return (
     <div className="space-y-5">
-      <h2 className="text-lg font-semibold text-txt-primary mb-6">{t('keybinds.title')}</h2>
+      <h2 className="font-display font-extrabold text-[32px] leading-tight tracking-[-0.03em] text-txt-primary mb-6">{t('keybinds.title')}</h2>
       {/* macOS Accessibility Warning */}
       {isElectronMac() && accessibilityTrusted === false && (
         <div className="rounded-lg bg-amber-500/10 border border-amber-500/20 p-3.5">

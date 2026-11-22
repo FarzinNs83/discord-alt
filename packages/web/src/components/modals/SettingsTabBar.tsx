@@ -23,15 +23,15 @@ export function SettingsTabBar() {
         >
           {s.label}
           {s.badgeCount !== undefined && s.badgeCount > 0 && (
-            <span className="ml-1.5 text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-accent-amber/15 text-accent-amber">
+            <span className="ms-1.5 text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-accent-amber/15 text-accent-amber">
               {s.badgeCount}
             </span>
           )}
           {s.badgeDot === true && (
-            <span className="ml-1.5 inline-block w-1.5 h-1.5 rounded-full bg-accent-amber align-middle" />
+            <span className="ms-1.5 inline-block w-1.5 h-1.5 rounded-full bg-accent-amber align-middle" />
           )}
           {ctx.activeSection === s.id && (
-            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent-primary rounded-full" />
+            <span className="absolute bottom-0 start-0 end-0 h-0.5 bg-accent-primary rounded-full" />
           )}
         </button>
       ))}

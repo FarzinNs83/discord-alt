@@ -18,6 +18,8 @@ export const supportedLanguages = [
   // included: a zh-TW reader gets a script they can read rather than English,
   // and the picker names the variant so they know what they got.
   { code: 'zh', nativeName: '简体中文', dir: 'ltr', released: true },
+  // Persian, written right to left: the document direction follows `dir`, and the UI uses logical (start/end) classes.
+  { code: 'fa', nativeName: 'فارسی', dir: 'rtl', released: true },
 ] as const satisfies readonly { code: string; nativeName: string; dir: 'ltr' | 'rtl'; released: boolean }[];
 
 export type SupportedLanguage = (typeof supportedLanguages)[number]['code'];

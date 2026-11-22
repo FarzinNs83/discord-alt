@@ -65,7 +65,7 @@ export function UpdateToast() {
   }
 
   return (
-    <div className="fixed bottom-6 left-6 z-[300] animate-slide-up max-w-[calc(calc(100*var(--app-vw))-3rem)]">
+    <div className="fixed bottom-6 start-6 z-[300] animate-slide-up max-w-[calc(calc(100*var(--app-vw))-3rem)]">
       <div className="glass-bubble rounded-2xl p-4 w-[380px] max-w-full">
         <div className="flex items-start gap-3">
           <div
@@ -94,7 +94,7 @@ export function UpdateToast() {
 
           <button
             onClick={handleLater}
-            className="shrink-0 -mt-1 -mr-1 p-1.5 rounded-lg text-txt-tertiary hover:text-txt-secondary hover:bg-white/[0.06] transition-colors"
+            className="shrink-0 -mt-1 -me-1 p-1.5 rounded-lg text-txt-tertiary hover:text-txt-secondary hover:bg-white/[0.06] transition-colors"
             aria-label={t('desktop:update.dismiss')}
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -103,18 +103,18 @@ export function UpdateToast() {
           </button>
         </div>
 
-        <div className="flex items-center gap-2 mt-3.5 pl-11">
+        <div className="flex items-center gap-2 mt-3.5 ps-11">
           {canRestart ? (
             <button
               onClick={install}
-              className="px-3 py-1.5 text-xs font-medium rounded-lg bg-accent-primary hover:bg-accent-primary/80 text-white transition-colors"
+              className="px-3 py-1.5 text-xs font-medium rounded-lg bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary transition-colors"
             >
               {t('desktop:update.restartNow')}
             </button>
           ) : (
             <button
               onClick={openDownloadPage}
-              className="px-3 py-1.5 text-xs font-medium rounded-lg bg-accent-primary hover:bg-accent-primary/80 text-white transition-colors"
+              className="px-3 py-1.5 text-xs font-medium rounded-lg bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary transition-colors"
             >
               {t('desktop:update.download')}
             </button>

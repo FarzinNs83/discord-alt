@@ -17,16 +17,16 @@ import { usePortalContainer } from '../../hooks/usePortalContainer';
 
 // An item the arrow keys moved to looks like a hovered one.
 const ITEM_CLASS =
-  'w-full text-left px-2 py-1.5 mx-1.5 text-sm rounded-sm flex items-center gap-2 text-txt-secondary hover:bg-accent-primary hover:text-white outline-none focus-visible:bg-accent-primary focus-visible:text-white';
+  'w-full text-start px-2 py-1.5 mx-1.5 text-sm rounded-sm flex items-center gap-2 text-txt-secondary hover:bg-accent-primary hover:text-txt-on-primary outline-none focus-visible:bg-accent-primary focus-visible:text-txt-on-primary';
 const ITEM_DANGER_CLASS =
-  'w-full text-left px-2 py-1.5 mx-1.5 text-sm rounded-sm flex items-center gap-2 text-txt-danger hover:bg-accent-rose hover:text-white outline-none focus-visible:bg-accent-rose focus-visible:text-white';
+  'w-full text-start px-2 py-1.5 mx-1.5 text-sm rounded-sm flex items-center gap-2 text-txt-danger hover:bg-accent-rose hover:text-white outline-none focus-visible:bg-accent-rose focus-visible:text-white';
 const ITEM_DISABLED_CLASS =
-  'w-full text-left px-2 py-1.5 mx-1.5 text-sm rounded-sm flex items-center gap-2 text-txt-secondary opacity-50 cursor-default';
+  'w-full text-start px-2 py-1.5 mx-1.5 text-sm rounded-sm flex items-center gap-2 text-txt-secondary opacity-50 cursor-default';
 const ITEM_STYLE: React.CSSProperties = { width: 'calc(100% - 12px)' };
 
 // ── Mobile item button ───────────────────────────────────────────────────────
 
-const MOBILE_ITEM_CLASS = 'w-full text-left px-5 py-3 text-sm flex items-center gap-3';
+const MOBILE_ITEM_CLASS = 'w-full text-start px-5 py-3 text-sm flex items-center gap-3';
 
 // ── Checkbox indicator ───────────────────────────────────────────────────────
 
@@ -320,7 +320,7 @@ function DesktopSubmenuItem({ item, close }: DesktopSubmenuItemProps) {
       >
         {item.icon && <span className="w-4 h-4">{item.icon}</span>}
         <span className="flex-1">{item.label}</span>
-        <span className="text-txt-tertiary text-xs ml-auto">{'\u203A'}</span>
+        <span className="text-txt-tertiary text-xs ms-auto">{'\u203A'}</span>
       </button>
       {isOpen && (
         <SubmenuFlyout
@@ -530,7 +530,7 @@ function MobileMenu({ items, close }: MobileMenuProps) {
       <div
         role="menu"
         aria-label={submenuStack?.label}
-        className="fixed bottom-0 left-0 right-0 z-[301] rounded-t-2xl glass-bubble animate-slide-up-sheet"
+        className="fixed bottom-0 start-0 end-0 z-[301] rounded-t-2xl glass-bubble animate-slide-up-sheet"
         style={{ paddingBottom: 'var(--safe-bottom)' }}
       >
         <div aria-hidden="true" className="w-10 h-1 bg-txt-tertiary/30 rounded-full mx-auto mt-2 mb-1" />

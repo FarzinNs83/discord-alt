@@ -142,7 +142,8 @@ function ChannelMentionBadge({ userId }: { userId: string }) {
 function buildComponents(): Components {
   return {
     // Paragraphs → spans to avoid block nesting issues in chat messages
-    p: ({ children }) => <span className="block">{children}</span>,
+    // Each paragraph takes its direction from its own first strong character, so English and Persian lines both read right in either UI direction.
+    p: ({ children }) => <span className="block ltr:text-left rtl:text-right" dir="auto">{children}</span>,
 
     // Links & Mentions
     // remark-parse autolinks <@userId> into mailto:@userId before plugins run,
@@ -198,14 +199,14 @@ function buildComponents(): Components {
 
     // Blockquotes
     blockquote: ({ children }) => (
-      <blockquote className="pl-3 border-l-[3px] border-interactive-muted my-0.5">
+      <blockquote className="ps-3 border-s-[3px] border-interactive-muted my-0.5">
         {children}
       </blockquote>
     ),
 
     // Lists
-    ul: ({ children }) => <ul className="list-disc pl-6 my-0.5 space-y-0.5">{children}</ul>,
-    ol: ({ children }) => <ol className="list-decimal pl-6 my-0.5 space-y-0.5">{children}</ol>,
+    ul: ({ children }) => <ul className="list-disc ps-6 my-0.5 space-y-0.5">{children}</ul>,
+    ol: ({ children }) => <ol className="list-decimal ps-6 my-0.5 space-y-0.5">{children}</ol>,
     li: ({ children }) => <li>{children}</li>,
 
     // Headings — Discord renders these with slightly larger/bolder text
@@ -239,7 +240,7 @@ function buildComponents(): Components {
     thead: ({ children }) => <thead className="border-b border-border-soft">{children}</thead>,
     tbody: ({ children }) => <tbody>{children}</tbody>,
     tr: ({ children }) => <tr className="border-b border-white/[0.06]">{children}</tr>,
-    th: ({ children }) => <th className="px-3 py-1.5 text-left text-txt-primary font-semibold">{children}</th>,
+    th: ({ children }) => <th className="px-3 py-1.5 text-start text-txt-primary font-semibold">{children}</th>,
     td: ({ children }) => <td className="px-3 py-1.5">{children}</td>,
   };
 }

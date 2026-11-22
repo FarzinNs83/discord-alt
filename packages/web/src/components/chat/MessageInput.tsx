@@ -24,6 +24,10 @@ import { useAuthStore } from '../../stores/authStore';
 import { selfIdentityOf } from '../../utils/identity';
 import { findLastOwnEditableMessage } from './messageEditing';
 import { describeError } from '../../i18n/errors';
+import { weakNetFeature } from '../../stores/weakNetStore';
+import { shrinkImage } from '../../utils/shrinkImage';
+import { useNetworkStatus } from '../../hooks/useNetworkStatus';
+import { VoiceRecorder, canRecordVoice } from './VoiceRecorder';
 
 interface MessageInputProps {
   channelId: string;
@@ -67,6 +71,10 @@ export function MessageInput({ channelId, channelName, placeholder }: MessageInp
 
   // UI-only state stays local
   const [activePopover, setActivePopover] = useState<InputPopoverTab | null>(null);
+  const [recording, setRecording] = useState(false);
+  const [voiceSupported] = useState(canRecordVoice);
+  const online = useNetworkStatus();
+  const waitingHere = usePendingMessageStore((s) => s.bubbles.get(channelId)?.length ?? 0);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -219,7 +227,9 @@ export function MessageInput({ channelId, channelName, placeholder }: MessageInp
     async (
       input: { file: File; handle?: FileSystemFileHandle | undefined },
     ): Promise<void> => {
-      const { file, handle } = input;
+      // A shrunk photo is a new file: the picked handle no longer describes it, so it is not kept for resuming.
+      const file = weakNetFeature('shrinkImages') ? await shrinkImage(input.file) : input.file;
+      const handle = file === input.file ? input.handle : undefined;
       let fileHandleId: string | undefined;
       if (handle && supportsFsHandles()) {
         try {
@@ -321,7 +331,8 @@ export function MessageInput({ channelId, channelName, placeholder }: MessageInp
       typingTimeoutRef.current = undefined;
     }
 
-    if (stagedTransfers.length === 0) {
+    // Offline, a text message takes the queued path below so it waits on this device and sends when the connection is back.
+    if (stagedTransfers.length === 0 && navigator.onLine) {
       // Consume the draft synchronously; network completion must not erase newer typing.
       clearComposer(channelId);
       try {
@@ -378,6 +389,29 @@ export function MessageInput({ channelId, channelName, placeholder }: MessageInp
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.focus();
+    }
+  };
+
+  /** Upload a finished voice recording and send it as its own message, as the attachment path above does. */
+  const sendVoice = async (file: File): Promise<void> => {
+    setRecording(false);
+    try {
+      const id = await startUpload(file, { channelId, tray: true, origin: getChannelOrigin(channelId) });
+      appendBubble({
+        clientId: crypto.randomUUID(),
+        channelId,
+        content: '',
+        replyToId: chatReplyTo?.id ?? null,
+        transferIds: [id],
+        createdAtLocal: Date.now(),
+        state: 'sending',
+        tusExpiresAt: Date.now() + DEFAULT_TUS_TTL_MS,
+        retryCount: 0,
+      });
+      chatSetReplyTo(channelId, null);
+      void returnToPresent(channelId);
+    } catch (err) {
+      addToast(describeError(err), 'warning');
     }
   };
 
@@ -571,9 +605,9 @@ export function MessageInput({ channelId, channelName, placeholder }: MessageInp
   //   remaining gap by re-reading `vv.height` for ~600 ms after a text
   //   input gains focus, even when no resize event ever lands.
   //
-  // The horizontal inset is symmetric: `left-2 right-2` on mobile (matches
+  // The horizontal inset is symmetric: `start-2 end-2` on mobile (matches
   // `MobileVoiceMiniBar`'s `mx-2` and the `MobileBottomNav` spacing tier);
-  // `desktop:left-3 desktop:right-3` on desktop (the historical 12 px inset).
+  // `desktop:start-3 desktop:end-3` on desktop (the historical 12 px inset).
   //
   // `z-[110]` keeps the bubble above any in-chat overlays (mention popover,
   // staged-attachment tiles) but below modals (`z-[300]+`).
@@ -600,8 +634,8 @@ export function MessageInput({ channelId, channelName, placeholder }: MessageInp
       }
     : undefined;
   const composerClass =
-    'absolute left-2 right-2 z-[110] glass-bubble rounded-[14px]' +
-    ' desktop:left-3 desktop:right-3 desktop:bottom-3';
+    'absolute start-2 end-2 z-[110] glass-bubble rounded-[20px] border-2 border-accent-primary shadow-[0_6px_0_rgb(var(--bg-base))]' +
+    ' desktop:start-3 desktop:end-3 desktop:bottom-3';
 
   // Dynamic message-list bottom padding ("composer clearance"):
   //
@@ -761,6 +795,18 @@ export function MessageInput({ channelId, channelName, placeholder }: MessageInp
         />
       )}
 
+      {!online && (
+        <div role="status" className="mx-1 mb-2 px-3.5 py-2.5 rounded-[18px] bg-accent-rose text-[#2A0B12] flex items-center gap-2.5 -rotate-[0.8deg]">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0M5 12a10 10 0 0 1 9.5-2.6M8.5 15.5a5 5 0 0 1 5.5-1M12 19h.01M3 3l18 18" /></svg>
+          <div className="flex-1 flex flex-col">
+            <span className="font-extrabold text-sm">{t('chat:offline.title')}</span>
+            <span className="text-xs font-semibold">
+              {waitingHere > 0 ? t('chat:offline.waiting', { count: waitingHere }) : t('chat:offline.hint')}
+            </span>
+          </div>
+        </div>
+      )}
+
       {chatReplyTo && (
         <div className="bg-interactive-hover rounded-t-lg px-4 py-2 flex items-center justify-between border-b border-white/[0.06]">
           <div className="flex items-center gap-1 text-[14px] text-txt-message truncate">
@@ -801,12 +847,12 @@ export function MessageInput({ channelId, channelName, placeholder }: MessageInp
           onRemove={removeStagedTransfer}
         />
 
-        <div className="flex items-center gap-1 desktop:gap-0 pl-2 desktop:pl-[10px] pr-2 desktop:pr-1">
+        <div className="flex items-center gap-1 desktop:gap-0 ps-2 desktop:ps-[10px] pe-2 desktop:pe-1">
           {/* File attach button */}
           {canAttachFiles && (
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="w-10 h-10 desktop:w-[34px] desktop:h-[34px] flex items-center justify-center rounded-[6px] text-txt-tertiary hover:text-txt-secondary transition-colors flex-shrink-0"
+              className="w-10 h-10 desktop:w-[34px] desktop:h-[34px] flex items-center justify-center rounded-[12px] text-txt-tertiary hover:text-txt-secondary transition-colors flex-shrink-0"
               title={t('chat:composer.attachFile')}
               aria-label={t('chat:composer.attachFile')}
             >
@@ -829,7 +875,16 @@ export function MessageInput({ channelId, channelName, placeholder }: MessageInp
             }}
           />
 
+          {recording && (
+            <VoiceRecorder
+              onSend={(file) => void sendVoice(file)}
+              onCancel={() => setRecording(false)}
+              onError={() => { setRecording(false); addToast(t('chat:voiceMessage.micUnavailable'), 'warning'); }}
+            />
+          )}
+
           {/* Text input */}
+          <div className={recording ? 'hidden' : 'contents'}>
           <MentionTextarea
             textareaRef={textareaRef}
             mentionAnchorRef={mentionAnchorRef}
@@ -847,6 +902,7 @@ export function MessageInput({ channelId, channelName, placeholder }: MessageInp
             className="input-embedded relative block w-full py-[10px] px-1 resize-none text-[15px] leading-[1.375rem] max-h-[calc(50*var(--app-vh))] scrollbar-thin"
             rows={1}
           />
+          </div>
 
           {/* Active-upload indicator */}
           {anyActiveOrQueued && (
@@ -878,10 +934,10 @@ export function MessageInput({ channelId, channelName, placeholder }: MessageInp
           )}
 
           {/* GIF button */}
-          {gifEnabled && (
+          {gifEnabled && !recording && (
             <button
               onClick={() => togglePopover('gif')}
-              className={`w-10 h-10 desktop:w-[34px] desktop:h-[34px] flex items-center justify-center rounded-[6px] transition-colors flex-shrink-0 ${
+              className={`w-10 h-10 desktop:w-[34px] desktop:h-[34px] flex items-center justify-center rounded-[12px] transition-colors flex-shrink-0 ${
                 activePopover === 'gif' ? 'text-accent-primary' : 'text-txt-tertiary hover:text-txt-secondary'
               }`}
               title={t('chat:composer.gif')}
@@ -894,9 +950,9 @@ export function MessageInput({ channelId, channelName, placeholder }: MessageInp
           )}
 
           {/* Emoji button */}
-          <button
+          {!recording && <button
             onClick={() => togglePopover('emoji')}
-            className={`w-10 h-10 desktop:w-[34px] desktop:h-[34px] flex items-center justify-center rounded-[6px] transition-colors flex-shrink-0 ${
+            className={`w-10 h-10 desktop:w-[34px] desktop:h-[34px] flex items-center justify-center rounded-[12px] transition-colors flex-shrink-0 ${
               activePopover === 'emoji' ? 'text-accent-primary' : 'text-txt-tertiary hover:text-txt-secondary'
             }`}
             title={t('chat:composer.emoji')}
@@ -905,18 +961,31 @@ export function MessageInput({ channelId, channelName, placeholder }: MessageInp
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5s.67 1.5 1.5 1.5zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
             </svg>
-          </button>
+          </button>}
+
+          {/* Voice message: in place of Send while there is nothing to send */}
+          {!canSend && !recording && canAttachFiles && voiceSupported && (
+            <button
+              type="button"
+              onClick={() => setRecording(true)}
+              className="w-10 h-10 desktop:w-[34px] desktop:h-[34px] flex items-center justify-center rounded-[12px] bg-txt-primary text-surface-base hover:opacity-90 transition-opacity flex-shrink-0"
+              title={t('chat:voiceMessage.record')}
+              aria-label={t('chat:voiceMessage.record')}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3" /></svg>
+            </button>
+          )}
 
           {/* Send button — appears when there's content/attachments to send */}
-          {canSend && (
+          {canSend && !recording && (
             <button
               onClick={() => void handleSubmit()}
               disabled={anyUnshippable}
-              className="w-10 h-10 desktop:w-[34px] desktop:h-[34px] flex items-center justify-center rounded-[6px] bg-accent-primary hover:bg-accent-primary-hover text-white transition-all duration-150 flex-shrink-0 disabled:opacity-50"
+              className="w-10 h-10 desktop:w-[34px] desktop:h-[34px] flex items-center justify-center rounded-[12px] bg-accent-primary hover:bg-accent-primary-hover text-txt-on-primary transition-all duration-150 flex-shrink-0 disabled:opacity-50"
               aria-label={t('chat:composer.sendMessage')}
               title={t('chat:composer.send')}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <svg className="rtl:-scale-x-100" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M3.4 20.4l17.45-7.48a1 1 0 000-1.84L3.4 3.6a.993.993 0 00-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.5-.87 1l.01 4.61c0 .71.73 1.2 1.39.91z" />
               </svg>
             </button>

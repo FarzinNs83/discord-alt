@@ -298,7 +298,7 @@ export function GeneralPanel() {
             aria-label={t('admin:general.instanceName.label')}
             className="input-standard w-full"
           />
-          <div className="text-[11px] text-txt-tertiary text-right mt-1">
+          <div className="text-[11px] text-txt-tertiary text-end mt-1">
             {t('admin:general.instanceName.counter', { length: draft.instanceName.length, max: INSTANCE_NAME_MAX_LENGTH })}
           </div>
         </div>
@@ -370,7 +370,7 @@ export function GeneralPanel() {
             })}
           </fieldset>
           {level === 'global' && (
-            <div className="ml-9 mr-2.5 mt-1.5 mb-1 space-y-3">
+            <div className="ms-9 me-2.5 mt-1.5 mb-1 space-y-3">
               {/*
                 Gated on the endpoint for the same reason the rung above it
                 is. The note warns that listed spaces will show as closed to
@@ -535,7 +535,7 @@ export function GeneralPanel() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50"
               >
                 {saving ? t('common:states.saving') : t('common:actions.save')}
               </button>

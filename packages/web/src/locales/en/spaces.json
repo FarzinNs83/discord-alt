@@ -694,5 +694,25 @@
     "suppressRoles": "Suppress role mentions",
     "massHeading": "Group mentions",
     "massNote": "@here reaches the same members as @everyone. Mentions of you by name always notify you."
+  },
+  "events": {
+    "schedule": "Schedule an event",
+    "titleIn": "{{title}} in {{place}}",
+    "imIn": "I'm in",
+    "going_one": "{{count}} in",
+    "going_other": "{{count}} in",
+    "cancel": "Cancel event",
+    "cancelConfirm": {
+      "title": "Cancel this event?",
+      "description": "{{title}} will be removed for everyone."
+    },
+    "form": {
+      "what": "What",
+      "whatPlaceholder": "Mafia night",
+      "when": "When",
+      "where": "Where",
+      "nowhere": "No channel",
+      "submit": "Schedule"
+    }
   }
 }

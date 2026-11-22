@@ -368,7 +368,7 @@ export function AppLayout() {
         {/* Sidebar */}
         <div className="w-60 hidden desktop:flex bg-surface-channel flex-shrink-0 flex-col pt-4 px-2">
           {/* Header bar */}
-          <div className="skeleton skeleton-bar w-[60%] h-4 mb-6 ml-2" />
+          <div className="skeleton skeleton-bar w-[60%] h-4 mb-6 ms-2" />
           {/* Channel items */}
           {Array.from({ length: 8 }, (_, i) => (
             <div key={i} className="flex items-center gap-2 px-2 py-1.5 mb-0.5" style={{ animationDelay: `${i * 0.08}s` }}>
@@ -451,7 +451,7 @@ export function AppLayout() {
   return (
     <div className="h-full flex flex-col desktop:grid desktop:grid-cols-[312px_1fr] desktop:grid-rows-[minmax(0,1fr)] bg-surface-base overflow-hidden">
       {/* Space sidebar - always visible on desktop */}
-      <div className={`fixed inset-y-0 left-0 z-40 flex w-[312px] transition-transform duration-200 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full desktop:translate-x-0'} desktop:static desktop:z-auto desktop:w-auto desktop:transform-none`}>
+      <div className={`fixed inset-y-0 start-0 z-40 flex w-[312px] transition-transform duration-200 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full rtl:translate-x-full desktop:translate-x-0'} desktop:static desktop:z-auto desktop:w-auto desktop:transform-none`}>
         <SpaceSidebar />
         <ChannelSidebar />
       </div>

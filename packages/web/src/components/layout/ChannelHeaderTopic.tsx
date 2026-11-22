@@ -27,7 +27,7 @@ export function ChannelHeaderTopic({ channelName, topic }: ChannelHeaderTopicPro
         onClick={() => setIsOpen(true)}
         title={topic}
         aria-haspopup="dialog"
-        className="min-w-0 truncate rounded-[4px] px-1 -mx-1 text-left text-[13px] leading-tight text-txt-tertiary transition-colors hover:text-txt-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary"
+        className="min-w-0 truncate rounded-[4px] px-1 -mx-1 text-start text-[13px] leading-tight text-txt-tertiary transition-colors hover:text-txt-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary"
       >
         <span className="sr-only">{t('main.topic.show')}</span>{' '}
         {topic}

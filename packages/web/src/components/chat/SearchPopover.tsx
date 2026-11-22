@@ -58,7 +58,7 @@ function SearchResultRow({
   return (
     <button
       onClick={() => onJumpToMessage(msg.id)}
-      className="w-full px-3 py-2.5 hover:bg-interactive-hover transition-colors text-left flex items-start gap-2.5 group/result"
+      className="w-full px-3 py-2.5 hover:bg-interactive-hover transition-colors text-start flex items-start gap-2.5 group/result"
     >
       <div className="flex-shrink-0 mt-0.5">
         <Avatar

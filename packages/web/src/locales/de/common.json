@@ -123,7 +123,8 @@
   },
   "chrome": {
     "toggleMemberList": "Mitgliederliste ein- oder ausblenden",
-    "closeSettings": "Einstellungen schließen"
+    "closeSettings": "Einstellungen schließen",
+    "escKey": "Esc"
   },
   "sourceCode": {
     "label": "Quellcode (AGPL)",

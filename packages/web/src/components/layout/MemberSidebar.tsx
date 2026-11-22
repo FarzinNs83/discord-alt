@@ -44,8 +44,8 @@ function MemberSidebarRow({
   const displayName = spaceMemberName(member, canonical);
 
   const rowClass = isRichActivity
-    ? `flex items-center gap-2.5 px-2.5 py-2 rounded-[10px] mb-1 cursor-pointer transition-colors glass-pill border-l-2 ${accentClass} ${ROW_FOCUS_CLASS}`
-    : `flex items-center gap-2.5 px-2 py-1.5 rounded-[4px] hover:bg-interactive-hover cursor-pointer group transition-colors ${ROW_FOCUS_CLASS}`;
+    ? `flex items-center gap-2.5 px-2.5 py-2 rounded-[10px] mb-1 cursor-pointer transition-colors glass-pill border-s-2 ${accentClass} ${ROW_FOCUS_CLASS}`
+    : `flex items-center gap-2.5 px-2 py-1.5 rounded-[12px] hover:bg-interactive-hover cursor-pointer group transition-colors ${ROW_FOCUS_CLASS}`;
 
   // The row is a control: Enter and Space open the profile like a click, and
   // the menu key or Shift+F10 open the member menu like a right click.
@@ -169,7 +169,7 @@ export function MemberSidebar() {
   return (
     <>
     {memberMenu.dialogs}
-    <div className="w-60 bg-surface-members flex-shrink-0 overflow-y-auto select-none no-scrollbar hidden desktop:block border-l border-border-hard">
+    <div className="w-64 bg-surface-members flex-shrink-0 overflow-y-auto select-none no-scrollbar hidden desktop:block">
       {showMemberSkeleton ? (
         <div className="px-3 pt-4" role="status" aria-label={t('spaces:members.loading')}>
           {/* Role group 1 */}
@@ -197,7 +197,7 @@ export function MemberSidebar() {
             {group.kind === 'owner' && space ? (
               <OwnerTitleHeading key={space.id} space={space} count={group.members.length} />
             ) : (
-              <h3 className="text-[10.5px] font-bold text-txt-tertiary uppercase tracking-[0.06em] px-2 mb-1">
+              <h3 className="flex items-center gap-2 text-[11px] font-bold text-txt-tertiary uppercase tracking-[0.12em] px-2 mb-1.5"><span aria-hidden="true" className="w-2 h-2 rounded-[2px] rotate-45 bg-accent-primary" />
                 {groupHeading(group.kind, group.label)} — {formatNumber(group.members.length)}
               </h3>
             )}
@@ -208,7 +208,7 @@ export function MemberSidebar() {
         {/* Offline */}
         {offlineMembers.length > 0 && (
           <div>
-            <h3 className="text-[10.5px] font-bold text-txt-tertiary uppercase tracking-[0.06em] px-2 mb-1">
+            <h3 className="flex items-center gap-2 text-[11px] font-bold text-txt-tertiary uppercase tracking-[0.12em] px-2 mb-1.5"><span aria-hidden="true" className="w-2 h-2 rounded-[2px] rotate-45 bg-accent-primary" />
               {t('common:states.offline')} — {formatNumber(offlineMembers.length)}
             </h3>
             {offlineMembers.map((m) => renderMember(m, true))}

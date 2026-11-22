@@ -16,7 +16,7 @@ export function VoiceChatPanel({ channelId, channelName }: VoiceChatPanelProps) 
   return (
     <div
       data-testid="voice-chat-panel"
-      className="relative w-[340px] min-w-[280px] max-w-[42%] min-h-0 flex-shrink-0 overflow-hidden bg-surface-chat flex flex-col border-l border-border-soft"
+      className="relative w-[340px] min-w-[280px] max-w-[42%] min-h-0 flex-shrink-0 overflow-hidden bg-surface-chat flex flex-col border-s border-border-soft"
     >
       {/* Chat header */}
       <div className="h-12 px-4 flex items-center justify-between shadow-header flex-shrink-0">

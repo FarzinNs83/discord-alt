@@ -449,7 +449,7 @@ export function MobileGroupDmInfo({ params }: MobileGroupDmInfoProps) {
                 onClick={handleClearIcon}
                 data-mobile-group-icon-clear
                 aria-label={t('dm:groupSettings.removeIcon')}
-                className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-surface-elevated border border-border-hard flex items-center justify-center text-txt-tertiary hover:text-txt-danger hover:bg-accent-rose/10 transition-colors"
+                className="absolute -top-1 -end-1 w-6 h-6 rounded-full bg-surface-elevated border border-border-hard flex items-center justify-center text-txt-tertiary hover:text-txt-danger hover:bg-accent-rose/10 transition-colors"
               >
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z" />
@@ -589,7 +589,7 @@ export function MobileGroupDmInfo({ params }: MobileGroupDmInfoProps) {
       {editing && (
         <div
           data-mobile-group-edit-bar
-          className="fixed left-0 right-0 z-30 bg-surface-base border-t border-border-hard px-4 py-3 flex items-center justify-end gap-2"
+          className="fixed start-0 end-0 z-30 bg-surface-base border-t border-border-hard px-4 py-3 flex items-center justify-end gap-2"
           style={{ bottom: bottomInset }}
         >
           <button
@@ -605,7 +605,7 @@ export function MobileGroupDmInfo({ params }: MobileGroupDmInfoProps) {
             type="button"
             onClick={handleSave}
             disabled={!isDirty || saving || !isOwner}
-            className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             data-mobile-group-save
           >
             {saving ? t('common:states.saving') : t('common:actions.save')}

@@ -102,22 +102,23 @@ export function MobileBottomNav() {
         <button
           key={tab.id}
           onClick={() => handleTab(tab.id)}
-          className={`flex flex-col items-center justify-center gap-0.5 flex-1 py-2 relative transition-colors ${
-            mobileScreen === tab.id ? 'text-accent-primary' : 'text-txt-secondary'
+          aria-current={mobileScreen === tab.id ? 'page' : undefined}
+          className={`flex flex-col items-center justify-center gap-0.5 flex-1 mx-2 my-1.5 py-1 rounded-[16px] relative transition-colors ${
+            mobileScreen === tab.id ? 'bg-accent-primary text-txt-on-primary' : 'text-txt-secondary'
           }`}
         >
           <div className="relative">
             {tab.icon}
             {tab.badge === 'dot' && (
-              <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-notification rounded-full" />
+              <span className="absolute -top-0.5 -end-0.5 w-2.5 h-2.5 bg-notification rounded-full" />
             )}
             {typeof tab.badge === 'number' && (
-              <span className="absolute -top-1 -right-2 min-w-[16px] h-4 px-1 bg-notification text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+              <span className="absolute -top-1 -end-2 min-w-[16px] h-4 px-1 bg-notification text-txt-on-primary text-[10px] font-bold rounded-full flex items-center justify-center">
                 {tab.badge > 99 ? '99+' : tab.badge}
               </span>
             )}
           </div>
-          <span className="text-[10px] font-medium">{tab.label}</span>
+          <span className="text-[11px] font-bold">{tab.label}</span>
         </button>
       ))}
     </nav>

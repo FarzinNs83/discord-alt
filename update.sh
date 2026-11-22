@@ -163,13 +163,15 @@ success "Compose project and running container found"
 
 # Asks the app itself rather than inferring from a tag. This is the value the
 # update has to move, and step 9 is the only check that catches a container that
-# comes up healthy while still running the old code.
+# comes up healthy while still running the old code. The build commit is part of
+# it: a from-source update (patogh-setup.sh) usually moves the commit and not the
+# version, and comparing the version alone would roll a good update back.
 running_version() {
   $DOCKER exec "$CONTAINER" node -e '
     const port = process.env.PORT || 3000;
     fetch("http://localhost:" + port + "/api/instance/info")
       .then((r) => r.json())
-      .then((j) => { process.stdout.write(String(j.version || "")); })
+      .then((j) => { process.stdout.write(j.version ? String(j.version) + (j.commit ? " (" + j.commit + ")" : "") : ""); })
       .catch(() => { process.exit(1); });
   ' 2>/dev/null || true
 }
@@ -226,6 +228,28 @@ fi
 echo "  Install channel   ${INSTALL_CHANNEL}"
 
 # -- --check: report and exit, touching nothing --------------
+
+if [[ "$MODE" == "check" && "$INSTALL_CHANNEL" == "source" ]] && git rev-parse --abbrev-ref '@{u}' >/dev/null 2>&1; then
+  # A from-source install follows its branch, not the release page.
+  step "Checking $(git rev-parse --abbrev-ref '@{u}') for new commits"
+  if ! git fetch --quiet 2>/dev/null; then
+    warn "Could not fetch from the git remote (network, or no write access to this checkout: try sudo)."
+    exit 0
+  fi
+  behind="$(git rev-list --count 'HEAD..@{u}')"
+  if [[ "$behind" == "0" ]]; then
+    success "You are on the latest commit ($(git rev-parse --short HEAD))."
+  else
+    echo ""
+    echo "  $behind new commit(s) on $(git rev-parse --abbrev-ref '@{u}'):"
+    git log --oneline --no-decorate -n 10 'HEAD..@{u}' | sed 's/^/    /'
+    echo ""
+    echo "  Update with: ./update.sh"
+  fi
+  echo ""
+  info "Nothing was changed."
+  exit 0
+fi
 
 if [[ "$MODE" == "check" ]]; then
   step "Checking for a newer release"
@@ -479,6 +503,10 @@ elif [[ "$NEW_VERSION" == "$CURRENT_VERSION" ]]; then
 else
   success "Updated from $CURRENT_VERSION to $NEW_VERSION"
 fi
+
+# The replaced image is no longer a rollback target; a from-source rebuild leaves
+# it dangling, and on a small VPS those add up.
+$DOCKER image prune -f >/dev/null 2>&1 || true
 
 echo ""
 echo "Done."

@@ -8,11 +8,13 @@ import { ScreenShareSettingsPopover } from './ScreenShareSettingsPopover';
 import { hasPermissionBit, PermissionBits } from '../../utils/permissions';
 import { handleMuteAction, handleDeafenAction, handleCameraAction, handleScreenShareAction, handleDisconnectAction } from '../../utils/voiceActions';
 import { VOICE_CHROME_ATTR } from '../../hooks/usePointerReveal';
+import { useSoundboardAvailable } from './SoundboardPanel';
 
-const btnBase = 'w-10 h-10 flex items-center justify-center rounded-full transition-colors';
-const btnDefault = `${btnBase} bg-surface-channel text-txt-secondary hover:bg-surface-elevated hover:text-txt-primary`;
+const btnBase = 'w-11 h-11 flex items-center justify-center rounded-[14px] transition-colors';
+const btnDefault = `${btnBase} bg-surface-elevated text-txt-primary hover:bg-interactive-active`;
 const btnActive = (color: string) => `${btnBase} bg-${color}/20 text-${color} hover:bg-${color}/30`;
-const btnGreen = `${btnBase} bg-surface-channel text-status-online hover:bg-surface-elevated`;
+// On (camera, screen share): a solid mint tile, the board's "live" colour
+const btnGreen = `${btnBase} bg-accent-mint text-txt-on-primary hover:bg-accent-mint/85`;
 
 /**
  * `revealed` is the fullscreen idle state, owned by MainContent because it
@@ -27,6 +29,9 @@ export function VoiceControlBar({ revealed = false }: { revealed?: boolean }) {
   const isScreenSharing = useVoiceStore((s) => s.isScreenSharing);
   const voiceChatOpen = useUIStore((s) => s.voiceChatOpen);
   const toggleVoiceChat = useUIStore((s) => s.toggleVoiceChat);
+  const soundboardOpen = useUIStore((s) => s.soundboardOpen);
+  const toggleSoundboard = useUIStore((s) => s.toggleSoundboard);
+  const soundboardAvailable = useSoundboardAvailable();
   const voiceFullscreen = useUIStore((s) => s.voiceFullscreen);
   const toggleVoiceFullscreen = useUIStore((s) => s.toggleVoiceFullscreen);
   const currentVoiceChannelId = useVoiceStore((s) => s.currentVoiceChannelId);
@@ -108,7 +113,7 @@ export function VoiceControlBar({ revealed = false }: { revealed?: boolean }) {
       className={containerClassName}
       {...(voiceFullscreen ? { [VOICE_CHROME_ATTR]: '' } : {})}
     >
-      <div className="pointer-events-auto flex items-center gap-1.5 rounded-full px-3 py-2 glass-bubble">
+      <div className="pointer-events-auto flex items-center gap-2 rounded-[22px] px-2.5 py-2 glass-bubble border-2 border-border-soft">
         {/* Mute */}
         <button
           onClick={handleMute}
@@ -196,11 +201,28 @@ export function VoiceControlBar({ revealed = false }: { revealed?: boolean }) {
         {/* Separator */}
         <div className="w-[1px] h-6 bg-white/10 mx-0.5" />
 
+        {/* Soundboard (space calls only) */}
+        {soundboardAvailable && (
+          <button
+            onClick={toggleSoundboard}
+            aria-expanded={soundboardOpen}
+            className={soundboardOpen
+              ? `${btnBase} bg-accent-amber text-txt-on-primary -rotate-2 shadow-[3px_3px_0_rgb(var(--text-primary))]`
+              : btnDefault
+            }
+            title={t('voice:soundboard.title')}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="2" /><rect x="14" y="3" width="7" height="7" rx="2" /><rect x="3" y="14" width="7" height="7" rx="2" /><rect x="14" y="14" width="7" height="7" rx="2" />
+            </svg>
+          </button>
+        )}
+
         {/* Chat Toggle */}
         <button
           onClick={toggleVoiceChat}
           className={voiceChatOpen
-            ? `${btnBase} bg-surface-channel text-txt-primary`
+            ? `${btnBase} bg-txt-primary text-txt-on-primary`
             : btnDefault
           }
           title={t('voice:controls.toggleChat')}
@@ -214,7 +236,7 @@ export function VoiceControlBar({ revealed = false }: { revealed?: boolean }) {
         <button
           onClick={handleFullscreen}
           className={voiceFullscreen
-            ? `${btnBase} bg-surface-channel text-txt-primary`
+            ? `${btnBase} bg-txt-primary text-txt-on-primary`
             : btnDefault
           }
           title={voiceFullscreen ? t('voice:controls.exitFullscreen') : t('voice:controls.fullscreen')}
@@ -236,7 +258,7 @@ export function VoiceControlBar({ revealed = false }: { revealed?: boolean }) {
         {/* Disconnect */}
         <button
           onClick={handleDisconnect}
-          className={`${btnBase} bg-accent-rose hover:bg-accent-rose/80 text-white`}
+          className={`${btnBase} bg-accent-rose hover:bg-accent-rose/85 text-txt-on-primary`}
           title={t('voice:controls.disconnect')}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">

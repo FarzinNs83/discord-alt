@@ -1,0 +1,249 @@
+{
+  "message": {
+    "edit": {
+      "hint": "Esc برای <cancel>لغو</cancel> • Enter برای <save>ذخیره</save>"
+    },
+    "edited": "(ویرایش‌شده)",
+    "rowLabel": "{{author}}، {{time}}",
+    "gifAlt": "گیف",
+    "upload": {
+      "failed": "بارگذاری ناموفق بود",
+      "discard": "دور انداختن"
+    },
+    "actions": {
+      "confirmDelete": "تأیید حذف"
+    },
+    "reply": {
+      "jump": "پرش به پیام اصلی"
+    },
+    "mention": {
+      "unknownUser": "کاربر ناشناس",
+      "unknownRole": "نقش ناشناس"
+    },
+    "reactions": {
+      "you": "تو",
+      "others_one": "{{count}} نفر دیگر",
+      "others_other": "{{count}} نفر دیگر",
+      "bySelf": "تو واکنش دادی",
+      "byOne": "{{name}} واکنش داد",
+      "byMany": "{{names}} واکنش دادند"
+    },
+    "waitingToSend": "در انتظار ارسال"
+  },
+  "list": {
+    "noHistoryPermission": "اجازه‌ی دیدن تاریخچه‌ی پیام‌های این کانال را نداری",
+    "loading": "در حال بارگذاری پیام‌ها",
+    "loadingOlder": "در حال بارگذاری پیام‌های قدیمی‌تر",
+    "loadFailed": "پیام‌ها بارگذاری نشدند",
+    "jumpToPresent": "پرش به آخرین پیام‌ها",
+    "jump": {
+      "unavailable": "آن پیام دیگر در دسترس نیست",
+      "failed": "آن پیام بارگذاری نشد",
+      "presentFailed": "آخرین پیام‌ها بارگذاری نشدند"
+    },
+    "unread": {
+      "label": "جدید",
+      "divider": "پیام‌های جدید",
+      "dividerWithDate": "پیام‌های جدید، {{date}}"
+    },
+    "welcome": {
+      "channel": {
+        "title": "به کانال خوش اومدی!",
+        "description": "این شروع گفتگوست."
+      },
+      "group": {
+        "intro": "این شروع گفتگوی گروهی شماست.",
+        "owner": "مالک: <owner>@{{name}}</owner>",
+        "federatedNotice": "پیام‌ها روی سرور خانه‌ی تو و گیرنده‌ها ذخیره می‌شوند. رمزنگاری سرتاسری ندارند.",
+        "openSettings": "باز کردن تنظیمات گروه",
+        "leave": "ترک گروه"
+      },
+      "dm": {
+        "fallbackName": "پیام خصوصی",
+        "intro": "این شروع تاریخچه‌ی پیام‌های خصوصی تو با <strong>@{{name}}</strong> است.",
+        "federatedNotice": "پیام‌ها روی سرور خانه‌ی تو و گیرنده ذخیره می‌شوند. رمزنگاری سرتاسری ندارند.",
+        "removeFriend": "حذف دوست"
+      }
+    }
+  },
+  "composer": {
+    "noPermission": "اجازه‌ی فرستادن پیام در این کانال را نداری",
+    "placeholder": {
+      "channel": "یه چیزی توی #{{name}} بنویس",
+      "dm": "پیام به @{{name}}"
+    },
+    "replyingTo": "در پاسخ به",
+    "cancelReply": "لغو پاسخ",
+    "removeAttachment": "برداشتن پیوست",
+    "attachFile": "پیوست فایل",
+    "uploading": "در حال بارگذاری…",
+    "uploadingLabel": "در حال بارگذاری",
+    "failedCount_one": "{{count}} ناموفق",
+    "failedCount_other": "{{count}} ناموفق",
+    "failedHint": "برای ارسال، پیوست ناموفق را بردار یا دوباره امتحان کن",
+    "gif": "گیف",
+    "gifPicker": "انتخاب گیف",
+    "emoji": "ایموجی",
+    "emojiPicker": "انتخاب ایموجی",
+    "send": "ارسال",
+    "sendMessage": "ارسال پیام",
+    "uploadFailed": "بارگذاری {{file}} ناموفق بود: {{reason}}",
+    "uploadFailedReason": "بارگذاری ناموفق بود",
+    "typing": {
+      "named_one": "{{names}} داره می‌نویسه",
+      "named_other": "{{names}} دارن می‌نویسن",
+      "several": "چند نفر دارن می‌نویسن"
+    }
+  },
+  "menu": {
+    "saveImage": "ذخیره‌ی تصویر",
+    "copyImage": "کپی تصویر",
+    "openOriginal": "باز کردن اصل",
+    "saveVideo": "ذخیره‌ی ویدیو",
+    "saveAudio": "ذخیره‌ی صدا",
+    "copyLink": "کپی لینک",
+    "openLink": "باز کردن لینک",
+    "copySelectedText": "کپی متن انتخاب‌شده",
+    "copyText": "کپی متن",
+    "markUnread": "علامت‌گذاری به‌عنوان خوانده‌نشده",
+    "editMessage": "ویرایش پیام",
+    "deleteMessage": "حذف پیام",
+    "linkCopied": "لینک کپی شد",
+    "linkCopyFailed": "کپی لینک ناموفق بود"
+  },
+  "attachment": {
+    "progress": {
+      "pausedTitle": "متوقف — {{percent}}"
+    },
+    "video": {
+      "cannotPlayDownload": "اینجا پخش نمی‌شود — دانلود کن",
+      "unsupportedFormat": "قالب ویدیو پشتیبانی نمی‌شود",
+      "unsupportedBrowser": "مرورگرت پخش ویدیو را پشتیبانی نمی‌کند."
+    },
+    "audio": {
+      "unsupportedBrowser": "مرورگرت پخش صدا را پشتیبانی نمی‌کند."
+    },
+    "federation": {
+      "remoteNamed": "روی سرور {{sender}} نگه‌داری می‌شود. برای داشتن نسخه‌ی محلی دانلودش کن.",
+      "remoteUnknown": "روی سرور فرستنده نگه‌داری می‌شود. برای داشتن نسخه‌ی محلی دانلودش کن.",
+      "partialGeneric": "بعضی گیرنده‌ها نمی‌توانند این فایل را محلی ذخیره کنند.",
+      "partialInstance": "سرور {{username}} (سقف: {{limit}})",
+      "partialList": "فایل روی {{instances}} ذخیره نشد. هنوز می‌توانند از سرور تو ببینندش.",
+      "listPair": "{{first}} و {{second}}"
+    }
+  },
+  "gif": {
+    "searchPlaceholder": "جستجوی گیف",
+    "noResults": "گیفی پیدا نشد",
+    "noTrending": "گیف پرطرفداری نیست",
+    "attribution": "با قدرت Klipy"
+  },
+  "preview": {
+    "save": "ذخیره‌ی تصویر",
+    "copy": "کپی تصویر",
+    "alt": "پیش‌نمایش تصویر"
+  },
+  "invite": {
+    "sentBy": "{{name}} دعوت فرستاد",
+    "memberCount_one": "{{count}} عضو",
+    "memberCount_other": "{{count}} عضو",
+    "revoked": "دعوت دیگر معتبر نیست",
+    "join": "پیوستن",
+    "joining": "در حال پیوستن…",
+    "joinFailed": "پیوستن ناموفق بود",
+    "askToJoin": "درخواست پیوستن",
+    "sendingRequest": "در حال ارسال…",
+    "requestSent": "درخواست فرستاده شد",
+    "requestPending": "درخواست در انتظار",
+    "requestNotice": "این فضا درخواست پیوستن می‌گیرد. یک مدیر هر درخواست را تأیید می‌کند.",
+    "requestReview": "یک مدیر درخواستت را بررسی می‌کند."
+  },
+  "notification": {
+    "unknownSender": "یه نفر",
+    "attachmentOnly": "یک پیوست فرستاد"
+  },
+  "embed": {
+    "loadAction": "برای بارگذاری کلیک کن",
+    "loadNamed": "بارگذاری {{name}}",
+    "loadUnnamed": "بارگذاری محتوای جاسازی‌شده",
+    "frameTitle": "محتوای جاسازی‌شده",
+    "playNamed": "پخش {{title}}",
+    "playUnnamed": "پخش ویدیو",
+    "videoTitle": "ویدیو"
+  },
+  "stickers": {
+    "title": "استیکرهای من",
+    "upload": "بارگذاری تصویر",
+    "limits": "PNG، JPEG، WebP یا GIF · تا ۵ مگابایت",
+    "loading": "در حال بارگذاری…",
+    "empty": "مجموعه‌ی استیکرهایت از اینجا شروع می‌شود",
+    "remove": "حذف",
+    "save": "افزودن به استیکرهای من",
+    "saved": "به استیکرهای من اضافه شد",
+    "preview": "پیش‌نمایش استیکر",
+    "manage": "مدیریت",
+    "done": "تمام",
+    "collectionHint": "یک استیکر برای فرستادن انتخاب کن. اینجا را مال خودت کن.",
+    "manageHint": "استیکرهای مجموعه‌ات را تغییر نام بده یا حذف کن. پیام‌هایی که فرستاده شده‌اند تغییر نمی‌کنند.",
+    "emptyHint": "لحظه‌های محبوبت را استیکر کن تا برای پاسخ بعدی آماده باشند.",
+    "chooseImage": "انتخاب تصویر",
+    "cancel": "لغو",
+    "replace": "جایگزینی تصویر",
+    "name": "نام استیکر",
+    "dropImage": "کلیک کن یا تصویری اینجا رها کن",
+    "pasteHint": "می‌توانی تصویری را از کلیپ‌بورد هم بچسبانی",
+    "uploading": "در حال افزودن استیکر…",
+    "singleImage": "هر بار یک تصویر انتخاب کن.",
+    "invalidSize": "تصویری غیرخالی تا ۵ مگابایت انتخاب کن.",
+    "invalidType": "فقط تصاویر PNG، JPEG، WebP و GIF پشتیبانی می‌شوند.",
+    "invalidImage": "این تصویر پیش‌نمایش نمی‌شود. یک تصویر معتبر انتخاب کن.",
+    "removeNamed": "حذف {{name}}",
+    "addMore": "افزودن بیشتر",
+    "selectedCount_one": "{{count}} استیکر انتخاب شده",
+    "selectedCount_other": "{{count}} استیکر انتخاب شده",
+    "dropMore": "کلیک کن یا تصاویر بیشتری اینجا رها کن",
+    "sticker": "استیکر",
+    "downloadFailed": "تصویر بارگذاری نشد.",
+    "batchLimit_one": "هر بار حداکثر {{count}} تصویر انتخاب کن.",
+    "batchLimit_other": "هر بار حداکثر {{count}} تصویر انتخاب کن.",
+    "capacityLimit_one": "مجموعه‌ات جای {{count}} استیکر دیگر دارد.",
+    "capacityLimit_other": "مجموعه‌ات جای {{count}} استیکر دیگر دارد.",
+    "full": "مجموعه‌ات پر است. برای افزودن، یک استیکر را حذف کن.",
+    "batchFailed_one": "{{count}} تصویر اضافه نشد. هنوز در فهرست پایین هست.",
+    "batchFailed_other": "{{count}} تصویر اضافه نشدند. هنوز در فهرست پایین هستند.",
+    "uploadingProgress": "در حال افزودن {{current}} از {{total}}…",
+    "rename": "تغییر نام",
+    "renameNamed": "تغییر نام {{name}}",
+    "renameTitle": "تغییر نام استیکر",
+    "search": "جستجوی استیکر",
+    "noResults": "استیکری پیدا نشد"
+  },
+  "poke": {
+    "action": "سقلمه",
+    "received": "{{actor}} به {{target}} سقلمه زد",
+    "disconnected": "اتصال قطع است. سقلمه فرستاده نشد."
+  },
+  "offline": {
+    "title": "آفلاینی",
+    "hint": "پیام‌هایی که الان می‌نویسی وقتی دوباره آنلاین شدی فرستاده می‌شوند.",
+    "waiting_one": "{{count}} پیام در انتظار · وقتی برگشتی فرستاده می‌شود",
+    "waiting_other": "{{count}} پیام در انتظار · وقتی برگشتی فرستاده می‌شوند"
+  },
+  "tapToLoad": {
+    "label": "برای بارگذاری بزن",
+    "withSize": "برای بارگذاری بزن · {{size}}"
+  },
+  "voiceMessage": {
+    "play": "پخش پیام صوتی",
+    "pause": "توقف پیام صوتی",
+    "seek": "موقعیت در پیام صوتی",
+    "position": "{{current}} از {{total}}",
+    "speed": "سرعت پخش {{speed}}×، تغییر",
+    "speedValue": "{{speed}}×",
+    "record": "ضبط پیام صوتی",
+    "recording": "در حال ضبط · {{time}}",
+    "send": "ارسال پیام صوتی",
+    "discard": "دور انداختن ضبط",
+    "micUnavailable": "میکروفونت در دسترس نبود. ببین مرورگر اجازه‌ی استفاده از آن را دارد."
+  }
+}

@@ -142,8 +142,8 @@ describe('VoiceChannel occupancy timer', () => {
     expect(screen.getByTestId('voice-channel-timer')).not.toHaveClass('group-hover:opacity-0');
     expect(screen.getByTestId('voice-channel-settings')).toHaveClass(
       'absolute',
-      'right-full',
-      'mr-1',
+      'end-full',
+      'me-1',
       'pointer-events-none',
       'group-hover:pointer-events-auto',
     );

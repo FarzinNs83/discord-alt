@@ -340,9 +340,9 @@ export function GroupDmSettings() {
 
   // ── Render helpers ─────────────────────────────────────────────────────
   const tabBtnClass = (t: Tab) =>
-    `w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
+    `w-full text-start px-3 py-2 rounded-md text-sm transition-colors ${
       tab === t
-        ? 'bg-interactive-selected text-txt-primary font-medium'
+        ? 'bg-accent-primary text-txt-on-primary font-bold'
         : 'text-txt-tertiary hover:text-txt-secondary hover:bg-interactive-hover'
     }`;
 
@@ -356,7 +356,7 @@ export function GroupDmSettings() {
   // ── Overview panel ─────────────────────────────────────────────────────
   const overviewPanel = (
     <div className="space-y-5">
-      <h2 className="text-lg font-semibold text-txt-primary mb-6">{t('dm:groupSettings.overview')}</h2>
+      <h2 className="font-display font-extrabold text-[32px] leading-tight tracking-[-0.03em] text-txt-primary mb-6">{t('dm:groupSettings.overview')}</h2>
 
       {/* Hero icon */}
       <div className="flex flex-col items-center gap-3">
@@ -400,7 +400,7 @@ export function GroupDmSettings() {
               onClick={handleClearIcon}
               data-group-dm-icon-clear
               aria-label={t('dm:groupSettings.removeIcon')}
-              className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-surface-elevated border border-border-hard flex items-center justify-center text-txt-tertiary hover:text-txt-danger hover:bg-accent-rose/10 transition-colors"
+              className="absolute -top-1 -end-1 w-6 h-6 rounded-full bg-surface-elevated border border-border-hard flex items-center justify-center text-txt-tertiary hover:text-txt-danger hover:bg-accent-rose/10 transition-colors"
             >
               <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z" />
@@ -437,7 +437,7 @@ export function GroupDmSettings() {
           aria-label={t('dm:groupSettings.nameAria')}
         />
         {isOwner && (
-          <div className="text-[11px] text-txt-tertiary text-right mt-1">
+          <div className="text-[11px] text-txt-tertiary text-end mt-1">
             {t('dm:groupSettings.nameCount', { current: trimmedName.length, max: MAX_NAME_LENGTH })}
           </div>
         )}
@@ -464,7 +464,7 @@ export function GroupDmSettings() {
             type="button"
             onClick={handleSave}
             disabled={!isDirty || saving}
-            className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             data-group-dm-save
           >
             {saving ? t('common:states.saving') : t('common:actions.save')}
@@ -539,7 +539,7 @@ export function GroupDmSettings() {
         </svg>
         {t('dm:groupSettings.addMember')}
         {!canAddMembers && (
-          <span className="ml-auto text-[11px] text-txt-tertiary">{t('dm:groupSettings.groupFull')}</span>
+          <span className="ms-auto text-[11px] text-txt-tertiary">{t('dm:groupSettings.groupFull')}</span>
         )}
       </button>
 

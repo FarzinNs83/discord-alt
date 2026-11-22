@@ -253,6 +253,20 @@
       "when": 1793389222813,
       "tag": "0035_patogh_default_name",
       "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "6",
+      "when": 1795161348744,
+      "tag": "0036_space_events",
+      "breakpoints": true
+    },
+    {
+      "idx": 37,
+      "version": "6",
+      "when": 1795162369576,
+      "tag": "0037_space_sounds",
+      "breakpoints": true
     }
   ]
 }

@@ -98,7 +98,7 @@ export function MobileFolderSheet({ folder, onClose, onSelectSpace, onUpdateFold
     <>
       <div className="fixed inset-0 z-[300] bg-black/50" onClick={onClose} />
       <div
-        className={`fixed bottom-0 left-0 right-0 z-[301] rounded-t-2xl glass-modal max-h-[calc(60*var(--app-vh))] flex flex-col ${
+        className={`fixed bottom-0 start-0 end-0 z-[301] rounded-t-2xl glass-modal max-h-[calc(60*var(--app-vh))] flex flex-col ${
           hasInteracted ? '' : 'animate-slide-up-sheet'
         }`}
         style={{ paddingBottom: 'var(--safe-bottom)', ...dragStyle }}
@@ -145,7 +145,7 @@ export function MobileFolderSheet({ folder, onClose, onSelectSpace, onUpdateFold
               <button
                 key={space.id}
                 onClick={() => { onSelectSpace(space.id); onClose(); }}
-                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-interactive-hover text-left transition-colors"
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-interactive-hover text-start transition-colors"
               >
                 <div
                   className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center shrink-0"

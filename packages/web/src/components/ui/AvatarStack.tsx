@@ -127,7 +127,7 @@ function AvatarTile({
   return (
     <div
       data-avatar-stack-tile="true"
-      className={`absolute rounded-full overflow-hidden border-2 flex items-center justify-center ${borderClass} ${className}`}
+      className={`absolute rounded-[34%] overflow-hidden border-2 flex items-center justify-center ${borderClass} ${className}`}
       style={{ width: size, height: size, ...style }}
     >
       <Avatar
@@ -148,14 +148,14 @@ export function AvatarStack({ members, origin, size, border, iconUrl }: AvatarSt
   if (iconUrl) {
     return (
       <div
-        className="relative flex-shrink-0 rounded-full overflow-hidden"
+        className="relative flex-shrink-0 rounded-[34%] overflow-hidden"
         style={{ width: size, height: size }}
       >
         <img
           src={resolveIconSrc(iconUrl)}
           alt=""
           loading="lazy"
-          className="w-full h-full rounded-full object-cover"
+          className="w-full h-full rounded-[34%] object-cover"
         />
       </div>
     );
@@ -176,11 +176,11 @@ export function AvatarStack({ members, origin, size, border, iconUrl }: AvatarSt
         <div
           // i18n-check: allow-literal: a data attribute for tests, not an input placeholder
           data-avatar-stack-placeholder="true"
-          className={`absolute inset-0 rounded-full bg-surface-input border-2 ${borderClass}`}
+          className={`absolute inset-0 rounded-[34%] bg-surface-input border-2 ${borderClass}`}
         />
         <div
           data-group-badge="true"
-          className={`absolute rounded-full bg-surface-elevated border-2 ${borderClass} flex items-center justify-center text-txt-tertiary`}
+          className={`absolute rounded-[34%] bg-surface-elevated border-2 ${borderClass} flex items-center justify-center text-txt-tertiary`}
           style={{
             width: badgeBoxSize,
             height: badgeBoxSize,
@@ -210,7 +210,7 @@ export function AvatarStack({ members, origin, size, border, iconUrl }: AvatarSt
         />
         <div
           data-group-badge="true"
-          className={`absolute rounded-full bg-surface-elevated border-2 ${borderClass} flex items-center justify-center text-txt-secondary z-10`}
+          className={`absolute rounded-[34%] bg-surface-elevated border-2 ${borderClass} flex items-center justify-center text-txt-secondary z-10`}
           style={{
             width: badgeBoxSize,
             height: badgeBoxSize,
@@ -340,7 +340,7 @@ export function AvatarStack({ members, origin, size, border, iconUrl }: AvatarSt
       {overflow > 0 && (
         <div
           data-avatar-stack-overflow="true"
-          className={`absolute rounded-full bg-surface-input border-2 ${borderClass} flex items-center justify-center text-txt-secondary font-semibold leading-none`}
+          className={`absolute rounded-[34%] bg-surface-input border-2 ${borderClass} flex items-center justify-center text-txt-secondary font-semibold leading-none`}
           style={{
             width: tileSize,
             height: tileSize,

@@ -127,7 +127,7 @@ export function AudioInputSection() {
           </div>
           <button
             onClick={() => { requestPermission().catch(() => {}); }}
-            className="text-[13px] px-3 py-2 rounded-md bg-accent-primary hover:bg-accent-primary-hover text-white font-medium transition-colors"
+            className="text-[13px] px-3 py-2 rounded-md bg-accent-primary hover:bg-accent-primary-hover text-txt-on-primary font-medium transition-colors"
           >
             {t('voice.input.permissionPrompt.enable')}
           </button>
@@ -163,9 +163,9 @@ export function AudioInputSection() {
             onClick={() => setListOpen((v) => !v)}
             className="w-full px-3 py-2 flex items-center justify-between rounded-md bg-surface-base hover:bg-interactive-hover transition-colors"
           >
-            <span className="text-[13px] text-txt-primary truncate text-left">{selectedLabel}</span>
+            <span className="text-[13px] text-txt-primary truncate text-start">{selectedLabel}</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
-              className={`text-txt-tertiary flex-shrink-0 ml-2 transition-transform ${listOpen ? 'rotate-90' : ''}`}>
+              className={`text-txt-tertiary flex-shrink-0 ms-2 transition-transform ${listOpen ? 'rotate-90' : ''}`}>
               <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
             </svg>
           </button>

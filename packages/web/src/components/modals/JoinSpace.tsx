@@ -261,7 +261,7 @@ export function JoinSpaceModal() {
                   {t('spaces:join.discoverEmpty')}
                 </div>
               ) : (
-                <div className="space-y-2 max-h-[280px] overflow-y-auto pr-0.5">
+                <div className="space-y-2 max-h-[280px] overflow-y-auto pe-0.5">
                   {previewSpaces.map((space) => (
                     <ExploreSpacePreviewCard
                       key={`${space.id}:${space._instanceOrigin}`}
@@ -278,7 +278,7 @@ export function JoinSpaceModal() {
                 className="mt-3 w-full py-2 flex items-center justify-center gap-1.5 text-sm font-medium text-accent-primary hover:bg-accent-primary/10 rounded-lg transition-colors"
               >
                 {t('spaces:join.browseExplore')}
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg className="w-4 h-4 rtl:-scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
               </button>
@@ -322,7 +322,7 @@ export function JoinSpaceModal() {
                   <button
                     type="submit"
                     disabled={isLoading || !inviteCode.trim()}
-                    className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+                    className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50"
                   >
                     {isLoading ? t('spaces:join.submitting') : t('spaces:join.submit')}
                   </button>
@@ -373,7 +373,7 @@ export function JoinSpaceModal() {
                   onClick={() => { setPhase('input'); setPassword(''); setError(''); }}
                   className="px-3 py-1 text-sm text-txt-tertiary hover:text-txt-secondary transition-colors flex items-center gap-1"
                 >
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg className="w-3.5 h-3.5 rtl:-scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                   </svg>
                   {t('common:actions.back')}
@@ -389,7 +389,7 @@ export function JoinSpaceModal() {
                 <button
                   type="submit"
                   disabled={isLoading || !password}
-                  className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+                  className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50"
                 >
                   {isLoading ? t('spaces:join.connect.submitting') : t('spaces:join.connect.submit')}
                 </button>
@@ -422,7 +422,7 @@ export function JoinSpaceModal() {
                   onClick={() => { setPhase('input'); setRequestTarget(null); setRequestMessage(''); setError(''); }}
                   className="px-3 py-1 text-sm text-txt-tertiary hover:text-txt-secondary transition-colors flex items-center gap-1"
                 >
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg className="w-3.5 h-3.5 rtl:-scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                   </svg>
                   {t('common:actions.back')}
@@ -438,7 +438,7 @@ export function JoinSpaceModal() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+                  className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50"
                 >
                   {isLoading ? t('spaces:explore.sendingRequest') : t('spaces:explore.sendRequest')}
                 </button>
@@ -458,7 +458,7 @@ export function JoinSpaceModal() {
             <button
               type="button"
               onClick={closeModal}
-              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors"
+              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors"
             >
               {t('common:actions.done')}
             </button>
@@ -505,7 +505,7 @@ export function JoinSpaceModal() {
                   onClick={() => { setPhase('connect'); setFallbackPassword(''); setError(''); }}
                   className="px-3 py-1 text-sm text-txt-tertiary hover:text-txt-secondary transition-colors flex items-center gap-1"
                 >
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg className="w-3.5 h-3.5 rtl:-scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                   </svg>
                   {t('common:actions.back')}
@@ -521,7 +521,7 @@ export function JoinSpaceModal() {
                 <button
                   type="submit"
                   disabled={isLoading || !fallbackUsername || !fallbackPassword}
-                  className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+                  className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50"
                 >
                   {isLoading ? t('spaces:join.fallback.submitting') : t('spaces:join.fallback.submit')}
                 </button>

@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Embed } from '@patogh/shared';
 import { useUIStore } from '../../../stores/uiStore';
+import { TapToLoad } from '../TapToLoad';
 
 interface ImageEmbedProps {
   embed: Embed;
@@ -12,6 +13,7 @@ export function ImageEmbed({ embed }: ImageEmbedProps) {
   const { width, height } = embed;
 
   return (
+    <TapToLoad width={width} height={height}>
     <div className="mt-2 max-w-fit">
       <div
         className="relative rounded-lg overflow-hidden"
@@ -27,5 +29,6 @@ export function ImageEmbed({ embed }: ImageEmbedProps) {
         />
       </div>
     </div>
+    </TapToLoad>
   );
 }

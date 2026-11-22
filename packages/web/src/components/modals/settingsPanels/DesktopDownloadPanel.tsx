@@ -211,7 +211,7 @@ function PlatformName({ platform, id, hero }: { platform: Platform; id: string; 
     <div className="relative flex items-center min-w-0">
       <span
         aria-hidden="true"
-        className={`absolute right-full mr-2 top-1/2 -translate-y-1/2 w-[3px] rounded-full ${
+        className={`absolute end-full me-2 top-1/2 -translate-y-1/2 w-[3px] rounded-full ${
           hero ? 'h-[22px]' : 'h-[18px]'
         } ${ACCENT_BARS[platform]}`}
       />
@@ -269,7 +269,7 @@ function HeroTile({
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="px-4 py-2 text-sm font-medium text-white bg-accent-primary hover:bg-accent-primary-hover rounded-lg transition-colors"
+          className="px-4 py-2 text-sm font-medium text-txt-on-primary bg-accent-primary hover:bg-accent-primary-hover rounded-lg transition-colors"
         >
           {t(DOWNLOAD_KEYS[platform])}
         </a>
@@ -431,7 +431,7 @@ export function DesktopDownloadPanel({ version }: { version: string | null }) {
 
   return (
     <div className="ddl-panel">
-      <h2 className="text-lg font-semibold text-txt-primary mb-6">{t('desktopDownload.title')}</h2>
+      <h2 className="font-display font-extrabold text-[32px] leading-tight tracking-[-0.03em] text-txt-primary mb-6">{t('desktopDownload.title')}</h2>
 
       {detected && (
         <div className="mb-5 space-y-3">

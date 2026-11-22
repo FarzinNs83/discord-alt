@@ -229,7 +229,7 @@ export function DeleteAccountModal({ isOpen, onClose }: DeleteAccountModalProps)
                             onClick={() => handleSpaceAction(space.id, 'transfer')}
                             className={`px-2.5 py-1 text-xs rounded transition-colors ${
                               space.action === 'transfer'
-                                ? 'bg-accent-primary text-white'
+                                ? 'bg-accent-primary text-txt-on-primary'
                                 : 'bg-white/[0.06] text-txt-secondary hover:text-txt-primary'
                             }`}
                           >

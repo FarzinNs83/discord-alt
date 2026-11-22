@@ -71,5 +71,10 @@
   "Emoji",
   "Spaces",
   "commit {{commit}} · ",
-  "Sticker"
+  "Sticker",
+  "Esc",
+  "{{title}} in {{place}}",
+  "Soundboard",
+  "{{current}} / {{total}}",
+  "{{speed}}×"
 ]

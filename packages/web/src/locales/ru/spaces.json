@@ -720,5 +720,27 @@
     "suppressRoles": "Подавлять упоминания ролей",
     "massHeading": "Групповые упоминания",
     "massNote": "@here доходит до тех же участников, что и @everyone. Упоминания вас по имени всегда приходят."
+  },
+  "events": {
+    "schedule": "Запланировать событие",
+    "titleIn": "{{title}} в {{place}}",
+    "imIn": "Я приду",
+    "going_one": "{{count}} идёт",
+    "going_few": "{{count}} идут",
+    "going_many": "{{count}} идут",
+    "going_other": "{{count}} идут",
+    "cancel": "Отменить событие",
+    "cancelConfirm": {
+      "title": "Отменить это событие?",
+      "description": "{{title}} исчезнет у всех."
+    },
+    "form": {
+      "what": "Что",
+      "whatPlaceholder": "Вечер мафии",
+      "when": "Когда",
+      "where": "Где",
+      "nowhere": "Без канала",
+      "submit": "Запланировать"
+    }
   }
 }

@@ -123,6 +123,58 @@ export interface UserWithPassword extends User {
 
 export type SpaceVisibility = 'public' | 'request' | 'private';
 
+/** Longest event title the server accepts. */
+export const MAX_SPACE_EVENT_TITLE_LENGTH = 100;
+
+/** A scheduled space event as one viewer sees it. */
+export interface SpaceEvent {
+  id: string;
+  spaceId: string;
+  /** Where it happens (usually a voice channel), or null. */
+  channelId: string | null;
+  title: string;
+  /** Epoch milliseconds. */
+  startsAt: number;
+  createdBy: string;
+  /** Current members who said they are in. */
+  goingCount: number;
+  /** Whether the viewer said they are in. */
+  going: boolean;
+}
+
+/** Soundboard limits, shared so the client can refuse before uploading. */
+export const SOUNDBOARD = {
+  maxBytes: 1024 * 1024,
+  maxSeconds: 6,
+  maxNameLength: 32,
+  maxPerSpace: 30,
+  /** One play per person this often. */
+  cooldownMs: 5000,
+} as const;
+
+export interface SpaceSound {
+  id: string;
+  spaceId: string;
+  name: string;
+  emoji: string | null;
+  /** Path on the hosting instance, e.g. `/api/sounds/<hash>.ogg`. */
+  url: string;
+  uploadedBy: string;
+}
+
+export interface UploadSpaceSoundRequest {
+  name: string;
+  emoji?: string | null;
+  /** The file, base64. */
+  audio: string;
+}
+
+export interface CreateSpaceEventRequest {
+  title: string;
+  startsAt: number;
+  channelId?: string | null;
+}
+
 export interface Space {
   id: string;
   name: string;
@@ -783,6 +835,11 @@ export type ServerEvent =
   | { type: 'channel_updated'; channel: Channel; spaceId: string }
   | { type: 'channel_deleted'; channelId: string; spaceId: string }
   | { type: 'space_updated'; space: Space }
+  /** A space's events or RSVPs changed; members refetch, since `going` is per viewer. */
+  | { type: 'space_events_changed'; spaceId: string }
+  | { type: 'space_sounds_changed'; spaceId: string }
+  /** Sent to the people in a voice channel when one of them plays a soundboard sound. */
+  | { type: 'soundboard_played'; spaceId: string; channelId: string; soundId: string; userId: string }
   | { type: 'join_request_received'; request: JoinRequest }
   | { type: 'join_request_accepted'; request: JoinRequest; space: SpaceWithChannelsAndMembers }
   | { type: 'join_request_declined'; request: JoinRequest }

@@ -123,7 +123,8 @@
   },
   "chrome": {
     "toggleMemberList": "Показать или скрыть список участников",
-    "closeSettings": "Закрыть настройки"
+    "closeSettings": "Закрыть настройки",
+    "escKey": "Esc"
   },
   "sourceCode": {
     "label": "Исходный код (AGPL)",

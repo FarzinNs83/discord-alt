@@ -97,10 +97,11 @@ function SidebarItem({ id, name, icon, avatarColor, active, onClick, onContextMe
   }, [type, id, name, icon, avatarColor, isHovered, active]);
 
   const getButtonClasses = () => {
-    const base = 'w-10 h-10 flex items-center justify-center duration-200 overflow-hidden [transition:border-radius_0.2s,background_0.2s,color_0.2s]';
+    const base = 'w-10 h-10 flex items-center justify-center duration-200 overflow-hidden [transition:border-radius_0.2s,background_0.2s,color_0.2s,transform_0.2s,box-shadow_0.2s]';
 
     if (type === 'dm') {
-      return `${base} text-white ${active ? 'rounded-[13px]' : 'rounded-[20px] hover:rounded-[13px]'}`;
+      // Home is tea itself, so its sticker shadow is cream instead of tea.
+      return `${base} text-white ${active ? 'rounded-[13px] -rotate-[6deg] shadow-[4px_4px_0_rgb(var(--text-primary))]' : 'rounded-[20px] hover:rounded-[13px]'}`;
     }
 
     if (type === 'action') {
@@ -108,10 +109,10 @@ function SidebarItem({ id, name, icon, avatarColor, active, onClick, onContextMe
     }
 
     if (icon) {
-      return `${base} ${active ? 'rounded-[13px]' : 'rounded-[20px] hover:rounded-[13px]'}`;
+      return `${base} ${active ? 'rounded-[13px] rotate-[5deg] shadow-sticker' : 'rounded-[20px] hover:rounded-[13px]'}`;
     }
 
-    return `${base} text-white ${active ? 'rounded-[13px]' : 'rounded-[20px] hover:rounded-[13px]'}`;
+    return `${base} text-white ${active ? 'rounded-[13px] rotate-[5deg] shadow-sticker' : 'rounded-[20px] hover:rounded-[13px]'}`;
   };
 
   const buttonContent = (
@@ -150,7 +151,7 @@ function SidebarItem({ id, name, icon, avatarColor, active, onClick, onContextMe
       {type === 'space' && <SpaceUnreadBadge spaceId={id} />}
       {type === 'dm' && <DmUnreadBadge />}
       {federationBadge && (
-        <div className="absolute -bottom-0.5 -right-0.5 w-[14px] h-[14px] rounded-full bg-surface-base flex items-center justify-center">
+        <div className="absolute -bottom-0.5 -end-0.5 w-[14px] h-[14px] rounded-full bg-surface-base flex items-center justify-center">
           {federationDisconnected ? (
             <div className="w-[8px] h-[8px] rounded-full bg-accent-amber" />
           ) : (
@@ -177,17 +178,17 @@ function SidebarItem({ id, name, icon, avatarColor, active, onClick, onContextMe
     >
       {/* Drop indicator lines — offset into the mb-1.5 gap so adjacent items share one line */}
       {dropIndicator === 'before' && (
-        <div className="absolute -top-[3px] left-3 right-3 h-[2px] bg-accent-mint rounded-full z-10" />
+        <div className="absolute -top-[3px] start-3 end-3 h-[2px] bg-accent-mint rounded-full z-10" />
       )}
       {dropIndicator === 'after' && (
-        <div className="absolute -bottom-[3px] left-3 right-3 h-[2px] bg-accent-mint rounded-full z-10" />
+        <div className="absolute -bottom-[3px] start-3 end-3 h-[2px] bg-accent-mint rounded-full z-10" />
       )}
 
       {/* Pill Indicator */}
       {(type === 'space' || type === 'dm') && (
-        <div className="absolute -left-0 w-2 h-10 flex items-center">
+        <div className="absolute -start-0 w-2 h-10 flex items-center">
           <div
-            className={`bg-white rounded-r-full transition-all duration-200 origin-left ${getPillHeight()} w-1`}
+            className={`bg-txt-primary rounded-e-full transition-all duration-200 origin-left ${getPillHeight()} w-1`}
           />
         </div>
       )}
@@ -251,7 +252,7 @@ function FolderIcon({ spaces, color, isActive, isHovered }: { spaces: TaggedSpac
         ))}
       </div>
       {remaining > 0 && (
-        <div className="absolute bottom-0 right-0 text-[7px] font-bold text-txt-tertiary bg-surface-base rounded-tl-sm px-0.5">
+        <div className="absolute bottom-0 end-0 text-[7px] font-bold text-txt-tertiary bg-surface-base rounded-ss-sm px-0.5">
           +{remaining}
         </div>
       )}
@@ -478,7 +479,7 @@ function FolderFlyout({
               </div>
 
               {/* Name */}
-              <span className="text-sm text-txt-primary truncate flex-1 text-left">{space.name}</span>
+              <span className="text-sm text-txt-primary truncate flex-1 text-start">{space.name}</span>
 
               {/* Federation badge */}
               {isFederated && !isDimmed && (
@@ -569,10 +570,10 @@ function FolderSlot({
     >
       {/* Drop indicators — offset into the mb-1.5 gap so adjacent items share one line */}
       {dropIndicator === 'before' && (
-        <div className="absolute -top-[3px] left-3 right-3 h-[2px] bg-accent-mint rounded-full z-10" />
+        <div className="absolute -top-[3px] start-3 end-3 h-[2px] bg-accent-mint rounded-full z-10" />
       )}
       {dropIndicator === 'after' && (
-        <div className="absolute -bottom-[3px] left-3 right-3 h-[2px] bg-accent-mint rounded-full z-10" />
+        <div className="absolute -bottom-[3px] start-3 end-3 h-[2px] bg-accent-mint rounded-full z-10" />
       )}
       {dropIndicator === 'merge' && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
@@ -581,8 +582,8 @@ function FolderSlot({
       )}
 
       {/* Pill indicator */}
-      <div className="absolute -left-0 w-2 h-10 flex items-center">
-        <div className={`bg-white rounded-r-full transition-all duration-200 origin-left ${getPillHeight()} w-1`} />
+      <div className="absolute -start-0 w-2 h-10 flex items-center">
+        <div className={`bg-txt-primary rounded-e-full transition-all duration-200 origin-left ${getPillHeight()} w-1`} />
       </div>
 
       {isFlyoutOpen ? (
@@ -1092,7 +1093,7 @@ export function SpaceSidebar() {
   }, [openFolderId, resolvedLayout]);
 
   return (
-    <nav data-pip-obstacle="left" className="w-[72px] bg-surface-base flex flex-col items-center py-3 overflow-y-auto flex-shrink-0 no-scrollbar select-none desktop:fixed desktop:inset-y-0 desktop:left-0 desktop:z-[100] desktop:glass-strip" style={{ paddingBottom: floatingPanelHeight + 24, ...(isElectron() ? { top: 'var(--titlebar-inset)' } : {}) }} onDragOver={(e) => { if (dragState) e.preventDefault(); }} onDrop={handleDrop}>
+    <nav data-pip-obstacle="left" className="w-[72px] bg-surface-base flex flex-col items-center py-3 overflow-y-auto flex-shrink-0 no-scrollbar select-none desktop:fixed desktop:inset-y-0 desktop:start-0 desktop:z-[100] desktop:glass-strip" style={{ paddingBottom: floatingPanelHeight + 24, ...(isElectron() ? { top: 'var(--titlebar-inset)' } : {}) }} onDragOver={(e) => { if (dragState) e.preventDefault(); }} onDrop={handleDrop}>
       <SidebarItem
         id="@me"
         name={t('spaces:sidebar.directMessages')}

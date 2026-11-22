@@ -301,7 +301,7 @@ export function OverviewPanel({ spaceId }: OverviewPanelProps) {
   return (
     <>
       <div className="space-y-5">
-        <h2 className="text-lg font-semibold text-txt-primary mb-6">{t('spaces:settings.nav.tabs.overview')}</h2>
+        <h2 className="font-display font-extrabold text-[32px] leading-tight tracking-[-0.03em] text-txt-primary mb-6">{t('spaces:settings.nav.tabs.overview')}</h2>
         {/* Space Identity */}
         <div>
           <div className="text-[11px] font-semibold text-txt-tertiary uppercase tracking-wider mb-1.5">{t('spaces:settings.overview.identity')}</div>
@@ -334,7 +334,7 @@ export function OverviewPanel({ spaceId }: OverviewPanelProps) {
                 </>
               ) : (
                 <div
-                  className="w-full h-full rounded-full flex items-center justify-center text-white text-xl font-bold"
+                  className="w-full h-full rounded-full flex items-center justify-center text-white text-xl font-display font-bold"
                   style={{ background: getSpaceGradient(space.id, space.name, avatarColorState).gradient }}
                 >
                   {space.name.charAt(0).toUpperCase()}
@@ -616,7 +616,7 @@ export function OverviewPanel({ spaceId }: OverviewPanelProps) {
                 <button
                   onClick={handleSave}
                   disabled={saving || uploadingIcon || uploadingBanner || !spaceName.trim()}
-                  className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+                  className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50"
                 >
                   {saving ? t('common:states.saving') : t('common:actions.save')}
                 </button>

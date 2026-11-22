@@ -156,6 +156,7 @@ Re-running the script updates Patogh: database snapshot, git pull, rebuild,
 restart. Settings and secrets are kept.
 
 From /opt/patogh:
+  ./update.sh               update the app only, with rollback (--check to look first)
   ./backup.sh               database snapshot to data/backups/
   ./restore.sh              list / restore snapshots
   docker compose logs -f    logs

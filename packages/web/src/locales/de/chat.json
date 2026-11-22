@@ -27,7 +27,8 @@
       "bySelf": "Du hast reagiert",
       "byOne": "{{name}} hat reagiert",
       "byMany": "{{names}} haben reagiert"
-    }
+    },
+    "waitingToSend": "Wartet auf Versand"
   },
   "list": {
     "noHistoryPermission": "Du hast keine Berechtigung, den Nachrichtenverlauf dieses Kanals zu sehen",
@@ -221,5 +222,28 @@
     "action": "Anstupsen",
     "received": "{{actor}} hat {{target}} angestupst",
     "disconnected": "Verbindung getrennt. Anstupsen wurde nicht gesendet."
+  },
+  "offline": {
+    "title": "Du bist offline",
+    "hint": "Nachrichten, die du jetzt schreibst, werden gesendet, sobald du wieder online bist.",
+    "waiting_one": "{{count}} Nachricht wartet · sie wird gesendet, sobald du zurück bist",
+    "waiting_other": "{{count}} Nachrichten warten · sie werden gesendet, sobald du zurück bist"
+  },
+  "tapToLoad": {
+    "label": "Zum Laden tippen",
+    "withSize": "Zum Laden tippen · {{size}}"
+  },
+  "voiceMessage": {
+    "play": "Sprachnachricht abspielen",
+    "pause": "Sprachnachricht pausieren",
+    "seek": "Position in der Sprachnachricht",
+    "position": "{{current}} von {{total}}",
+    "speed": "Wiedergabegeschwindigkeit {{speed}}×, ändern",
+    "speedValue": "{{speed}}×",
+    "record": "Sprachnachricht aufnehmen",
+    "recording": "Aufnahme · {{time}}",
+    "send": "Sprachnachricht senden",
+    "discard": "Aufnahme verwerfen",
+    "micUnavailable": "Dein Mikrofon konnte nicht verwendet werden. Prüfe, ob der Browser darauf zugreifen darf."
   }
 }

@@ -9,6 +9,7 @@ import { MessageInput } from '../chat/MessageInput';
 import { VoiceGrid } from '../voice/VoiceGrid';
 import { VoiceControlBar } from '../voice/VoiceControlBar';
 import { VoiceChatPanel } from '../voice/VoiceChatPanel';
+import { SoundboardPanel } from '../voice/SoundboardPanel';
 import { FriendsPage } from '../chat/FriendsPage';
 import { ExplorePage } from '../chat/ExplorePage';
 import { Avatar } from '../ui/Avatar';
@@ -63,6 +64,7 @@ export function MainContent() {
   const currentChannelId = useChatStore((s) => s.currentChannelId);
   const currentSpaceId = useSpaceStore((s) => s.currentSpaceId);
   const voiceChatOpen = useUIStore((s) => s.voiceChatOpen);
+  const soundboardOpen = useUIStore((s) => s.soundboardOpen);
   const voiceFullscreen = useUIStore((s) => s.voiceFullscreen);
   const setVoiceFullscreen = useUIStore((s) => s.setVoiceFullscreen);
   const participants = useVoiceStore((s) => s.participants);
@@ -256,17 +258,17 @@ export function MainContent() {
               </svg>
               <span className="font-bold text-[15px] tracking-[-0.02em] text-txt-primary">{dmName}</span>
               {connectionError ? (
-                <span className="text-xs text-txt-danger font-medium ml-2">{t('spaces:main.voice.connectionFailed')}</span>
+                <span className="text-xs text-txt-danger font-medium ms-2">{t('spaces:main.voice.connectionFailed')}</span>
               ) : isLiveKitConnected ? (
                 <>
-                  <span className="text-xs text-status-online font-medium ml-2">{t('spaces:main.voice.connected')}</span>
-                  <span className="text-xs text-txt-tertiary ml-1">{t('spaces:main.voice.inCall', { count: participants.length })}</span>
+                  <span className="text-xs text-status-online font-medium ms-2">{t('spaces:main.voice.connected')}</span>
+                  <span className="text-xs text-txt-tertiary ms-1">{t('spaces:main.voice.inCall', { count: participants.length })}</span>
                 </>
               ) : (
-                <span className="text-xs text-status-idle font-medium ml-2">{t('spaces:main.voice.connecting')}</span>
+                <span className="text-xs text-status-idle font-medium ms-2">{t('spaces:main.voice.connecting')}</span>
               )}
             </div>
-            <div className={`flex items-center gap-1 flex-shrink-0 ${voiceFullscreen ? 'pointer-events-auto mr-24' : ''}`}>
+            <div className={`flex items-center gap-1 flex-shrink-0 ${voiceFullscreen ? 'pointer-events-auto me-24' : ''}`}>
               <TransferIndicator />
               <MemberListToggleButton />
             </div>
@@ -460,7 +462,7 @@ export function MainContent() {
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-txt-tertiary">
                 <path d="M11 5L6 9H2V15H6L11 19V5ZM15.54 8.46C16.48 9.4 17 10.67 17 12S16.48 14.6 15.54 15.54L14.12 14.12C14.69 13.55 15 12.79 15 12S14.69 10.45 14.12 9.88L15.54 8.46Z" />
               </svg>
-              <span className="font-bold text-[15px] tracking-[-0.02em] text-txt-primary">{channel.name}</span>
+              <span className="font-display font-extrabold text-[17px] tracking-[-0.01em] text-txt-primary">{channel.name}</span>
             </div>
             <div className="flex items-center gap-1 flex-shrink-0">
               <TransferIndicator />
@@ -470,12 +472,12 @@ export function MainContent() {
           <div className="flex-1 flex flex-col items-center justify-center gap-8 relative">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgb(var(--accent-primary)/0.12)_0%,transparent_70%)] animate-gradient-pulse pointer-events-none" />
             <div className="text-center relative z-10">
-              <h2 className="text-[28px] font-bold text-white mb-3">{channel.name}</h2>
+              <h2 className="text-[28px] font-display font-bold text-white mb-3">{channel.name}</h2>
               <p className="text-txt-tertiary text-[15px]">{t('spaces:main.voice.empty')}</p>
             </div>
             <button
               onClick={() => joinVoiceChannel(currentChannelId, useVoiceStore.getState().connectFn ?? undefined)}
-              className="relative z-10 px-8 py-3 bg-accent-primary hover:bg-accent-primary-hover text-white font-semibold rounded-full transition-all text-[15px] shadow-[0_4px_20px_rgb(var(--accent-primary)/0.3)]"
+              className="relative z-10 px-8 py-3 bg-accent-primary hover:bg-accent-primary-hover text-txt-on-primary font-semibold rounded-full transition-all text-[15px] shadow-[0_4px_20px_rgb(var(--accent-primary)/0.3)]"
             >
               {t('spaces:main.voice.join')}
             </button>
@@ -498,19 +500,19 @@ export function MainContent() {
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-txt-tertiary">
               <path d="M11 5L6 9H2V15H6L11 19V5ZM15.54 8.46C16.48 9.4 17 10.67 17 12S16.48 14.6 15.54 15.54L14.12 14.12C14.69 13.55 15 12.79 15 12S14.69 10.45 14.12 9.88L15.54 8.46Z" />
             </svg>
-            <span className="font-bold text-[15px] tracking-[-0.02em] text-txt-primary">{channel.name}</span>
+            <span className="font-display font-extrabold text-[17px] tracking-[-0.01em] text-txt-primary">{channel.name}</span>
             {connectionError ? (
-              <span className="text-xs text-txt-danger font-medium ml-2">{t('spaces:main.voice.connectionFailed')}</span>
+              <span className="text-xs text-txt-danger font-medium ms-2">{t('spaces:main.voice.connectionFailed')}</span>
             ) : isLiveKitConnected ? (
               <>
-                <span className="text-xs text-status-online font-medium ml-2">{t('spaces:main.voice.connected')}</span>
-                <span className="text-xs text-txt-tertiary ml-1">{t('spaces:main.voice.participants', { count: participants.length })}</span>
+                <span className="text-xs text-status-online font-medium ms-2">{t('spaces:main.voice.connected')}</span>
+                <span className="text-xs text-txt-tertiary ms-1">{t('spaces:main.voice.participants', { count: participants.length })}</span>
               </>
             ) : (
-              <span className="text-xs text-status-idle font-medium ml-2">{t('spaces:main.voice.connecting')}</span>
+              <span className="text-xs text-status-idle font-medium ms-2">{t('spaces:main.voice.connecting')}</span>
             )}
           </div>
-          <div className={`flex items-center gap-1 flex-shrink-0 ${voiceFullscreen ? 'pointer-events-auto mr-24' : ''}`}>
+          <div className={`flex items-center gap-1 flex-shrink-0 ${voiceFullscreen ? 'pointer-events-auto me-24' : ''}`}>
             <TransferIndicator />
             <MemberListToggleButton />
           </div>
@@ -524,6 +526,7 @@ export function MainContent() {
           {voiceChatOpen && !voiceFullscreen && (
             <VoiceChatPanel channelId={currentChannelId} channelName={channel.name} />
           )}
+          {soundboardOpen && !voiceFullscreen && <SoundboardPanel />}
         </div>
       </div>
     );
@@ -534,7 +537,7 @@ export function MainContent() {
       <div className="h-12 px-5 flex items-center justify-between border-b border-border-hard flex-shrink-0 z-10 bg-surface-chat">
         <div className="flex items-center gap-[10px] min-w-0">
           <span className="text-[20px] font-medium text-txt-tertiary flex-shrink-0 leading-none">#</span>
-          <span className="font-bold text-[15px] tracking-[-0.02em] text-txt-primary truncate leading-tight">{channel.name}</span>
+          <span className="font-display font-extrabold text-[17px] tracking-[-0.01em] text-txt-primary truncate leading-tight">{channel.name}</span>
           {channel.topic && (
             <ChannelHeaderTopic key={channel.id} channelName={channel.name} topic={channel.topic} />
           )}

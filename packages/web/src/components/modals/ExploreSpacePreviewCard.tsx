@@ -69,7 +69,7 @@ export function ExploreSpacePreviewCard({
               type="button"
               onClick={handleJoin}
               disabled={joining}
-              className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary-hover text-white text-xs font-medium rounded-full transition-colors disabled:opacity-50"
+              className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary-hover text-txt-on-primary text-xs font-medium rounded-full transition-colors disabled:opacity-50"
             >
               {joining ? t('spaces:explore.preview.joining') : t('spaces:explore.preview.join')}
             </button>

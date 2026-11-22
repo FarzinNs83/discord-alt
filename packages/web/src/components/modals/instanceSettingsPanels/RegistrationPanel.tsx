@@ -176,7 +176,7 @@ function FilterDropdown({
       {open && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 top-full mt-1 z-50 glass rounded-lg p-1.5 w-48">
+          <div className="absolute end-0 top-full mt-1 z-50 glass rounded-lg p-1.5 w-48">
             {view === 'archived' && (
               <>
                 <div className="text-[10px] font-semibold text-txt-tertiary uppercase tracking-wider px-2 py-1">
@@ -209,7 +209,7 @@ function FilterDropdown({
                     key={opt.key}
                     type="button"
                     onClick={() => { onActiveSortChange(opt.key); setOpen(false); }}
-                    className={`w-full text-left px-2 py-1.5 text-xs rounded ${
+                    className={`w-full text-start px-2 py-1.5 text-xs rounded ${
                       activeSort === opt.key
                         ? 'text-accent-lavender bg-accent-lavender/[0.08]'
                         : 'text-txt-primary'
@@ -223,7 +223,7 @@ function FilterDropdown({
                     key={opt.key}
                     type="button"
                     onClick={() => { onArchivedSortChange(opt.key); setOpen(false); }}
-                    className={`w-full text-left px-2 py-1.5 text-xs rounded ${
+                    className={`w-full text-start px-2 py-1.5 text-xs rounded ${
                       archivedSort === opt.key
                         ? 'text-accent-lavender bg-accent-lavender/[0.08]'
                         : 'text-txt-primary'
@@ -308,7 +308,7 @@ function ExpirySelector({ value, customDateTime, onChange, showKeep, disabled }:
             disabled={disabled}
             className={`px-2.5 py-1 text-xs rounded transition-colors disabled:opacity-50 ${
               value === 'keep'
-                ? 'bg-accent-primary text-white'
+                ? 'bg-accent-primary text-txt-on-primary'
                 : 'bg-surface-input text-txt-tertiary hover:text-txt-secondary'
             }`}
           >
@@ -323,7 +323,7 @@ function ExpirySelector({ value, customDateTime, onChange, showKeep, disabled }:
             disabled={disabled}
             className={`px-2.5 py-1 text-xs rounded transition-colors disabled:opacity-50 ${
               value === p.id
-                ? 'bg-accent-primary text-white'
+                ? 'bg-accent-primary text-txt-on-primary'
                 : 'bg-surface-input text-txt-tertiary hover:text-txt-secondary'
             }`}
           >
@@ -574,7 +574,7 @@ function CreateInviteModal({ onClose, onCreated }: CreateInviteModalProps) {
             <button
               type="submit"
               disabled={submitting}
-              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50"
             >
               {submitting ? t('admin:invites.createModal.submitting') : t('admin:invites.createModal.submit')}
             </button>
@@ -794,7 +794,7 @@ function EditInviteModal({ invite, onClose, onUpdated }: EditInviteModalProps) {
             <button
               type="submit"
               disabled={submitting}
-              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50"
             >
               {submitting ? t('admin:invites.editModal.submitting') : t('admin:invites.editModal.submit')}
             </button>
@@ -1010,7 +1010,7 @@ function ReinstateInviteModal({ invite, onClose, onReinstated }: ReinstateInvite
             <button
               type="submit"
               disabled={submitting}
-              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50"
             >
               {submitting
                 ? t('admin:invites.reinstateModal.submitting')
@@ -1288,7 +1288,7 @@ function InviteRow({ invite, expanded, onToggleExpand, onMutate }: InviteRowProp
               <div className="text-[11px] text-txt-tertiary truncate">{subtitle}</div>
             </div>
           </div>
-          <div className="flex items-center gap-2 shrink-0 ml-2">
+          <div className="flex items-center gap-2 shrink-0 ms-2">
             {!isActive && (
               <span
                 className={`inline-flex items-center text-[10px] font-medium px-1.5 py-0.5 rounded ${inviteStatusPillColor(invite.status)}`}
@@ -1383,7 +1383,7 @@ function InviteRow({ invite, expanded, onToggleExpand, onMutate }: InviteRowProp
                     <button
                       type="button"
                       onClick={(e) => { e.stopPropagation(); setShowRedemptions(true); }}
-                      className="text-[11px] text-txt-tertiary hover:text-txt-secondary underline decoration-dotted transition-colors ml-1"
+                      className="text-[11px] text-txt-tertiary hover:text-txt-secondary underline decoration-dotted transition-colors ms-1"
                     >
                       {t('admin:invites.row.viewRedemptions')}
                     </button>
@@ -1407,7 +1407,7 @@ function InviteRow({ invite, expanded, onToggleExpand, onMutate }: InviteRowProp
                     <button
                       type="button"
                       onClick={(e) => { e.stopPropagation(); setShowRedemptions(true); }}
-                      className="text-[11px] text-txt-tertiary hover:text-txt-secondary underline decoration-dotted transition-colors ml-1"
+                      className="text-[11px] text-txt-tertiary hover:text-txt-secondary underline decoration-dotted transition-colors ms-1"
                     >
                       {t('admin:invites.row.viewRedemptions')}
                     </button>
@@ -1675,7 +1675,7 @@ export function RegistrationPanel() {
           <button
             type="button"
             onClick={() => setShowCreate(true)}
-            className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-lg transition-colors"
+            className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-lg transition-colors"
           >
             {t('admin:invites.create')}
           </button>
@@ -1691,7 +1691,7 @@ export function RegistrationPanel() {
                 tab === 'active' ? 'bg-white/[0.08] text-txt-primary' : 'text-txt-tertiary hover:text-txt-secondary'
               }`}
             >
-              {t('admin:invites.tabs.active')} <span className="text-[10px] text-txt-tertiary ml-0.5">{activeCount}</span>
+              {t('admin:invites.tabs.active')} <span className="text-[10px] text-txt-tertiary ms-0.5">{activeCount}</span>
             </button>
             <button
               type="button"
@@ -1700,7 +1700,7 @@ export function RegistrationPanel() {
                 tab === 'archived' ? 'bg-white/[0.08] text-txt-primary' : 'text-txt-tertiary hover:text-txt-secondary'
               }`}
             >
-              {t('admin:invites.tabs.archived')} <span className="text-[10px] text-txt-tertiary ml-0.5">{archivedCount}</span>
+              {t('admin:invites.tabs.archived')} <span className="text-[10px] text-txt-tertiary ms-0.5">{archivedCount}</span>
             </button>
           </div>
           <FilterDropdown
@@ -1759,7 +1759,7 @@ export function RegistrationPanel() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50"
               >
                 {saving ? t('common:states.saving') : t('common:actions.save')}
               </button>

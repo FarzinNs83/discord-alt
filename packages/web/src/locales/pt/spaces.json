@@ -707,5 +707,26 @@
     "suppressRoles": "Suprimir menções a cargos",
     "massHeading": "Menções em grupo",
     "massNote": "@here alcança os mesmos membros que @everyone. Menções diretas a você sempre notificam."
+  },
+  "events": {
+    "schedule": "Agendar um evento",
+    "titleIn": "{{title}} em {{place}}",
+    "imIn": "Eu vou",
+    "going_one": "{{count}} vai",
+    "going_many": "{{count}} vão",
+    "going_other": "{{count}} vão",
+    "cancel": "Cancelar evento",
+    "cancelConfirm": {
+      "title": "Cancelar este evento?",
+      "description": "{{title}} será removido para todos."
+    },
+    "form": {
+      "what": "O quê",
+      "whatPlaceholder": "Noite de Máfia",
+      "when": "Quando",
+      "where": "Onde",
+      "nowhere": "Nenhum canal",
+      "submit": "Agendar"
+    }
   }
 }

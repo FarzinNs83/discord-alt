@@ -341,7 +341,7 @@ export function DiscoveryPanel({ spaceId }: { spaceId: string }) {
 
   return (
     <div className="space-y-5">
-      <h2 className="text-lg font-semibold text-txt-primary mb-6">{t('spaces:settings.discovery.title')}</h2>
+      <h2 className="font-display font-extrabold text-[32px] leading-tight tracking-[-0.03em] text-txt-primary mb-6">{t('spaces:settings.discovery.title')}</h2>
       {!flagsUnknown && !discoveryEnabled && (
         <div className="p-2.5 bg-accent-amber/10 border border-accent-amber/30 rounded text-[13px] text-accent-amber">
           {t('spaces:settings.discovery.disabledNotice')}
@@ -452,7 +452,7 @@ export function DiscoveryPanel({ spaceId }: { spaceId: string }) {
             rows={3}
             className="input-standard w-full resize-none"
           />
-          <div className="text-[11px] text-txt-tertiary text-right">
+          <div className="text-[11px] text-txt-tertiary text-end">
             {t('spaces:settings.discovery.description.counter', { length: description.length, max: DESCRIPTION_MAX_LENGTH })}
           </div>
         </div>
@@ -479,7 +479,7 @@ export function DiscoveryPanel({ spaceId }: { spaceId: string }) {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50"
               >
                 {saving ? t('common:states.saving') : t('common:actions.save')}
               </button>
@@ -650,8 +650,8 @@ export function SpaceSettingsModal() {
   if (!space || !currentSpaceId) return null;
 
   const tabClass = (target: typeof tab) =>
-    `w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
-      tab === target ? 'bg-interactive-selected text-txt-primary font-medium' : 'text-txt-tertiary hover:text-txt-secondary hover:bg-interactive-hover'
+    `w-full text-start px-3 py-2 rounded-md text-sm transition-colors ${
+      tab === target ? 'bg-accent-primary text-txt-on-primary font-bold' : 'text-txt-tertiary hover:text-txt-secondary hover:bg-interactive-hover'
     }`;
 
   const handleTabClick = (target: typeof tab) => {

@@ -313,7 +313,7 @@ export function AccountPanel() {
 
   return (
     <div className="space-y-5">
-      <h2 className="text-lg font-semibold text-txt-primary mb-6">{t('settings:account.title')}</h2>
+      <h2 className="font-display font-extrabold text-[32px] leading-tight tracking-[-0.03em] text-txt-primary mb-6">{t('settings:account.title')}</h2>
       {formerHome && (
         <div className="rounded-lg bg-accent-amber/10 border border-accent-amber/25 px-3.5 py-3 text-xs text-txt-secondary leading-relaxed mb-4">
           <span className="font-medium text-txt-primary">{t('settings:account.detached.notice')}</span>{' '}
@@ -424,7 +424,7 @@ export function AccountPanel() {
                   type="button"
                   onClick={() => avatarInputRef.current?.click()}
                   disabled={uploadingAvatar}
-                  className="text-xs text-accent-primary hover:underline text-left"
+                  className="text-xs text-accent-primary hover:underline text-start"
                 >
                   {t('settings:account.profile.avatar.change')}
                 </button>
@@ -432,7 +432,7 @@ export function AccountPanel() {
                   <button
                     type="button"
                     onClick={handleRemoveAvatar}
-                    className="text-xs text-txt-danger hover:underline text-left"
+                    className="text-xs text-txt-danger hover:underline text-start"
                   >
                     {t('common:actions.remove')}
                   </button>
@@ -607,7 +607,7 @@ export function AccountPanel() {
                 className="input-standard w-full resize-none"
                 maxLength={BIO_MAX_LENGTH}
               />
-              <span className="absolute bottom-2 right-2 text-[10px] text-txt-tertiary">
+              <span className="absolute bottom-2 end-2 text-[10px] text-txt-tertiary">
                 {t('settings:account.profile.bio.counter', { used: bio.length, max: BIO_MAX_LENGTH })}
               </span>
             </div>
@@ -667,7 +667,7 @@ export function AccountPanel() {
                 type={showCurrentPassword ? 'text' : 'password'}
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                className="input-standard w-full pr-10"
+                className="input-standard w-full pe-10"
                 placeholder={t('settings:account.password.current.placeholder')}
                 autoComplete="current-password"
               />
@@ -675,7 +675,7 @@ export function AccountPanel() {
                 type="button"
                 onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                 aria-label={showCurrentPassword ? t('settings:account.password.hide') : t('settings:account.password.show')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-txt-tertiary hover:text-txt-secondary transition-colors"
+                className="absolute end-2.5 top-1/2 -translate-y-1/2 text-txt-tertiary hover:text-txt-secondary transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   {showCurrentPassword ? (
@@ -697,7 +697,7 @@ export function AccountPanel() {
                 type={showNewPassword ? 'text' : 'password'}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="input-standard w-full pr-10"
+                className="input-standard w-full pe-10"
                 placeholder={t('settings:account.password.new.placeholder', { min: PASSWORD_MIN_LENGTH })}
                 autoComplete="new-password"
               />
@@ -705,7 +705,7 @@ export function AccountPanel() {
                 type="button"
                 onClick={() => setShowNewPassword(!showNewPassword)}
                 aria-label={showNewPassword ? t('settings:account.password.hide') : t('settings:account.password.show')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-txt-tertiary hover:text-txt-secondary transition-colors"
+                className="absolute end-2.5 top-1/2 -translate-y-1/2 text-txt-tertiary hover:text-txt-secondary transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   {showNewPassword ? (
@@ -738,7 +738,7 @@ export function AccountPanel() {
           <button
             type="submit"
             disabled={passwordLoading || !currentPassword || !newPassword || !confirmNewPassword}
-            className="px-4 py-2 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {passwordLoading ? t('settings:account.password.submitting') : t('settings:account.password.submit')}
           </button>
@@ -778,7 +778,7 @@ export function AccountPanel() {
               <button
                 onClick={handleSave}
                 disabled={isLoading || uploadingAvatar || uploadingBanner}
-                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50"
               >
                 {isLoading ? t('common:states.saving') : t('common:actions.save')}
               </button>

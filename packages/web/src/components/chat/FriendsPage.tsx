@@ -51,7 +51,7 @@ function ActivityFriendItem({
   const friendDisplayName = userDisplayName(canonical);
 
   const rowClass = isRichActivity
-    ? `flex items-center gap-3 px-4 py-2.5 rounded-[10px] mb-1 cursor-pointer transition-colors glass-pill border-l-2 ${accentClass}`
+    ? `flex items-center gap-3 px-4 py-2.5 rounded-[10px] mb-1 cursor-pointer transition-colors glass-pill border-s-2 ${accentClass}`
     : 'flex items-center gap-3 px-4 py-2.5 rounded-[4px] hover:bg-interactive-hover cursor-pointer transition-colors active:bg-interactive-hover';
 
   return (
@@ -336,7 +336,7 @@ export function FriendsPage({ mobile }: FriendsPageProps) {
       {mobile ? (
         <div className="h-12 px-3 flex items-center gap-2 border-b border-border-soft flex-shrink-0 z-10 bg-surface-base">
           <button onClick={popMobileScreen} className="w-8 h-8 flex items-center justify-center text-txt-secondary hover:text-txt-primary">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg className="w-5 h-5 rtl:-scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
             </svg>
           </button>
@@ -344,20 +344,20 @@ export function FriendsPage({ mobile }: FriendsPageProps) {
         </div>
       ) : (
         <div className="h-12 px-4 flex items-center border-b border-border-hard flex-shrink-0 z-10 bg-surface-chat">
-          <div className="flex items-center gap-2 mr-4">
+          <div className="flex items-center gap-2 me-4">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-txt-tertiary">
               <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
             </svg>
             <span className="font-bold text-txt-primary">{t('common:labels.friends')}</span>
           </div>
           <div className="w-[1px] h-6 bg-surface-elevated mx-2" />
-          <div className="flex items-center gap-4 ml-2">
+          <div className="flex items-center gap-4 ms-2">
             <TabButton active={activeTab === 'online'} onClick={() => setActiveTab('online')}>{t('common:states.online')}</TabButton>
             <TabButton active={activeTab === 'all'} onClick={() => setActiveTab('all')}>{t('social:tabs.all')}</TabButton>
             <TabButton active={activeTab === 'pending'} onClick={() => setActiveTab('pending')}>
               {t('social:tabs.pending')}
               {(pendingIncoming.length > 0) && (
-                <span className="ml-2 px-1.5 py-0.5 bg-accent-rose text-white text-[10px] rounded-full leading-none">
+                <span className="ms-2 px-1.5 py-0.5 bg-accent-rose text-white text-[10px] rounded-full leading-none">
                   {pendingIncoming.length}
                 </span>
               )}
@@ -371,7 +371,7 @@ export function FriendsPage({ mobile }: FriendsPageProps) {
               {t('social:tabs.add')}
             </button>
           </div>
-          <div className="ml-auto flex items-center gap-1">
+          <div className="ms-auto flex items-center gap-1">
             <MemberListToggleButton />
           </div>
         </div>
@@ -392,7 +392,7 @@ export function FriendsPage({ mobile }: FriendsPageProps) {
             >
               {tabLabel(t, tab)}
               {tab === 'pending' && pendingIncoming.length > 0 && (
-                <span className="ml-1.5 px-1.5 py-0.5 text-xs bg-notification text-white rounded-full">
+                <span className="ms-1.5 px-1.5 py-0.5 text-xs bg-notification text-txt-on-primary rounded-full">
                   {pendingIncoming.length}
                 </span>
               )}
@@ -584,7 +584,7 @@ function AddFriendTab({
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-txt-tertiary hover:text-txt-secondary"
+              className="absolute end-2 top-1/2 -translate-y-1/2 text-txt-tertiary hover:text-txt-secondary"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
@@ -610,7 +610,7 @@ function AddFriendTab({
             <button
               onClick={handleDirectAdd}
               disabled={directAddLoading}
-              className="px-3 py-1.5 rounded-md bg-accent-primary hover:bg-accent-primary-hover text-white text-sm font-medium transition-colors disabled:opacity-50 flex-shrink-0"
+              className="px-3 py-1.5 rounded-md bg-accent-primary hover:bg-accent-primary-hover text-txt-on-primary text-sm font-medium transition-colors disabled:opacity-50 flex-shrink-0"
             >
               {directAddLoading ? t('social:request.sending') : t('social:add.sendRequest')}
             </button>
@@ -778,7 +778,7 @@ function UserDiscoverCard({
           style={{ background: 'linear-gradient(to top, rgba(20,20,26,0.9), transparent)' }}
         />
         {originLabel && (
-          <div className="absolute top-2 right-2 z-[2]">
+          <div className="absolute top-2 end-2 z-[2]">
             <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold backdrop-blur-sm bg-black/30 text-txt-secondary">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" className="opacity-60">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
@@ -811,7 +811,7 @@ function UserDiscoverCard({
 
       {/* Content */}
       <div className="px-4 pt-1.5 pb-3.5 flex flex-col flex-1">
-        <button onClick={handleOpenProfile} className="text-left group">
+        <button onClick={handleOpenProfile} className="text-start group">
           <h3 className="text-[14px] font-bold text-txt-primary truncate group-hover:underline">{displayName}</h3>
           <p className="text-[12px] text-txt-tertiary truncate">@{user.username}</p>
         </button>
@@ -847,7 +847,7 @@ function UserDiscoverCard({
           <button
             onClick={handleSendRequest}
             disabled={actionLoading}
-            className="w-full py-1.5 bg-accent-primary hover:bg-accent-primary-hover text-white text-[13px] font-medium rounded transition-colors disabled:opacity-50"
+            className="w-full py-1.5 bg-accent-primary hover:bg-accent-primary-hover text-txt-on-primary text-[13px] font-medium rounded transition-colors disabled:opacity-50"
           >
             {actionLoading ? t('social:request.sending') : t('social:request.send')}
           </button>
@@ -899,7 +899,7 @@ function TabButton({ children, active, onClick }: { children: React.ReactNode, a
     <button
       onClick={onClick}
       className={`px-2 py-0.5 rounded-[4px] text-[16px] font-medium transition-colors ${
-        active ? 'bg-interactive-selected text-white' : 'text-txt-tertiary hover:bg-interactive-hover hover:text-txt-secondary'
+        active ? 'bg-txt-primary text-txt-on-primary font-bold' : 'text-txt-tertiary hover:bg-interactive-hover hover:text-txt-secondary'
       }`}
     >
       {children}
@@ -929,7 +929,7 @@ function FriendItem({ friend, onRemove, onDm }: { friend: TaggedFriend, onRemove
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-2 opacity-60 group-hover:opacity-100 transition-opacity pr-2">
+      <div className="flex items-center gap-2 opacity-60 group-hover:opacity-100 transition-opacity pe-2">
         <button
           onClick={(e) => { e.stopPropagation(); onDm(); }}
           className="w-9 h-9 flex items-center justify-center bg-surface-base rounded-full text-txt-tertiary hover:text-txt-primary transition-colors"

@@ -23,7 +23,7 @@ import { useSpaceStore } from '../../stores/spaceStore';
 import { useUIStore } from '../../stores/uiStore';
 import { ChannelSidebar } from './ChannelSidebar';
 
-const SELECTED = 'bg-interactive-selected';
+const SELECTED = 'bg-accent-primary';
 const LABELS = { friends: 'Friends', explore: 'Explore' } as const;
 
 function LocationProbe() {

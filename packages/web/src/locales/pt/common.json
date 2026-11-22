@@ -123,7 +123,8 @@
   },
   "chrome": {
     "toggleMemberList": "Alternar lista de membros",
-    "closeSettings": "Fechar configurações"
+    "closeSettings": "Fechar configurações",
+    "escKey": "Esc"
   },
   "sourceCode": {
     "label": "Código-fonte (AGPL)",

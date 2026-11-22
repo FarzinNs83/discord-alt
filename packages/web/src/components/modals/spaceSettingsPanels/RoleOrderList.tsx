@@ -212,10 +212,10 @@ export function RoleOrderList({ spaceId, onOpen }: RoleOrderListProps) {
         onDragOver={index !== null ? handleDragOver(index) : undefined}
         onDrop={index !== null ? handleDrop(index) : undefined}
         className={`relative flex items-center gap-1.5 rounded hover:bg-interactive-hover transition-colors cursor-pointer group/role ${
-          reorderable && !isMobile ? 'pl-1 pr-2' : reorderable ? 'pl-3 pr-2' : 'px-3'
+          reorderable && !isMobile ? 'ps-1 pe-2' : reorderable ? 'ps-3 pe-2' : 'px-3'
         } ${dragIndex !== null && dragIndex === index ? 'opacity-50' : ''}`}
       >
-        {marker === 'before' && <div className="absolute -top-[2px] left-2 right-2 h-[2px] bg-accent-mint rounded-full z-10" />}
+        {marker === 'before' && <div className="absolute -top-[2px] start-2 end-2 h-[2px] bg-accent-mint rounded-full z-10" />}
 
         {reorderable && !isMobile && (
           <div className="w-6 h-6 flex-shrink-0 flex items-center justify-center">
@@ -250,7 +250,7 @@ export function RoleOrderList({ spaceId, onOpen }: RoleOrderListProps) {
         <button
           type="button"
           draggable={draggable || undefined}
-          className={`flex-1 min-w-0 flex items-center gap-2.5 py-2 rounded text-left ${FOCUS_RING}`}
+          className={`flex-1 min-w-0 flex items-center gap-2.5 py-2 rounded text-start ${FOCUS_RING}`}
         >
           <span className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: role.color }} />
           <span className="text-sm text-txt-primary truncate">
@@ -301,7 +301,7 @@ export function RoleOrderList({ spaceId, onOpen }: RoleOrderListProps) {
         )}
 
         <svg
-          className="w-4 h-4 text-txt-tertiary group-hover/role:text-txt-secondary transition-colors flex-shrink-0"
+          className="w-4 h-4 text-txt-tertiary group-hover/role:text-txt-secondary transition-colors flex-shrink-0 rtl:-scale-x-100"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -311,7 +311,7 @@ export function RoleOrderList({ spaceId, onOpen }: RoleOrderListProps) {
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
         </svg>
 
-        {marker === 'after' && <div className="absolute -bottom-[2px] left-2 right-2 h-[2px] bg-accent-mint rounded-full z-10" />}
+        {marker === 'after' && <div className="absolute -bottom-[2px] start-2 end-2 h-[2px] bg-accent-mint rounded-full z-10" />}
       </div>
     );
   };

@@ -89,7 +89,7 @@ describe('Message mention highlight (#332)', () => {
   it("highlights a mention of my id on the DM's origin", () => {
     const message = dmMessage(`hey <@${meOnOrbit.id}>`);
     render(<Message message={message} isCompact={false} isFirstInGroup previousMessageId={null} />);
-    expect(rowOf(message).className).toContain('border-l-accent-amber');
+    expect(rowOf(message).className).toContain('border-s-accent-amber');
     // The badge resolves the mention to me, in the DM's own id space.
     expect(screen.getByText('@Alice')).toBeInTheDocument();
   });
@@ -97,12 +97,12 @@ describe('Message mention highlight (#332)', () => {
   it("does not highlight my home id in a DM on another origin (that id is someone else's there)", () => {
     const message = dmMessage(`hey <@${me.id}>`);
     render(<Message message={message} isCompact={false} isFirstInGroup previousMessageId={null} />);
-    expect(rowOf(message).className).not.toContain('border-l-accent-amber');
+    expect(rowOf(message).className).not.toContain('border-s-accent-amber');
   });
 
   it('does not highlight my token when it sits inside code', () => {
     const message = dmMessage(`the syntax is \`<@${meOnOrbit.id}>\``);
     render(<Message message={message} isCompact={false} isFirstInGroup previousMessageId={null} />);
-    expect(rowOf(message).className).not.toContain('border-l-accent-amber');
+    expect(rowOf(message).className).not.toContain('border-s-accent-amber');
   });
 });

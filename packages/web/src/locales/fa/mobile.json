@@ -1,0 +1,17 @@
+{
+  "nav": {
+    "spaces": "فضاها",
+    "dms": "پیام‌ها",
+    "you": "من"
+  },
+  "you": {
+    "editProfile": "ویرایش نمایه",
+    "homeInstance": "سرور خانه: {{domain}}",
+    "logOutConfirm": "مطمئنی می‌خوای خارج بشی؟"
+  },
+  "chat": {
+    "openCall": "باز کردن تماس",
+    "cancelCall": "لغو تماس",
+    "unknownChannel": "کانال"
+  }
+}

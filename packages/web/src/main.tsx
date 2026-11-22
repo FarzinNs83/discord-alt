@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { App } from './App';
 import { startPendingMessageOrchestrator } from './stores/pendingMessageRehydrate';
+import { startWeakNetProbe } from './stores/weakNetStore';
 import i18n, { initI18n } from './i18n';
 import './styles/globals.css';
 import { initializeInterfaceScale } from './platform/interfaceScale';
@@ -119,6 +120,7 @@ const root = document.getElementById('root');
 if (!root) throw new Error('Root element not found');
 
 startPendingMessageOrchestrator();
+startWeakNetProbe();
 
 function render(): void {
   ReactDOM.createRoot(root!).render(

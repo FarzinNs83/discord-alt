@@ -145,7 +145,7 @@ function InviteSelectFriendRow({
     <button
       onClick={() => onToggle(friendKey(friend), friend)}
       disabled={alreadyMember || sending}
-      className={`w-full flex items-center gap-3 px-3 py-2 rounded-[4px] transition-colors text-left ${
+      className={`w-full flex items-center gap-3 px-3 py-2 rounded-[4px] transition-colors text-start ${
         alreadyMember
           ? 'opacity-40 cursor-not-allowed'
           : isSelected

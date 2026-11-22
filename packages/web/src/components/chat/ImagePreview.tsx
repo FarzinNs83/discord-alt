@@ -22,7 +22,7 @@ export function ImagePreview() {
       onClick={closeImagePreview}
     >
       {/* Toolbar: download, copy, close */}
-      <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
+      <div className="absolute top-4 end-4 flex items-center gap-2 z-10">
         <button
           className="text-white/70 hover:text-white transition-colors"
           onClick={(e) => {

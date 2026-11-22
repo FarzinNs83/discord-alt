@@ -213,7 +213,7 @@ export function StreamingPanel() {
   };
 
   const pillBase = 'px-3 py-1.5 rounded text-[13px] font-medium transition-colors cursor-pointer select-none';
-  const pillOn = 'bg-accent-primary text-white';
+  const pillOn = 'bg-accent-primary text-txt-on-primary';
   const pillOff = 'bg-surface-elevated text-txt-secondary hover:bg-interactive-hover';
 
   return (
@@ -333,7 +333,7 @@ export function StreamingPanel() {
                   onClick={() => setDraft({ ...draft, bitrateStepKbps: step })}
                   className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors cursor-pointer select-none ${
                     draft.bitrateStepKbps === step
-                      ? 'bg-accent-primary text-white'
+                      ? 'bg-accent-primary text-txt-on-primary'
                       : 'bg-surface-elevated text-txt-secondary hover:bg-interactive-hover'
                   }`}
                 >
@@ -441,7 +441,7 @@ export function StreamingPanel() {
             <table className="w-full text-xs">
               <thead>
                 <tr>
-                  <th className="text-left text-txt-tertiary font-normal pb-1.5 pr-2"></th>
+                  <th className="text-start text-txt-tertiary font-normal pb-1.5 pe-2"></th>
                   {enabledFramerates.map((fps) => (
                     <th key={fps} className="text-center text-txt-tertiary font-normal pb-1.5 px-1 min-w-[52px]">{t('admin:streaming.units.fps', { value: fps })}</th>
                   ))}
@@ -451,7 +451,7 @@ export function StreamingPanel() {
                 {enabledResolutions.map((res) => (
                   <tr key={res}>
                     {/* i18n-check: allow-literal (a resolution such as 1080p reads the same in every language) */}
-                    <td className="text-txt-secondary font-medium pr-2 py-0.5">{RESOLUTION_LABELS[res as Resolution] ?? `${res}p`}</td>
+                    <td className="text-txt-secondary font-medium pe-2 py-0.5">{RESOLUTION_LABELS[res as Resolution] ?? `${res}p`}</td>
                     {enabledFramerates.map((fps) => {
                       const key = `${res}_${fps}`;
                       const val = matrixDraft[key] ?? getDefaultKbps(key);
@@ -492,7 +492,7 @@ export function StreamingPanel() {
                               {(val / 1000).toFixed(1)}
                               {overridden && (
                                 <span
-                                  className="ml-1 text-[10px] text-txt-tertiary hover:text-txt-danger cursor-pointer"
+                                  className="ms-1 text-[10px] text-txt-tertiary hover:text-txt-danger cursor-pointer"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     setMatrixDraft({ ...matrixDraft, [key]: getDefaultKbps(key) });
@@ -562,7 +562,7 @@ export function StreamingPanel() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-txt-on-primary text-sm font-medium rounded-full transition-colors disabled:opacity-50"
               >
                 {saving ? t('common:states.saving') : t('common:actions.save')}
               </button>

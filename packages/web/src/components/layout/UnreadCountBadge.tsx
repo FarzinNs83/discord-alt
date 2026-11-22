@@ -7,7 +7,7 @@
  */
 export function UnreadCountBadge({ count, label, muted = false }: { count: number; label: string; muted?: boolean }) {
   return (
-    <span className="absolute -right-1.5 -top-1.5 z-10 pointer-events-none">
+    <span className="absolute -end-1.5 -top-1.5 z-10 pointer-events-none">
       <span
         aria-hidden="true"
         className={`block min-w-[18px] h-[18px] px-1 rounded-full text-[10px] leading-[18px] font-bold text-center ring-2 ring-surface-base ${

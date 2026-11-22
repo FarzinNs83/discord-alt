@@ -114,7 +114,7 @@ export function OverrideEntry({
           onClick={() => setExpanded(!expanded)}
           aria-expanded={expanded}
           aria-controls={panelId}
-          className="flex-1 min-w-0 flex items-center gap-2 pl-3 pr-1.5 py-2 text-left"
+          className="flex-1 min-w-0 flex items-center gap-2 ps-3 pe-1.5 py-2 text-start"
         >
           <span
             className="w-3 h-3 rounded-full flex-shrink-0"
@@ -145,7 +145,7 @@ export function OverrideEntry({
               onClick={removeDisabled ? undefined : onRemove}
               disabled={removeDisabled}
               aria-label={t('spaces:permissions.removeOverrideFor', { name: label })}
-              className={`w-7 h-7 mr-1.5 flex items-center justify-center rounded text-txt-tertiary transition-colors ${
+              className={`w-7 h-7 me-1.5 flex items-center justify-center rounded text-txt-tertiary transition-colors ${
                 removeDisabled ? 'opacity-40 cursor-not-allowed' : 'hover:text-accent-rose hover:bg-accent-rose/10'
               }`}
             >
@@ -156,7 +156,7 @@ export function OverrideEntry({
           </Tooltip>
         ) : (
           // Keeps every row's chevron in the same column as the removable rows.
-          <span className="w-7 h-7 mr-1.5 flex-shrink-0" aria-hidden="true" />
+          <span className="w-7 h-7 me-1.5 flex-shrink-0" aria-hidden="true" />
         )}
       </div>
       {expanded && (
