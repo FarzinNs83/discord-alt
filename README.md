@@ -60,6 +60,20 @@ changes) with a rollback if the new build does not come up healthy:
 ./update.sh           # snapshot, pull, rebuild, restart; --yes skips the question
 ```
 
+Or run the newest `update.sh` straight from GitHub, from anywhere:
+
+```bash
+cd /opt/patogh && bash -c "$(curl -Ls https://raw.githubusercontent.com/FarzinNs83/discord-alt/main/update.sh)" update.sh
+```
+
+Through the ghfast.top mirror:
+
+```bash
+cd /opt/patogh && bash -c "$(curl -Ls https://ghfast.top/https://raw.githubusercontent.com/FarzinNs83/discord-alt/main/update.sh)" update.sh
+```
+
+Options go at the end, e.g. `... update.sh --check`.
+
 Show all options:
 
 ```bash
